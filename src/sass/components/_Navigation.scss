@@ -1,0 +1,34 @@
+.navigation{
+    display:flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    a{
+        display: flex;
+        text-decoration:  none;
+        color: $color-quaternary;
+        margin: 0 20px;
+        &:hover{
+            font-weight: bold;
+        }
+    }
+}
+.nav-active{
+    position: relative;
+    font-style: italic;
+    &::after{ 
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        content:"";
+        height: 3px;
+        background-color: $color-quaternary;
+        border-radius: 10px;
+        transform: translateX(-50%);
+        animation: anim 600ms ease forwards;
+    }
+}
+@keyframes anim{
+    to{
+        width: 100%;
+    }
+}

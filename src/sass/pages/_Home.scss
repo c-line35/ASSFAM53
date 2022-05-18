@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    align-items: center;
+    margin: 100px auto;
+    width: 85%;
+}
+.events{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    padding-left: 50px;
+    color: $color-quaternary;
+    &__item{
+        border-bottom: 1px dotted $color-quaternary;
+        width: 100%;
+        max-width: 250px;
+    }
+    p{
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,80 @@
+@import './utils/butterfly-anim';
+@import './utils/variables';
+@import './utils/mixins';
+@import './components/Navigation';
+@import './components/header';
+@import './components/footer';
+@import './layout/level';
+@import './layout/carrousel';
+@import './pages/Home.scss';
+@import './pages/Join.scss';
+
+
+*{
+    box-sizing: border-box;
+    font-family: 'Mulish', sans-serif;
+    margin: 0;
+}
+h1{
+    color:$color-quaternary;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+h2{
+    margin: 0;
+    color: $color-quaternary;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+}
+h3{
+    color:$color-quaternary;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    border-bottom: 1px double $color-quaternary;
+}
+h4{
+    color:$color-quaternary;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+.bg-img{
+    background: url('../assets/image-accueil.jpg') center/cover;
+    position: relative;
+    text-decoration: none;
+    height: 900px;
+    a{
+        text-decoration: none;
+    }
+    .citation{
+        color: $color-quaternary;
+        text-align: center;
+        padding-top: 5%;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 0;
+        padding-top: 30px;
+    }
+};
+.partner{
+    position: absolute;
+    top: calc(100% - 100px);
+    width: 75%;
+    height: 100px;
+    display:flex;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 900px){
+ 
+    .bg-img{
+        height: 600px;
+    }
+    .partner{
+       display: none;
+    }
+}
+

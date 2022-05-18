@@ -1,0 +1,55 @@
+
+    .level{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    background: linear-gradient(-45deg, $color-secondary, $color-primary);
+    border-radius: 100px;
+    opacity: 1;
+    @include box-shadow-normal;
+    &:hover{
+        @include box-shadow-hover;
+        opacity: 0.85;
+    }
+    a{
+        text-decoration: none;
+    }
+    &--visit{
+        position: absolute;
+        top:40%;
+        left:3%;
+        width: 190px;
+        height: 190px;
+    }
+    &--adher{
+        position: absolute;
+        top: 50%;
+        left:25%;
+        width: 150px;
+        height: 150px;
+    }
+    &--admin{
+        position: absolute;
+        top: 15%;
+        left:18%;
+        width: 170px;
+        height: 170px;
+    }
+    &--child{
+        position: absolute;
+        top: 32%;
+        left:53%;
+        width: 210px;
+        height: 210px;
+    }
+} 
+@media screen and (max-width: 900px){
+    .level{
+        width:calc(100% - 20px);
+        max-width: 250px;
+        height: 50px;
+        position:static;
+        margin: 40px auto;
+    }
+}

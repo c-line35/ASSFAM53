@@ -1,0 +1,50 @@
+.join{
+    display:flex;
+    margin: 100px auto;
+    font-size: 14px;
+    &__content{
+    display:flex;
+    flex-direction:column;
+    width: 50%;
+    max-width: 1000px;
+    margin-bottom: 30px;;
+    p{
+        margin: 20px ;
+        }
+    }
+    &__level{
+        display:flex;
+        flex-direction: column; 
+        margin: auto;
+        width: 40%;
+        max-width: 600px;
+    }
+}
+.joinLevel{
+    margin-top: 30px;
+    &--head{
+        background-color: $color-tertiary;
+    }
+    &--color{
+        background-color: $color-tertiary-light;
+    }
+    th{
+        padding: 10px; 
+    }
+    td{
+        padding: 10px;
+    }
+}
+@media screen and (max-width: 900px){
+    .join{
+    flex-direction: column;
+    &__content{
+        width: 80%;
+    }    
+    &__level{
+        width: 80%;
+    }    
+            
+       
+    }
+}
