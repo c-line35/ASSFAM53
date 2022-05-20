@@ -10,7 +10,7 @@ const Join = () => {
       <div className='join'>
         <div className='join__content'>
           <h2>Pourquoi adhérer?</h2>
-          <p className='join__content--p1'>Pour échanger, s’informer, se former.</p> 
+          <p>Pour échanger, s’informer, se former.</p> 
           <p>Echanger lors de rencontres conviviales :</p>
           <ul>
             <li>Réunions de secteur</li>
@@ -30,12 +30,15 @@ const Join = () => {
         <div className='join__level'>
           <h2>3 Niveaux d'adhésion vous sont proposés</h2>
           <JoinLevel />
+        </div> 
         </div>
-       
+        <div className='join-form'>
+          <a href='./assets/formulaire.pdf' target='blank'>Vous pouvez télécharger le bulletin d'adhésion en cliquant ici</a>
+        </div>
 
        
 
-      </div>
+     
       <Footer />
     </div>
   )

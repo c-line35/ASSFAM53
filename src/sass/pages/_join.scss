@@ -2,12 +2,13 @@
     display:flex;
     margin: 100px auto;
     font-size: 14px;
+    padding: 0 auto;
     &__content{
     display:flex;
     flex-direction:column;
+    justify-content: center;
     width: 50%;
-    max-width: 1000px;
-    margin-bottom: 30px;;
+    margin:auto;
     p{
         margin: 20px ;
         }
@@ -35,16 +36,37 @@
         padding: 10px;
     }
 }
+.join-form{
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    a{
+        text-decoration: none;
+        color: $color-quaternary;
+        font-weight: bold; 
+        padding: 10px;
+        border: 2px solid white;
+        &:hover{
+            border: 2px solid $color-quaternary;
+           
+        }
+    }
+}
 @media screen and (max-width: 900px){
     .join{
     flex-direction: column;
+    margin-bottom: 30px;
     &__content{
         width: 80%;
     }    
     &__level{
         width: 80%;
-    }    
-            
-       
+        }    
     }
+    .joinLevel{
+        font-size: 12px;
+        th, td{
+            padding: 5px;
+    }
+}
 }

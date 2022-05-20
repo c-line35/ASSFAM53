@@ -6,8 +6,10 @@ const Footer = () => {
         <div className='footer'>
             <h3>Contact</h3>
             <div className='footer__content'>
-                <p>contact@assfamacueill53.org</p>
-                <p>Site développé par Céline Busson<br/> bussonceline@sfr.fr</p>
+                <a href="mailto:contact@assfamaccueil53.org ">contact@assfamaccueil53.org</a>
+                <p>Site développé par Céline Busson<br/> 
+                    <a href ='mailto:bussonceline@sfr.fr'>bussonceline@sfr.fr</a>
+                </p>
             </div>
         </div>
     );

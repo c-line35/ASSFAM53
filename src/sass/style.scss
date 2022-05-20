@@ -6,6 +6,7 @@
 @import './components/footer';
 @import './layout/level';
 @import './layout/carrousel';
+@import './layout/member';
 @import './pages/Home.scss';
 @import './pages/Join.scss';
 
@@ -45,7 +46,7 @@ h4{
     background: url('../assets/image-accueil.jpg') center/cover;
     position: relative;
     text-decoration: none;
-    height: 900px;
+    height: 800px;
     a{
         text-decoration: none;
     }
@@ -68,6 +69,15 @@ h4{
     justify-content: space-around;
 }
 
+@media screen and (min-width: 900px)and (max-width: 1300px){
+ 
+    .bg-img{
+        height:750px;
+    }
+ 
+
+}
+
 @media screen and (max-width: 900px){
  
     .bg-img{
@@ -77,4 +87,3 @@ h4{
        display: none;
     }
 }
-

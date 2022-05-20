@@ -7,40 +7,29 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 
 
 // import required modules
-import { EffectCoverflow, Pagination, Autoplay } from "swiper";
+import { Pagination, Navigation , Mousewheel, Keyboard, Autoplay} from "swiper";
 
-export default function Carrousel() {
+export default function App() {
   return (
     <>
       <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={"2"}
-        coverflowEffect={{
-          rotate: -50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
-        }}
-        
-        modules={[EffectCoverflow, Pagination, Autoplay]}
-        className="mySwiper"
+        loop={true}
         pagination={{
-            clickable: true,
-          }}
-          loop={true}
-          autoplay={{
-            delay:2500,
-            disableOnInteraction: true,
-          }}
+          clickable: true,
+        }}
+        navigation={true}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: true,
+        }}
+        modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
+        className="mySwiper"
       >
        {articlesList.map(articles=>(
             <SwiperSlide key={articles.position}>
@@ -48,8 +37,9 @@ export default function Carrousel() {
                 <div className="article__content">
                 <div className="article__content__title">{articles.title}</div>
                 <div className="article__content__image"><img src={articles.img} alt={articles.img}/></div>
-                <div className="article__content__text">{articles.txt}</div>
-            </div>
+                </div>
+                <div className="article__text">{articles.txt}</div>
+            
             </div>
             </SwiperSlide>
        ))}
