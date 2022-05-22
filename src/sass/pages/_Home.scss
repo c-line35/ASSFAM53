@@ -54,9 +54,10 @@ border-radius: 50px;
 }
 @media screen and (max-width: 900px){
     .intro{
-        p{
-            font-size: 12px;
-        }
+        padding: 20px 0;
+        background-color: rgba(255, 255, 255, 0);
+        border-radius: 0;
+        margin: 20px;    
     }
     .events{
         margin-top: 300px;

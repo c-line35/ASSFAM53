@@ -8,12 +8,12 @@
   -webkit-animation: cross 5000ms linear;
           animation: cross 5000ms linear;
   top: 50%;
-  right: 150px;
+  right: 400px;
 }
 .anim--yellow {
   z-index: 4;
   bottom: 50%;
-  left: 50px;
+  left: 150px;
   -webkit-animation: crossNegatif 7000ms linear;
           animation: crossNegatif 7000ms linear;
   -webkit-animation-delay: 4000ms;
@@ -22,7 +22,7 @@
 .anim--pink {
   z-index: 2;
   bottom: 30%;
-  left: 130px;
+  left: 20px;
   -webkit-animation: crossNegatif 6000ms linear;
           animation: crossNegatif 6000ms linear;
   -webkit-animation-delay: 9000ms;
@@ -460,6 +460,20 @@
   font-weight: bold;
 }
 
+@media screen and (max-width: 900px) {
+  .identification {
+    padding: 20px;
+  }
+  .identification__text {
+    padding: 10px;
+  }
+  .identification ul {
+    margin-left: 0;
+  }
+  .identification ul li {
+    margin-left: 0;
+  }
+}
 .button {
   display: flex;
   width: 50%;
@@ -715,8 +729,11 @@
 }
 
 @media screen and (max-width: 900px) {
-  .intro p {
-    font-size: 12px;
+  .intro {
+    padding: 20px 0;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 0;
+    margin: 20px;
   }
 
   .events {

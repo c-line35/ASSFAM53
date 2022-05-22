@@ -25,3 +25,17 @@
         }
     }
 }
+@media screen and (max-width: 900px){
+    .identification{
+        padding:20px;
+        &__text{
+            padding: 10px;
+        }
+        ul{
+            margin-left: 0;
+            li{
+                margin-left: 0;
+            }
+        }
+    }
+}
