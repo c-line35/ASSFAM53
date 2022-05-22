@@ -1,0 +1,23 @@
+.button{
+    display: flex;
+    width: 50%;
+    margin: auto;
+    background: linear-gradient(-45deg, $color-secondary, $color-primary);
+    border-radius: 30px;
+    padding: 5px;
+    margin-bottom: 50px;
+    text-decoration: none;
+    @include box-shadow-normal;
+    &:hover{
+        @include box-shadow-hover;
+    }
+    a{
+        display: flex;
+        margin: auto;
+        text-decoration: none;
+        color: $color-quaternary;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+  }

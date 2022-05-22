@@ -13,7 +13,7 @@
 .anim--yellow {
   z-index: 4;
   bottom: 50%;
-  left: 300px;
+  left: 50px;
   -webkit-animation: crossNegatif 7000ms linear;
           animation: crossNegatif 7000ms linear;
   -webkit-animation-delay: 4000ms;
@@ -22,7 +22,7 @@
 .anim--pink {
   z-index: 2;
   bottom: 30%;
-  left: 75px;
+  left: 130px;
   -webkit-animation: crossNegatif 6000ms linear;
           animation: crossNegatif 6000ms linear;
   -webkit-animation-delay: 9000ms;
@@ -31,7 +31,7 @@
 .anim--blue {
   z-index: 2;
   bottom: 50%;
-  left: 200px;
+  left: 400px;
   -webkit-animation: crossNegatif 5250ms linear;
           animation: crossNegatif 5250ms linear;
   -webkit-animation-delay: 7000ms;
@@ -427,6 +427,62 @@
     align-items: flex-start;
   }
 }
+.partners {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.identification {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  color: #734c56;
+  font-weight: bold;
+  background: url("../assets/paysage.jpg") center/cover;
+}
+.identification__text {
+  background-color: rgba(255, 255, 255, 0.502);
+  padding: 50px;
+}
+.identification__text p {
+  margin: 30px 30px 50px 30px;
+}
+.identification__text ul {
+  margin: 30px 30px 50px 30px;
+}
+.identification__text div {
+  display: flex;
+  margin: auto;
+  text-decoration: none;
+  color: #734c56;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.button {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  background: linear-gradient(-45deg, #30bad9, #d4d934);
+  border-radius: 30px;
+  padding: 5px;
+  margin-bottom: 50px;
+  text-decoration: none;
+  box-shadow: 7px 10px 7px 0px rgb(219, 219, 219);
+}
+.button:hover {
+  box-shadow: 9px 12px 7px 0px rgb(170, 170, 170);
+}
+.button a {
+  display: flex;
+  margin: auto;
+  text-decoration: none;
+  color: #734c56;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 .level {
   display: flex;
   justify-content: center;
@@ -499,7 +555,7 @@
   width: 70%;
   max-width: 480px;
   margin: auto;
-  height: 85%;
+  height: 550px;
   text-overflow: ellipsis;
   overflow: hidden;
   background-color: white;
@@ -527,7 +583,8 @@
   color: #734c56;
   font-weight: bold;
   margin: 10px auto;
-  font-size: 20px;
+  font-size: 25px;
+  text-align: center;
 }
 .article__text {
   color: #734c56;
@@ -536,14 +593,22 @@
   font-size: 14px;
   padding: 10px;
 }
+.article__text p {
+  margin-bottom: 7px;
+}
 
 @media screen and (max-width: 900px) {
   .mySwiper {
     width: 100%;
   }
 
+  .swiper-button-next, .swiper-button-prev {
+    top: 22%;
+  }
+
   .article {
     width: 100%;
+    border-radius: 0;
   }
   .article__content {
     flex-direction: column;
@@ -564,7 +629,7 @@
   background-color: white;
   width: 30%;
   max-width: 300px;
-  margin-bottom: 30px;
+  margin: 30px;
   padding: 20px;
   border-radius: 30px;
   color: #734c56;
@@ -649,6 +714,27 @@
   font-size: 14px;
 }
 
+@media screen and (max-width: 900px) {
+  .intro p {
+    font-size: 12px;
+  }
+
+  .events {
+    margin-top: 300px;
+  }
+  .events__content {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .events__content__item {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #734c56;
+    border-left: none;
+  }
+  .events__content__item h4 {
+    margin-bottom: 5px;
+  }
+}
 .join {
   display: flex;
   margin: 100px auto;

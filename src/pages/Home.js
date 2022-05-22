@@ -8,7 +8,6 @@ const Home = () => {
   return (
     <div>
       <Header />
-     
       <div className='container'> 
         <div className='container__carrousel'> 
           <div className='intro'>
@@ -16,14 +15,11 @@ const Home = () => {
             <p>Ce site est en cours de fabrication, vous trouverez plus de fonctionnalités petit à petit...</p>
             <p>Merci de votre compréhension</p>
           </div>
-         
           <Carrousel /> 
-          </div>
-          <Events />
-         
+        </div>
+        <Events />
       </div>
       <Footer />
-     
     </div>
   )
 }

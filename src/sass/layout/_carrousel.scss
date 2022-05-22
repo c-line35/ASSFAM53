@@ -14,7 +14,7 @@
     width: 70%;
     max-width: 480px;
     margin: auto;
-    height: 85%;
+    height:550px;
     text-overflow: ellipsis;
     overflow: hidden;
     background-color: white; 
@@ -41,7 +41,8 @@
               color: $color-quaternary;
               font-weight: bold;
               margin: 10px auto;
-              font-size: 20px;
+              font-size: 25px;
+              text-align: center;
           }  
         }
           &__text{
@@ -49,16 +50,23 @@
               font-family: 'Mulish', sans-serif;
               margin-top: 20px;
               font-size: 14px;
-            
               padding: 10px;
+              p{
+                  margin-bottom: 7px;
+              }
           }
   }
+  
   @media screen and (max-width: 900px){
       .mySwiper{
           width: 100%;
       }
+      .swiper-button-next, .swiper-button-prev{
+          top: 22%;
+      }
       .article{
           width: 100%;
+          border-radius: 0;
           &__content{
               flex-direction: column;
           }

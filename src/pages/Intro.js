@@ -4,10 +4,10 @@ import ButterfliesAnim from '../components/ButterfliesAnim';
 
 
 const levelArray = [
-    {id: 'visit', txt: 'Visiteurs'}, 
-    {id: 'adher', txt: 'Adhérents'}, 
-    {id: 'admin', txt:'Administrateurs'}, 
-    {id: 'child', txt: 'Le Coin Des Enfants'}
+    {id: 'visit', txt: 'Visiteurs', link:'/Home'}, 
+    {id: 'adher', txt: 'Adhérents', link:'/Identification'}, 
+    {id: 'admin', txt:'Administrateurs', link:'/Identification'}, 
+    {id: 'child', txt: 'Le Coin Des Enfants', link:'/Identification'}
 ]
 
 const Intro = () => {
@@ -30,7 +30,7 @@ const Intro = () => {
                 pour mieux prendre son envol."
                 </p>
                 {levelArray.map((level)=>
-                <NavLink key={level.id} to ='/home'>
+                <NavLink key={level.id} to ={level.link}>
                     <h2  className={'level level--'+level.id}>
                         {level.txt}
                     </h2>   

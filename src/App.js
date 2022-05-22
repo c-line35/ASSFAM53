@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import Join from './pages/Join'
 import Partners from './pages/Partners'
 import Staff from './pages/Staff'
+import Identification from './pages/Identification'
+
 
 const App = () => {
   return (
@@ -14,6 +16,8 @@ const App = () => {
         <Route path="/join" element={<Join />} />
         <Route path="/partners" element={<Partners />} />
         <Route path="/staff" element={<Staff />} />
+        <Route path="/identification" element={<Identification />} />
+        
       </Routes>
     </BrowserRouter>
   )

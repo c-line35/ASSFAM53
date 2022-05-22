@@ -2,7 +2,7 @@
 margin: 40px;
 padding: 20px;
 background-color: rgba(255, 255, 255, 0.438);
-border-radius: 50px;;
+border-radius: 50px;
     p{
     margin: 0;
     color: $color-quaternary;
@@ -41,7 +41,6 @@ border-radius: 50px;;
     width: 90%;
     margin: 60px auto;
     color: $color-quaternary;
- 
     &__item{
         border-left: 1px dotted $color-quaternary;
         width: 100%;
@@ -50,6 +49,29 @@ border-radius: 50px;;
     }
     p{
         font-size: 14px;
+        }
     }
+}
+@media screen and (max-width: 900px){
+    .intro{
+        p{
+            font-size: 12px;
+        }
+    }
+    .events{
+        margin-top: 300px;
+        &__content{
+            flex-direction: column; 
+            margin-top: 20px;
+            &__item{
+            margin-bottom: 10px;
+            border-bottom: 1px dotted $color-quaternary;
+            border-left: none;
+            h4{
+                margin-bottom: 5px;
+            }
+        }
+        }
+       
     }
 }

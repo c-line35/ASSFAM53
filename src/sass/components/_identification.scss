@@ -1,0 +1,27 @@
+.identification{
+    display:flex;
+    flex-direction: column;
+    padding: 50px;
+    color:$color-quaternary;
+    font-weight: bold;
+    background: url('../assets/paysage.jpg') center/cover;
+    &__text{
+        background-color: rgba(255, 255, 255, 0.502);
+        padding: 50px;
+    p{
+        margin: 30px 30px 50px 30px;
+    }
+    ul{
+        margin: 30px 30px 50px 30px; 
+        }
+        div{
+        display: flex;
+        margin: auto;
+        text-decoration: none;
+        color: $color-quaternary;
+        font-size: 12px;
+        font-weight: bold;
+
+        }
+    }
+}
