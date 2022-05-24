@@ -34,7 +34,11 @@
             object-fit: cover;
         
         }
-
+    }
+    &__grade{
+        font-weight: bold;
+        margin-bottom: 7px;
+        text-align: center;
     }
 }
 @media screen and (max-width: 900px){
