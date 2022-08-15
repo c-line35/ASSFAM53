@@ -1,0 +1,11 @@
+.createUser{
+    border: black solid 1px;
+    border-radius: 20px;
+    box-shadow: 7px 5px 5px rgba(187, 187, 187, 0.719);
+    width: 60%;
+    margin: 50px auto;
+    padding: 20px;
+    &:hover{
+        box-shadow: 12px 8px 5px rgb(187, 187, 187);
+    }
+}

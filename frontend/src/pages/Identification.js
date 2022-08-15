@@ -1,7 +1,10 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom'
+
+import { NavLink } from 'react-router-dom';
+
+
 
 const Identification = () => {
+    
     return (
         <div className = 'identification'>
             <div className='identification__text'>

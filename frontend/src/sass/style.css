@@ -8,12 +8,12 @@
   -webkit-animation: cross 5000ms linear;
           animation: cross 5000ms linear;
   top: 50%;
-  right: 450px;
+  right: 500px;
 }
 .anim--yellow {
   z-index: 4;
   bottom: 50%;
-  left: 200px;
+  left: 325px;
   -webkit-animation: crossNegatif 7000ms linear;
           animation: crossNegatif 7000ms linear;
   -webkit-animation-delay: 4000ms;
@@ -22,7 +22,7 @@
 .anim--pink {
   z-index: 2;
   bottom: 30%;
-  left: 140px;
+  left: 95px;
   -webkit-animation: crossNegatif 6000ms linear;
           animation: crossNegatif 6000ms linear;
   -webkit-animation-delay: 9000ms;
@@ -31,7 +31,7 @@
 .anim--blue {
   z-index: 2;
   bottom: 50%;
-  left: 300px;
+  left: 150px;
   -webkit-animation: crossNegatif 5250ms linear;
           animation: crossNegatif 5250ms linear;
   -webkit-animation-delay: 7000ms;
@@ -336,7 +336,6 @@
   .navigation a {
     margin: 0 7px;
   }
-
   .nav-active {
     border-bottom: 2px solid #734c56;
   }
@@ -382,7 +381,6 @@
     font-size: 20px;
     width: 100%;
   }
-
   .header__nav {
     flex-direction: column;
     align-items: center;
@@ -421,7 +419,6 @@
   .footer {
     margin-top: 30px;
   }
-
   .footer__content {
     flex-direction: column;
     align-items: flex-start;
@@ -495,6 +492,26 @@
   color: #734c56;
   font-size: 12px;
   font-weight: bold;
+}
+
+.presentation {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  width: 30%;
+  margin-left: 70%;
+}
+
+.createUser {
+  border: black solid 1px;
+  border-radius: 20px;
+  box-shadow: 7px 5px 5px rgba(187, 187, 187, 0.719);
+  width: 60%;
+  margin: 50px auto;
+  padding: 20px;
+}
+.createUser:hover {
+  box-shadow: 12px 8px 5px rgb(187, 187, 187);
 }
 
 .level {
@@ -615,11 +632,9 @@
   .mySwiper {
     width: 100%;
   }
-
   .swiper-button-next, .swiper-button-prev {
     top: 22%;
   }
-
   .article {
     width: 100%;
     border-radius: 0;
@@ -743,7 +758,6 @@
     border-radius: 0;
     margin: 20px;
   }
-
   .events {
     margin-top: 300px;
   }
@@ -827,7 +841,6 @@
   .join__level {
     width: 80%;
   }
-
   .joinLevel {
     font-size: 12px;
   }
@@ -907,7 +920,6 @@ h4 {
   .bg-img {
     height: 600px;
   }
-
   .partner {
     display: none;
   }

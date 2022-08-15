@@ -4,6 +4,7 @@ import Carrousel from'../components/Carrousel';
 import Events from '../components/Events';
 import Footer from '../components/Footer';
 
+
 const Home = () => {
   return (
     <div>

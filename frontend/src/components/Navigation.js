@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { authContext } from '../context/AuthContext';
 import { NavLink } from 'react-router-dom'
 
 const Navigation = () => {
+
+  const { authProfil } = useContext(authContext)
+
+  console.log(authProfil)
+  
   return (
     <div className="navigation">
       <NavLink to="/home" className={(nav)=>(nav.isActive? 'nav-active':"")}>
@@ -16,6 +22,7 @@ const Navigation = () => {
       <NavLink to="/partners" className={(nav)=>(nav.isActive? 'nav-active':"")}>
         <div >Partenaires</div>
       </NavLink>
+
     </div>
   )
 }
