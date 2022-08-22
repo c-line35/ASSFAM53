@@ -5,6 +5,7 @@
     color:$color-quaternary;
     font-weight: bold;
     background: url('../assets/paysage.jpg') center/cover;
+    height: 100vh;
     &__text{
         background-color: rgba(255, 255, 255, 0.502);
         padding: 50px;

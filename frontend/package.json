@@ -9,6 +9,7 @@
     "antd": "^4.22.5",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
+    "fs": "^0.0.1-security",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-pdf": "^5.7.2",
@@ -16,7 +17,8 @@
     "react-scripts": "5.0.1",
     "sass": "^1.51.0",
     "swiper": "^8.1.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.74.0"
   },
   "scripts": {
     "start": "react-scripts start",

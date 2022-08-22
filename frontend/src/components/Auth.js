@@ -1,22 +1,23 @@
 import React, { useContext } from 'react';
+import {NavLink} from 'react-router-dom';
 import { authContext } from '../context/AuthContext';
 import { Button, Form, Input } from 'antd';
-import axios from 'axios';
+import ResetPassword from './ResetPassword';
 
 
 const Auth = () => {
     
-    const { initToken } = useContext(authContext)
+    const { initToken, reqInstance} = useContext(authContext)
  
     const onFinish = (values)=>{
-       axios.post(
-            `http://localhost:3001/api/auth/login`,
+       reqInstance.post(
+            '/auth/login',
             {email: values.email,
             password: values.password
         })
         .then((res)=>{
-            localStorage.setItem('token', res.data.token)
-            initToken()  
+          localStorage.setItem('token', res.data.token)
+          initToken()  
         })
         .catch((error)=>alert(error))
     }
@@ -25,8 +26,14 @@ const Auth = () => {
         console.log('Failed:', errorInfo);
       };
 
+    
+
     return (
-        <div>
+        <div className='authForm'>
+          <div className='authForm__form'>
+            <NavLink to ='/'className='header__nav__logo'>
+                    <img src='./assets/logos/logo.png' alt="logo de l'association"></img>
+            </NavLink> 
             <Form
       name="basic"
       labelCol={{
@@ -74,10 +81,12 @@ const Auth = () => {
         }}
       >
         <Button type="primary" htmlType="submit">
-          Submit
+          Connexion
         </Button>
       </Form.Item>
     </Form>
+    <ResetPassword/>
+    </div>
         </div>
     );
 };

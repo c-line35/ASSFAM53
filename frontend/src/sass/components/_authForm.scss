@@ -1,0 +1,21 @@
+.authForm{
+    display: flex;
+    height: 100vh;
+    background: url('../assets/image-accueil.jpg') center/cover;
+ 
+   &__form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        width: 70%;
+        padding: 50px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 30px;;
+        img{
+            height: 130px;
+            margin-bottom: 20px;
+        }
+    }
+}
+   

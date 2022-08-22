@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
 export const authContext = React.createContext({
     authProfil: null, 
-    reqAuth:null,
+    reqInstance:null,
     reqBearer: null,
     getProfil: ()=>{},
     initToken:()=>{},
@@ -13,30 +12,49 @@ export const authContext = React.createContext({
 const AuthContextProvider=({ children })=>{
 
     const [authProfil, setAuthProfil] = useState('');
-    const [ token, setToken ]= useState('');
+    const [ token, setToken ] = useState('');
+   
+    const initToken = async()=>{
+            setToken(localStorage.getItem('token'));
+        }  
 
     useEffect(()=>{
         initToken()
-    },[]);
+        }) 
 
-    const initToken =() =>{
-        setToken(localStorage.getItem('token'))
-        console.log(localStorage)
-    };
+    useEffect(()=>{
+        getProfil()
+    }, [token])
+
+    const reqInstance = axios.create({
+        baseURL: 
+        'http://localhost:3001/api'
+        //'https://assfamaccueil53.org/api'
+            }) 
+
+    const reqBearer = axios.create({
+        headers:{
+            Authorization: `Bearer ${token}`,
+                },
+        baseURL: 
+        'http://localhost:3001/api'
+        //'https://assfamaccueil53.org/api'
+                    })
     
 
     const getProfil = ()=>{
-    localStorage.length >0
-    ?axios.get(`http://localhost:3001/api/auth/user/${token}`)
-        .then((res)=>{
-            setAuthProfil(res.data) 
-        })
-    :setAuthProfil('')
-    }
-
+        token
+        ?reqInstance.get(`/auth/user/${token}`)
+            .then((res)=>{
+                setAuthProfil(res.data)
+            })
+        :setAuthProfil('')
+        }
+    
+     
     return(
 
-        <authContext.Provider value={ {authProfil, setAuthProfil, getProfil, initToken, token} }>
+        <authContext.Provider value={ {authProfil, setAuthProfil, getProfil, initToken, token, reqInstance, reqBearer} }>
             { children}
         </authContext.Provider>
     )

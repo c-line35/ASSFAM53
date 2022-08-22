@@ -8,12 +8,12 @@
   -webkit-animation: cross 5000ms linear;
           animation: cross 5000ms linear;
   top: 50%;
-  right: 500px;
+  right: 350px;
 }
 .anim--yellow {
   z-index: 4;
   bottom: 50%;
-  left: 325px;
+  left: 275px;
   -webkit-animation: crossNegatif 7000ms linear;
           animation: crossNegatif 7000ms linear;
   -webkit-animation-delay: 4000ms;
@@ -22,7 +22,7 @@
 .anim--pink {
   z-index: 2;
   bottom: 30%;
-  left: 95px;
+  left: 15px;
   -webkit-animation: crossNegatif 6000ms linear;
           animation: crossNegatif 6000ms linear;
   -webkit-animation-delay: 9000ms;
@@ -437,6 +437,7 @@
   color: #734c56;
   font-weight: bold;
   background: url("../assets/paysage.jpg") center/cover;
+  height: 100vh;
 }
 .identification__text {
   background-color: rgba(255, 255, 255, 0.502);
@@ -512,6 +513,86 @@
 }
 .createUser:hover {
   box-shadow: 12px 8px 5px rgb(187, 187, 187);
+}
+
+.userCard {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 20px auto;
+  border: 1px black solid;
+  padding: 20px 0;
+}
+.userCard__info {
+  margin-bottom: 5px;
+  display: flex;
+  background-color: rgba(255, 228, 196, 0.4);
+  padding-left: 10px;
+}
+.userCard__info p {
+  margin: 0 5px 5px 0;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.authForm {
+  display: flex;
+  height: 100vh;
+  background: url("../assets/image-accueil.jpg") center/cover;
+}
+.authForm__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 70%;
+  padding: 50px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+}
+.authForm__form img {
+  height: 130px;
+  margin-bottom: 20px;
+}
+
+.resetPassword {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9em;
+}
+.resetPassword:hover {
+  cursor: pointer;
+}
+
+.initPassword {
+  padding: 50px 100px;
+  background: url("../assets/background-waves.jpg") center/cover;
+  height: 100vh;
+}
+.initPassword__form {
+  background-color: rgba(255, 255, 255, 0.37);
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+  padding: 50px;
+  max-width: 900px;
+}
+.initPassword__form__header {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 20px;
+}
+.initPassword__form__header h2 {
+  color: white;
+}
+.initPassword__form__header img {
+  width: 100px;
+}
+
+.login-form-button {
+  display: flex;
+  margin: auto;
+  justify-content: center;
 }
 
 .level {
@@ -887,7 +968,7 @@ h4 {
   background: url("../assets/image-accueil.jpg") center/cover;
   position: relative;
   text-decoration: none;
-  height: 800px;
+  height: 100vh;
 }
 .bg-img a {
   text-decoration: none;

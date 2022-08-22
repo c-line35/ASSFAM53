@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Input, Radio, Button, Switch } from 'antd';
-import axios from 'axios'
+import { authContext } from '../context/AuthContext';
 
 const AdminCreateUser = () => {
     const [insurance, setInsurance] = useState(false)
+
+    const { reqInstance } = useContext(authContext)
     const onFinish = (values)=>{
         const { email, firstName, lastName, form, level, password, role, phoneNumber} = values
-        axios.post(
-            "http://localhost:3001/api/auth/signup",
+        reqInstance.post(
+            "/auth/signup",
             {
                 email,
                 firstName,
@@ -100,7 +102,6 @@ const AdminCreateUser = () => {
                 name="password"
                 rules={[
                 {
-                    required: true,
                     message: 'Veuillez entrer un mot de passe!',
                 },
                 ]}

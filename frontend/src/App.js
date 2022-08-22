@@ -5,13 +5,15 @@ import Join from './pages/Join'
 import Partners from './pages/Partners'
 import Staff from './pages/Staff'
 import Identification from './pages/Identification'
-import Admin from './pages/Admin'
+import Admin from './pages/Admin';
+import InitPassword from './pages/InitPassword';
 import 'antd/dist/antd.min.css';
 import AuthContextProvider from './context/AuthContext'
 
 
 const App = () => {
   return (
+    <AuthContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
@@ -20,9 +22,11 @@ const App = () => {
         <Route path="/partners" element={<Partners />} />
         <Route path="/staff" element={<Staff />} />
         <Route path="/identification" element={<Identification />} />              
-        <Route path="/admin" element={<AuthContextProvider><Admin /></AuthContextProvider>} />        
+        <Route path="/admin" element={<Admin /> } />      
+        <Route path="/initpassword/:token" element={<InitPassword /> } />      
       </Routes>
     </BrowserRouter>
+    </AuthContextProvider>
   )
 }
 

@@ -1,24 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { authContext } from '../context/AuthContext';
 import Auth from '../components/Auth';
 import Manage from '../components/Manage';
+import UsersContextProvider from '../context/UsersContext';
 
 
 
 const Admin = () => {
 
-    const { authProfil, getProfil, token} = useContext(authContext)
-    console.log(getProfil)
-
-    useEffect(()=>{
-        getProfil()
-    }, [token])
+    const { authProfil } = useContext(authContext)
+   
 
 
     return (
         <div>
             {authProfil.role === "admin" 
-            ?<Manage/>
+            ?<UsersContextProvider><Manage/></UsersContextProvider>
             :<Auth/>   
             }
         </div>

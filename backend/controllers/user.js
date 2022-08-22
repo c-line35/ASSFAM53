@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+
 exports.signup =(req, res, next)=>{
     const { email, password, lastName, firstName, role, end, form, level, phoneNumber} = req.body
     bcrypt.hash(password, 10)
@@ -37,14 +38,14 @@ exports.login = (req, res, next) =>{
                     return res.status(401).json({error: 'Mot de passe incorrect'})
                 }else{
                     res.status(200).json({
-                    token: jwt.sign(
+                          token: jwt.sign(
                         {
                             userId: user._id,
                             role: user.role
                         },
                         process.env.TOKEN_KEY,
                         {expiresIn: '24h'}
-                    ) 
+                    )  
                 })}
                 
             }) 
@@ -56,11 +57,10 @@ exports.login = (req, res, next) =>{
 exports.getDataUser = (req, res, next)=>{
 
     const token= req.params.token;
-    
     const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
     const  id  = decodedToken.userId;
 
-    User.findOne({where: {id: parseInt(id)}})
+    User.findOne({_id: id})
     .then((data)=>{
         if(!data){
             res.status(404).send({message: 'Utilisateur non trouvé'})
@@ -68,5 +68,53 @@ exports.getDataUser = (req, res, next)=>{
        
         res.status(200).send(data)
         }
+    })
+}
+
+exports.getAllUsers = (req, res, next) =>{
+    User.find()
+    .then((users)=> res.status(200).json(users))
+    .catch(error => res.status(400).json({ error: error }));
+};
+
+exports.resetPassword = (req, res, next)=>{
+    User.findOne({email: req.body.email})
+    .then(user => {
+        if(!user){
+            return res.status(401).json({error: 'Utilisateur non trouvé !'})
+        }
+        else{ 
+            res.status(200).json({
+                  token: jwt.sign(
+                {
+                    userId: user._id,
+                    role: user.role
+                },
+                process.env.TOKEN_KEY,
+                {expiresIn: '24h'}
+                ),
+                
+            })
+        }
+    })
+    .catch(error => res.status(500).json({error: 'erreur server'}));   
+}
+
+exports.initPassword=(req, res, next)=>{
+    const token = req.params.token
+    const decodedToken = jwt.verify(token, process.env.TOKEN_KEY)
+    const id = decodedToken.userId;
+
+    User.findOne({_id:id})
+    .then((user)=>{
+        if(!user){
+            res.status(404).json({message:'Utilisateur non trouvé'})
+        }else{
+            bcrypt.hash(req.body.password, 10)
+            .then(hash=>{
+                User.updateOne({_id: id}, {password: hash})
+                .then(() =>res.status(200).json({ message: 'Objet modifié !'}))
+                .catch(error => res.status(400).json({ error }));
+        })}
     })
 }
