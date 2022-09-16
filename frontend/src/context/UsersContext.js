@@ -11,12 +11,12 @@ export const usersContext = React.createContext({
 
 const UsersContextProvider=({ children })=>{
 
-    const { reqInstance } = useContext(authContext)
+    const { reqBearer } = useContext(authContext)
 
     const [users, setUsers ] = useState([''])
 
     const getAllUsers =() =>{
-        reqInstance.get('/auth/users')
+        reqBearer.get('/auth/users')
         .then((res)=>setUsers(res.data))
         .catch((error)=>{message(error)})
     }

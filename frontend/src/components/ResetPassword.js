@@ -19,7 +19,7 @@ const ResetPassword = () => {
 
  const sendMail=(res, values)=>{
     alert(`message envoyé`);
-      const templateId = 'template_respass';
+      const templateId = 'template_prod';
       const serviceID = 'assfam53';
       sendFeedback(serviceID, templateId, { user_email: values.email, token: res.data.token} )
   }

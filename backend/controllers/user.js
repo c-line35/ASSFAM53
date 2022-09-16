@@ -59,22 +59,26 @@ exports.getDataUser = (req, res, next)=>{
     const token= req.params.token;
     const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
     const  id  = decodedToken.userId;
-
-    User.findOne({_id: id})
-    .then((data)=>{
-        if(!data){
-            res.status(404).send({message: 'Utilisateur non trouvé'})
-        }else{
-       
-        res.status(200).send(data)
-        }
-    })
+        User.findOne({_id: id})
+        .then((data)=>{
+            if(!data){
+                res.status(404).send({message: 'Utilisateur non trouvé'})
+            }else{
+                res.status(200).send(data)
+            }
+    }) 
 }
 
 exports.getAllUsers = (req, res, next) =>{
-    User.find()
-    .then((users)=> res.status(200).json(users))
-    .catch(error => res.status(400).json({ error: error }));
+    if(req.auth.userRole !== 'admin'){
+        return res.status(401).json({error: 'Requête non authentifiée'})
+    }else{
+        User.find()
+        .then((users)=> {
+            res.status(200).json(users)
+        })
+        .catch(error => res.status(400).json({ error: error }));
+    }
 };
 
 exports.resetPassword = (req, res, next)=>{
@@ -93,7 +97,6 @@ exports.resetPassword = (req, res, next)=>{
                 process.env.TOKEN_KEY,
                 {expiresIn: '24h'}
                 ),
-                
             })
         }
     })
@@ -117,4 +120,36 @@ exports.initPassword=(req, res, next)=>{
                 .catch(error => res.status(400).json({ error }));
         })}
     })
+}
+//--------------------------------------------
+exports.updateUser=(req, res, next)=>{
+    const id = req.params.id
+    const { email, lastName, firstName }= req.body
+    if(req.auth.userRole === 'admin' || req.auth.userId === id){
+        User.updateOne({_id:id}, {email, lastName, firstName })
+            .then(()=> res.status(200).json({message: 'user modifié!'}))
+            .catch (error => res.status(400).json({ error }));
+    }else{     
+        return res.status(401).json({error: 'Requête non authentifiée'})
+    }
+}
+exports.getUserById=(req, res, next)=>{
+    const id = req.params.id
+    if(req.auth.userRole === 'admin' || req.auth.userId === id){
+        User.findOne({_id:id})
+        .then((user) =>res.status(200).json(user))
+        .catch(error => res.status(400).json({ error }));
+    }else{     
+        return res.status(401).json({error: 'Requête non authentifiée'})
+    }
+}
+
+exports.deleteUser=(req, res, next)=>{
+    if(req.auth.userRole === 'admin' || req.auth.userId === id){
+        User.deleteOne({_id: req.params.id})
+            .then(()=> res.status(200).json({ message: 'Utilisateur supprimé'}))
+            .catch(error => res.status(400).json({error}))
+    }else{     
+        return res.status(401).json({error: 'Requête non authentifiée'})
+    }
 }

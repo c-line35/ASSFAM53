@@ -7,7 +7,7 @@ import ResetPassword from './ResetPassword';
 
 const Auth = () => {
     
-    const { initToken, reqInstance} = useContext(authContext)
+    const { reqInstance, getProfil } = useContext(authContext)
  
     const onFinish = (values)=>{
        reqInstance.post(
@@ -16,8 +16,8 @@ const Auth = () => {
             password: values.password
         })
         .then((res)=>{
-          localStorage.setItem('token', res.data.token)
-          initToken()  
+          localStorage.setItem('token', res.data.token);
+          getProfil()
         })
         .catch((error)=>alert(error))
     }

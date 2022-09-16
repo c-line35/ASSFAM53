@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Form, Input, Radio, Button, Switch } from 'antd';
-import { authContext } from '../context/AuthContext';
+import { authContext } from '../../context/AuthContext';
 
 const AdminCreateUser = () => {
     const [insurance, setInsurance] = useState(false)
@@ -103,6 +103,7 @@ const AdminCreateUser = () => {
                 rules={[
                 {
                     message: 'Veuillez entrer un mot de passe!',
+                    required: true
                 },
                 ]}
             >
