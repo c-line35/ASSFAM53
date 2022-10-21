@@ -5,7 +5,9 @@ import { authContext } from './AuthContext';
 export const usersContext = React.createContext({
     users: [''],
     setUsers:()=>{},
-    getAllUsers: ()=>{}
+    getAllUsers: ()=>{},
+    setShowUsers:()=>{},
+    showUsers: ""
 
 })
 
@@ -14,6 +16,7 @@ const UsersContextProvider=({ children })=>{
     const { reqBearer } = useContext(authContext)
 
     const [users, setUsers ] = useState([''])
+    const [showUsers, setShowUsers]=useState(false);
 
     const getAllUsers =() =>{
         reqBearer.get('/auth/users')
@@ -23,7 +26,7 @@ const UsersContextProvider=({ children })=>{
 
     return(
 
-        <usersContext.Provider value ={ {users, setUsers, getAllUsers} }>
+        <usersContext.Provider value ={ {users, setUsers, getAllUsers, setShowUsers, showUsers} }>
             { children}
         </usersContext.Provider>
     )

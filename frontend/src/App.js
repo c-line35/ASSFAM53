@@ -9,11 +9,13 @@ import Admin from './pages/Admin';
 import InitPassword from './pages/InitPassword';
 import 'antd/dist/antd.min.css';
 import AuthContextProvider from './context/AuthContext'
+import UsersContextProvider from './context/UsersContext'
 
 
 const App = () => {
   return (
     <AuthContextProvider>
+    <UsersContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
@@ -23,9 +25,10 @@ const App = () => {
         <Route path="/staff" element={<Staff />} />
         <Route path="/identification" element={<Identification />} />              
         <Route path="/admin" element={<Admin /> } />      
-        <Route path="/initpassword/:token" element={<InitPassword /> } />      
+        <Route path="/initpassword/:token" element={<InitPassword /> } />       
       </Routes>
     </BrowserRouter>
+    </UsersContextProvider>
     </AuthContextProvider>
   )
 }

@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
     firstName:{type: String,required: true},
     phoneNumber:{type: Number, required: true},
     role:{type: String, required: true},
-    end: {type: String},
+    end: { type: [Number], default: undefined, require: true},
     form: {type: Boolean},
     level: {type: Number, required: true}
 });

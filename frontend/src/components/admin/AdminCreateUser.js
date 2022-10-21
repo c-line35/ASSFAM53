@@ -1,13 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { Form, Input, Radio, Button, Switch } from 'antd';
 import { authContext } from '../../context/AuthContext';
+import { usersContext } from '../../context/UsersContext';
 
-const AdminCreateUser = () => {
+const date = new Date()
+const year = date.getFullYear()
+
+const AdminCreateUser = ({ setIsModalVisible }) => {
     const [insurance, setInsurance] = useState(false)
 
     const { reqInstance } = useContext(authContext)
+    const { getAllUsers }=useContext(usersContext)
     const onFinish = (values)=>{
-        const { email, firstName, lastName, form, level, password, role, phoneNumber} = values
+        const { email, firstName, lastName, form, level, password, role, phoneNumber} = values;
+        
         reqInstance.post(
             "/auth/signup",
             {
@@ -19,10 +25,14 @@ const AdminCreateUser = () => {
                 password,
                 role,
                 phoneNumber,
-                end:'2022-12-31'    
+                end:[year]   
             }
         )
-        .then(()=>{alert('Utilisateur créé')})
+        .then(()=>{
+            alert('Utilisateur créé')
+            getAllUsers()
+            setIsModalVisible(false)
+        })
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -129,7 +139,7 @@ const AdminCreateUser = () => {
             }
             <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button">
-                Envoyer
+                Créer
                 </Button>
             </Form.Item>
 
