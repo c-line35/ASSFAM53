@@ -1,21 +1,57 @@
-.userCard{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: 20px auto;
-    border: 1px black solid;
-    padding: 20px 0; 
-    &__info{
-        margin-bottom: 5px;
-        display: flex; 
-        background-color: rgba(255, 228, 196, 0.4);
-        padding-left: 10px; 
-        p{
-            margin: 0 5px 5px 0;
-            font-style: italic;
-            font-weight: bold;
-        };
+.mainContentUsers{
+    margin-top:20px;
+}
+
+.users{
+    margin: 20px 20px;
+}
+.userTableTitle{
+  display:flex;
+  width: 100%;
+    span{
+        width: 33%;
+        font-size: 14px;
+        font-weight: bold; 
+        padding: 5px;
     }
-  
+}
+.userTable:nth-child(even){
+    background-color: #f1f9f6;
+}
+.userTable{
+    display: flex;
    
+    &__element{
+        display: flex;
+        align-items: center;
+        width: 33%;
+        padding: 5px;
+        &__admin{
+            padding-left:10px;
+        }
+    }
+   
+}
+
+.input-control{
+    display:flex;
+    align-items: center;
+    max-width: 450px;
+    background-color: #f4f4f4;
+    border-radius: 6px;
+    padding:15px;
+    margin-left: 20px;
+    input{
+        width: 100%;
+        padding-left: 10px;
+        outline: 0;
+        border: 0;
+        color: black;
+        background-color:#f4f4f4;
+
+
+    }
+}
+.input-control input::placeholder{
+    color: #838f9f;
 }

@@ -24,8 +24,8 @@ const AuthContextProvider=({ children })=>{
     },[token])
     const reqInstance = axios.create({
         baseURL: 
-       'http://localhost:3001/api'
-        // 'https://assfamaccueil53.org/api'
+        'http://localhost:3001/api'
+       // 'https://assfamaccueil53.org/api'
             }) 
 
     const reqBearer = axios.create({
@@ -34,7 +34,7 @@ const AuthContextProvider=({ children })=>{
                 },
         baseURL: 
        'http://localhost:3001/api'
-      //  ' https://assfamaccueil53.org/api'
+      //' https://assfamaccueil53.org/api'
                     })
     
 
