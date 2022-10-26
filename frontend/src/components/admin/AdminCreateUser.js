@@ -12,7 +12,7 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
     const { reqInstance } = useContext(authContext)
     const { getAllUsers }=useContext(usersContext)
     const onFinish = (values)=>{
-        const { email, firstName, lastName, form, level, password, role, phoneNumber} = values;
+        const { email, firstName, lastName, form, level, password, role, phoneNumber, end } = values;
         
         reqInstance.post(
             "/auth/signup",
@@ -25,7 +25,7 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 password,
                 role,
                 phoneNumber,
-                end:[year]   
+                end 
             }
         )
         .then(()=>{
@@ -131,7 +131,13 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                     <Radio value="2">2</Radio>
                     <Radio value="3">3</Radio>
                 </Radio.Group>
-            </Form.Item>    
+            </Form.Item>  
+            <Form.Item name="end" label="Année de l'adhésion" >
+                <Radio.Group >
+                    <Radio value={year}>{year}</Radio>
+                    <Radio value={year + 1}>{year + 1}</Radio>
+                </Radio.Group>
+            </Form.Item>      
             {insurance && 
             <Form.Item name="form" label="Formulaire assurance" valuePropName="checked">
                 <Switch />

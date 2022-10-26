@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { usersContext } from '../../context/UsersContext';
 import AdminArticles from './AdminArticles';
 import AdminBooks from './AdminBooks';
@@ -11,14 +11,14 @@ import Users from './Users';
 const Manage = () => {
 
 const { showUsers }=useContext(usersContext)    
-   
+
     return (
         <div>
             {showUsers?
               <Users />
             :<div className='dashboard'>
                 <div className='dashboard__bloc dashboard__bloc--intro'><AdminIntro/></div>
-                <div className='dashboard__bloc dashboard__bloc--users'><AdminUsers/></div>
+                <div className='dashboard__bloc dashboard__bloc--users'><AdminUsers /></div>
                 <div className='dashboard__bloc dashboard__bloc--staff'><AdminStaff/></div>
                 <div className='dashboard__bloc dashboard__bloc--books'><AdminBooks/></div>
                 <div className='dashboard__bloc dashboard__bloc--articles'><AdminArticles/></div>

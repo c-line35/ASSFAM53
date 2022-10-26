@@ -4,17 +4,15 @@ import { Button, Modal } from 'antd';
 import { usersContext } from '../../context/UsersContext';
 
 
-
-
 const AdminUsers = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    
-    const { users, getAllUsers, setShowUsers, showUsers } = useContext(usersContext)
-    
+
+    const { users, getAllUsers, setShowUsers, usersOfYear } = useContext(usersContext)
+ 
+        
     useEffect(()=>{
         getAllUsers()
     },[])
-
 
     const handleCancel = () => {
         setIsModalVisible(false);
@@ -31,7 +29,7 @@ const AdminUsers = () => {
         <div>
             
             <h1>Les adhérents</h1>
-            <div className='usercounter'>Il y a {users.length} adhérents à l'association.</div>
+            <div className='usercounter'>Il y a {usersOfYear.length} adhérents à l'association.</div>
 
             <div className='createUserModal'>
                 <Button type="primary" onClick={showModal}>Créer un nouvel adhérent</Button>

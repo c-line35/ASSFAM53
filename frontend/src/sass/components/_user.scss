@@ -1,36 +1,8 @@
-.mainContentUsers{
-    margin-top:20px;
-}
-
-.users{
-    margin: 20px 20px;
-}
-.userTableTitle{
-  display:flex;
-  width: 100%;
-    span{
-        width: 33%;
-        font-size: 14px;
-        font-weight: bold; 
-        padding: 5px;
-    }
-}
-.userTable:nth-child(even){
-    background-color: #f1f9f6;
-}
-.userTable{
-    display: flex;
-   
-    &__element{
-        display: flex;
-        align-items: center;
-        width: 33%;
-        padding: 5px;
-        &__admin{
-            padding-left:10px;
-        }
-    }
-   
+.searchBar{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin: 20px;
 }
 
 .input-control{
@@ -40,7 +12,6 @@
     background-color: #f4f4f4;
     border-radius: 6px;
     padding:15px;
-    margin-left: 20px;
     input{
         width: 100%;
         padding-left: 10px;
@@ -54,4 +25,72 @@
 }
 .input-control input::placeholder{
     color: #838f9f;
+}
+.backDashboard{
+    &:hover{
+        cursor: pointer;
+    }
+    img{
+        width: 25px;
+        padding-right: 3px;
+    }
+}
+
+.mainContentUsers{
+    margin:20px;
+    display:flex;
+
+}
+.filter{
+    width:20%;
+    margin-top: 20px;
+    &__title{
+        display:flex;
+        align-items:center;
+        img{
+            width:20px;
+            padding-right: 3px;
+        }
+    }
+}
+.users{
+    width:80%;
+    margin: 20px;
+    padding-left: 20px;
+    border-left: 2px solid #f4f4f4;
+}
+.userTableTitle{
+  display:flex;
+  width: 100%;
+    &__bar{ 
+        display:flex;
+        width: 30%;
+        font-size: 14px;
+        font-weight: bold; 
+        padding: 5px;
+        &:last-child{
+    width: 10%;
+        } 
+    }
+}
+
+.userTable:nth-child(even){
+    background-color: #f1f9f6;
+}
+.userTable{
+    display: flex;
+   
+    &__element{
+        display: flex;
+        align-items: center;
+        width: 30%;
+        padding: 10px;
+        &__admin{
+            padding-left:10px;
+        }
+        &--level{
+           width:10%;
+        }
+    }
+   
 }
