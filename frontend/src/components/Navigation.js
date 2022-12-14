@@ -34,7 +34,7 @@ const Navigation = () => {
       </NavLink>
       {
       isAdmin &&
-      <NavLink to="/admin" className={(nav)=>(nav.isActive? 'nav-active':"")}>
+      <NavLink to="/management" className={(nav)=>(nav.isActive? 'nav-active':"")}>
       <div >Administration</div>
     </NavLink>
       }

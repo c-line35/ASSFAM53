@@ -1,20 +1,10 @@
 import React from 'react';
 import{NavLink} from 'react-router-dom';
 import ButterfliesAnim from '../components/ButterfliesAnim';
-import AuthContextProvider from '../context/AuthContext';
-
-
-const levelArray = [
-    {id: 'visit', txt: 'Visiteurs', link:'/Home'}, 
-    {id: 'adher', txt: 'Adhérents', link:'/Identification'}, 
-    {id: 'admin', txt:'Administrateurs', link:'/Admin'}, 
-    {id: 'child', txt: 'Le Coin Des Enfants', link:'/Identification'}
-]
 
 const Intro = () => {
     return (
         <div>
-            <AuthContextProvider>
             <ButterfliesAnim />
         <div className = "header">
             <img src='./assets/logos/logo.png' alt="Logo de l'association"></img>
@@ -31,13 +21,13 @@ const Intro = () => {
                 dans le respect de son histoire et de sa culture,<br/>
                 pour mieux prendre son envol."
                 </p>
-                {levelArray.map((level)=>
-                <NavLink key={level.id} to ={level.link}>
-                    <h2  className={'level level--'+level.id}>
-                        {level.txt}
-                    </h2>   
-                </NavLink> 
-                )}
+               
+                <NavLink to ="/home" ><h2 className='level level--visit'>Visiteurs</h2></NavLink> 
+                <NavLink to ="/home"><h2 className='level level--adher'>Adhérents</h2></NavLink> 
+                <NavLink to ="/management"><h2 className='level level--admin'>Administrateurs</h2></NavLink> 
+                <NavLink to ="/offers"><h2 className='level level--child'>Le coin des enfants</h2></NavLink> 
+                
+        
                 <div className='partner'>
                     <img src='./assets/logos/icone-fnaf.png' alt='logo fnaf'/>
                     <img src='./assets/logos/logo-mayenne-petit.png' alt='logo département Mayenne'/>
@@ -47,7 +37,6 @@ const Intro = () => {
                    
             </div>
         </main>
-        </AuthContextProvider>
         </div>
     );
 };

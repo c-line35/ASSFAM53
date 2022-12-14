@@ -8,13 +8,16 @@ export const authContext = React.createContext({
     reqBearer: null,
     getProfil: ()=>{},
     initToken:()=>{},
+    token:"",
+    isAdminUser:false,
+    setIsAdminUser:()=>{}
 });
 
 const AuthContextProvider=({ children })=>{
 
     const [authProfil, setAuthProfil] = useState('');
     const [ token, setToken ] = useState('');
-
+    const [isAdminUser, setIsAdminUser]=useState(false);
     const initToken=()=>{
         setToken(localStorage.getItem('token'))
     }
@@ -25,7 +28,7 @@ const AuthContextProvider=({ children })=>{
     const reqInstance = axios.create({
         baseURL: 
          'http://localhost:3001/api'
-       //'https://assfamaccueil53.org/api'
+      // 'https://assfamaccueil53.org/api'
             }) 
 
     const reqBearer = axios.create({
@@ -33,8 +36,8 @@ const AuthContextProvider=({ children })=>{
             Authorization: `Bearer ${token}`,
                 },
         baseURL: 
-       'http://localhost:3001/api'
-      //' https://assfamaccueil53.org/api'
+           'http://localhost:3001/api'
+ // ' https://assfamaccueil53.org/api'
                     })
     
 
@@ -46,12 +49,17 @@ const AuthContextProvider=({ children })=>{
             )
             .then((res)=>{
                 setAuthProfil(res.data)
+                if(res.data.adminRights.includes('adminRights')){
+                    
+                    setIsAdminUser(true)
+                }
             })
         :setAuthProfil('')
     }
+       
     return(
 
-        <authContext.Provider value={ {authProfil, setAuthProfil, getProfil, initToken, token, reqInstance, reqBearer} }>
+        <authContext.Provider value={ {authProfil, setAuthProfil, getProfil, initToken, token, reqInstance, reqBearer, isAdminUser, setIsAdminUser} }>
             { children}
         </authContext.Provider>
     )

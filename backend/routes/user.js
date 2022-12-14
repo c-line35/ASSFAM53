@@ -12,6 +12,8 @@ router.get('/users', auth, userCtrl.getAllUsers);
 router.post('/pass', userCtrl.resetPassword);
 router.put('/user/:token', validePassword, userCtrl.initPassword)
 router.put('/user/update/:id', auth, userCtrl.updateUser);
+router.put('/user/update/:id/end', auth, userCtrl.updateUserEnd);
+router.put ('/user/updateAdminRights/:id', auth, userCtrl.updateAdminRights)
 router.get('/iduser/:id', auth, userCtrl.getUserById);
 router.delete('/:id', auth, userCtrl.deleteUser)
 

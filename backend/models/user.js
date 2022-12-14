@@ -7,10 +7,13 @@ const userSchema = mongoose.Schema({
     lastName:{type: String,required: true},
     firstName:{type: String,required: true},
     phoneNumber:{type: Number, required: true},
+    adress:{type: String},
+    post:{type: Number},
+    city:{type: String},
     role:{type: String, required: true},
     end: { type: [Number], default: undefined, require: true},
-    form: {type: Boolean},
-    level: {type: Number, required: true}
+    level: {type: Number, required: true},
+    adminRights: {type: [String]}
 });
 userSchema.plugin(uniqueValidator);
 

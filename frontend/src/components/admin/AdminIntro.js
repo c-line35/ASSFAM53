@@ -5,12 +5,14 @@ import { PoweroffOutlined } from '@ant-design/icons';
 
 const AdminIntro = () => {
 
-    const { initToken, authProfil } = useContext(authContext)
-    const { lastName, firstName } = authProfil
+    const { initToken, authProfil,  setIsAdminUser} = useContext(authContext)
+    const { lastName, firstName  } = authProfil
 
     const disconnect = () =>{
         localStorage.removeItem('token')
         initToken()
+        setIsAdminUser(false)
+
     }
     return (
         <div>

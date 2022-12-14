@@ -5,7 +5,7 @@ require('dotenv').config();
 
 
 exports.signup =(req, res, next)=>{
-    const { email, password, lastName, firstName, role, end, form, level, phoneNumber} = req.body
+    const { email, password, lastName, firstName, role, end, form, level, phoneNumber, adress, post, city} = req.body
     bcrypt.hash(password, 10)
     .then(hash =>{
         const user = new User({
@@ -17,7 +17,10 @@ exports.signup =(req, res, next)=>{
             end,
             form,
             phoneNumber,
-            level
+            level,
+            adress,
+            post,
+            city
        });
        user.save()
        .then(()=> res.status(201).json({message: "Utilisateur créé!"}))
@@ -41,7 +44,8 @@ exports.login = (req, res, next) =>{
                           token: jwt.sign(
                         {
                             userId: user._id,
-                            role: user.role
+                            role: user.role,
+                            userRights: user.adminRights
                         },
                         process.env.TOKEN_KEY,
                         {expiresIn: '24h'}
@@ -92,7 +96,8 @@ exports.resetPassword = (req, res, next)=>{
                   token: jwt.sign(
                 {
                     userId: user._id,
-                    role: user.role
+                    role: user.role,
+                    userRights: user.adminRights
                 },
                 process.env.TOKEN_KEY,
                 {expiresIn: '24h'}
@@ -123,19 +128,52 @@ exports.initPassword=(req, res, next)=>{
 }
 //--------------------------------------------
 exports.updateUser=(req, res, next)=>{
-    const id = req.params.id
-    const { email, lastName, firstName }= req.body
-    if(req.auth.userRole === 'admin' || req.auth.userId === id){
-        User.updateOne({_id:id}, {email, lastName, firstName })
-            .then(()=> res.status(200).json({message: 'user modifié!'}))
-            .catch (error => res.status(400).json({ error }));
-    }else{     
+    const id = req.params.id;
+    const{ lastName, firstName, email, phoneNumber, level, adress, post, city } =req.body
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights')|| req.auth.userId === id ){
+        User.findOne({_id: id})
+        .then((data)=>{
+            if(!data){
+                res.status(404).send({message: 'Utilisateur non trouvé'})
+            }else{
+                    User.updateOne({_id:id}, {lastName, firstName, email, phoneNumber, level, adress, post, city})
+                    .then(()=>res.status(200).json())
+                    .catch(error=>res.status(400).json({ error }))
+            }
+        })    
+    }else{
+        return res.status(401).json({message: 'Vous navez pas les droits pour effectuer cette opération'})
+    }
+}
+
+exports.updateAdminRights=(req, res, next)=>{
+    const id = req.params.id;
+    const{ adminRights } =req.body
+    console.log(req.auth.userRights)
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') ){
+        User.findOne({_id: id})
+        .then((data)=>{
+            if(!data){
+                res.status(404).send({message: 'Utilisateur non trouvé'})
+            }else{
+                
+                if (data.role ==='admin'){
+                    User.updateOne({_id:id}, {adminRights})
+                    .then((user)=>res.status(200).json({message: `Vous êtes sur le point de modifier les droits d'administrateurs de ${user.firstName}" "${user.lastName} `}))
+                    .catch(error=>res.status(400).json({ error }))
+                }else{
+                    return res.status(401).json({error: 'Requête non autorisée'})
+                }
+            }
+        })    
+    }else{
         return res.status(401).json({error: 'Requête non authentifiée'})
     }
 }
+
 exports.getUserById=(req, res, next)=>{
     const id = req.params.id
-    if(req.auth.userRole === 'admin' || req.auth.userId === id){
+    if(req.auth.userRole === 'admin'  || req.auth.userId === id){
         User.findOne({_id:id})
         .then((user) =>res.status(200).json(user))
         .catch(error => res.status(400).json({ error }));
@@ -145,11 +183,36 @@ exports.getUserById=(req, res, next)=>{
 }
 
 exports.deleteUser=(req, res, next)=>{
-    if(req.auth.userRole === 'admin' || req.auth.userId === id){
+    const id = req.params.id;
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') || req.auth.userId === id){
         User.deleteOne({_id: req.params.id})
             .then(()=> res.status(200).json({ message: 'Utilisateur supprimé'}))
             .catch(error => res.status(400).json({error}))
     }else{     
-        return res.status(401).json({error: 'Requête non authentifiée'})
+        return res.status(401).json({message: 'Vous navez pas les droits pour effectuer cette opération'})
+    }
+}
+
+exports.updateUserEnd=(req, res, next)=>{
+    const id = req.params.id;
+    const newYear = req.body.newYear;
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') ){
+        User.findOne({_id: id})
+        .then((data)=>{
+            if(!data){
+                res.status(404).send({message: 'Utilisateur non trouvé'})
+            }else{
+                let end= data.end
+                if(end.includes(newYear)){
+                        return res.status(400).json({message: `L'adhérent ${data.firstName} ${data.lastName} est déjà inscrit pour ${newYear}`})
+                    }else{
+                        end.push(newYear)
+                        User.updateOne({_id:id}, {end})
+                        .then(()=> res.status(200).json())
+                        .catch((error)=> res.status(400).json({message:error}))
+                        }}})
+                
+    }else{
+        return res.status(401).json({message: 'Vous navez pas les droits pour effectuer cette opération'})
     }
 }

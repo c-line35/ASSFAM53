@@ -2,55 +2,70 @@ import React, { useContext, useEffect, useState } from 'react';
 import AdminCreateUser from './AdminCreateUser';
 import { Button, Modal } from 'antd';
 import { usersContext } from '../../context/UsersContext';
+import { authContext } from '../../context/AuthContext';
 
 
 const AdminUsers = () => {
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalCreateVisible, setIsModalCreateVisible] = useState(false);
 
-    const { users, getAllUsers, setShowUsers, usersOfYear } = useContext(usersContext)
+    const { getAllUsers, setAfficheAdmins, setAfficheUsers, setAfficheDashboard, users } = useContext(usersContext);
  
-        
+    const { isAdminUser }=useContext(authContext);
+
+    const handleCancelCreate = () => {
+        setIsModalCreateVisible(false);
+    };
+    
+    const showModalCreate = (e) => {
+        setIsModalCreateVisible(true);
+    };
+   
     useEffect(()=>{
         getAllUsers()
     },[])
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
-    
-    const showModal = (e) => {
-        setIsModalVisible(true);
-    };
-  
-    const onClick=()=>{
-        setShowUsers(true)
-    }
+const seeUsers=()=>{
+    setAfficheDashboard(false)
+    setAfficheUsers(true)
+}
+const seeAdmins=()=>{
+    setAfficheDashboard(false)
+    setAfficheAdmins(true)
+}
+
     return (
         <div>
             
             <h1>Les adhérents</h1>
-            <div className='usercounter'>Il y a {usersOfYear.length} adhérents à l'association.</div>
-
+           <div className='usercounter'>Il y a {users.length} adhérents à l'association.</div> 
+           <div className='usersButtons'>
+           <Button className='usersButtons__buttons' onClick={seeUsers}>Voir tous les adhérents</Button> 
+ {isAdminUser&&
+   <>
             <div className='createUserModal'>
-                <Button type="primary" onClick={showModal}>Créer un nouvel adhérent</Button>
+                <Button className='usersButtons__buttons' type="primary" onClick={showModalCreate}>Créer un nouvel adhérent</Button>
                 <Modal
                title="Créer un nouvel adhérent" 
-               visible={isModalVisible} 
+               visible={isModalCreateVisible} 
                destroyOnClose={true}
-               onCancel={handleCancel}
+               onCancel={handleCancelCreate}
                 footer={[
-                    <Button key="back" onClick={handleCancel}>
+                    <Button key="back" onClick={handleCancelCreate}>
                         Fermer
                     </Button>,
                     ]}
                 >
-                    <AdminCreateUser setIsModalVisible={setIsModalVisible} />
+                    <AdminCreateUser setIsModalVisible={setIsModalCreateVisible} />
                 </Modal>
             </div>
-    
-    <button onClick={onClick}>Voir tous les adhérents</button>
-        
-        </div>
+  
+ 
+  <Button className='usersButtons__buttons' onClick={seeAdmins}>Gestion des administrateurs</Button> 
+  </>
+}  
+</div>
+
+    </div>
     );
 };
 

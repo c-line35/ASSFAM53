@@ -12,9 +12,11 @@
 @import './components/user';
 @import './components/authForm';
 @import './components/modifPassword';
-@import './components/dashboard';
 @import './layout/level';
+@import './components/adminList';
+@import './components/dashboard';
 @import './layout/carrousel';
+@import './layout/messageError';
 @import './layout/member';
 @import './pages/Home.scss';
 @import './pages/Join.scss';
@@ -55,6 +57,7 @@ h4{
     background: url('../assets/image-accueil.jpg') center/cover;
     position: relative;
     text-decoration: none;
+    width: 100vw;
     height: 100vh;
     a{
         text-decoration: none;
@@ -78,18 +81,9 @@ h4{
     justify-content: space-around;
 }
 
-@media screen and (min-width: 900px)and (max-width: 1300px){
- 
-    .bg-img{
-        height:750px;
-    }
-}
+
 
 @media screen and (max-width: 900px){
- 
-    .bg-img{
-        height: 600px;
-    }
     .partner{
        display: none;
     }

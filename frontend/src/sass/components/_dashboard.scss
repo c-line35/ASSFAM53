@@ -36,10 +36,13 @@
                 background-color: #f8c1b8;
                 grid-area: e;
             }
-        &--logo{
+        &--logo {
             grid-area: l;
             display: flex;
             justify-content: center;
+            a img{
+                width: 100%;
+            }
         }
     }  
 }

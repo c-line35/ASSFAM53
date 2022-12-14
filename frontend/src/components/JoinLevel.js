@@ -8,7 +8,7 @@ const JoinLevel = () => {
                     <th>Adhésion Année civile</th>
                     <th>25€</th>
                     <th>38€</th>
-                    <th>56€</th>
+                    <th>71€</th>
                 </tr>
                 <tr>
                     <td>Accès aux journées organisées par l’association</td>
@@ -49,13 +49,13 @@ const JoinLevel = () => {
                 <tr>
                     <td>Accès aux fiches pratiques FNAF</td>
                     <td align='center'> </td>
-                    <td align='center'><img src='./assets/logos/true.png' alt='ok'></img></td>
+                    <td align='center'></td>
                     <td align='center'><img src='./assets/logos/true.png' alt='ok'></img></td>
                 </tr>
                 <tr className='joinLevel--color'>
                     <td >Accès à ALLO ECOUTE</td>
                     <td align='center'> </td>
-                    <td align='center'><img src='./assets/logos/true.png' alt='ok'></img></td>
+                    <td align='center'></td>
                     <td align='center'><img src='./assets/logos/true.png' alt='ok'></img></td>
                 </tr>
                 <tr>

@@ -20,6 +20,7 @@ app.use(cors());
 
 app.use('/api/auth', userRoutes)
 
-//app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+//app.get('/management/*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 module.exports = app;

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Form, Input, Radio, Button, Switch } from 'antd';
+import { Form, Input, Radio, Button } from 'antd';
 import { authContext } from '../../context/AuthContext';
 import { usersContext } from '../../context/UsersContext';
 
@@ -7,12 +7,18 @@ const date = new Date()
 const year = date.getFullYear()
 
 const AdminCreateUser = ({ setIsModalVisible }) => {
-    const [insurance, setInsurance] = useState(false)
 
     const { reqInstance } = useContext(authContext)
     const { getAllUsers }=useContext(usersContext)
+
+    const [value, setValue] = useState(1);
+
+    const onChange = (e) => {
+      setValue(e.target.value);
+    }
+
     const onFinish = (values)=>{
-        const { email, firstName, lastName, form, level, password, role, phoneNumber, end } = values;
+        const { email, firstName, lastName, form, level, password, phoneNumber, end, adress, post, city } = values;
         
         reqInstance.post(
             "/auth/signup",
@@ -23,9 +29,12 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 form,
                 level, 
                 password,
-                role,
+                role:'user',
                 phoneNumber,
-                end 
+                end,
+                adress,
+                post, 
+                city 
             }
         )
         .then(()=>{
@@ -39,11 +48,7 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
         console.log('Failed:', errorInfo);
       };
 
-      const isInsurance = (e) =>{
-            parseInt(e.target.value) === 3
-            ? setInsurance(true)
-            :setInsurance(false)
-      }
+      
 
     return (
         <div className='createUser'>
@@ -107,6 +112,36 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 }}
                 />
             </Form.Item>
+            <Form.Item
+                name="adress"
+                label="Adresse"
+            >
+                <Input
+                style={{
+                    width: '100%',
+                }}
+                />
+            </Form.Item>
+            <Form.Item
+                name="post"
+                label="Code Postal"
+            >
+                <Input
+                style={{
+                    width: '100%',
+                }}
+                />
+            </Form.Item>
+            <Form.Item
+                name="city"
+                label="Ville"
+            >
+                <Input
+                style={{
+                    width: '100%',
+                }}
+                />
+            </Form.Item>
              <Form.Item
                 label="Mot de passe"
                 name="password"
@@ -119,30 +154,20 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
             >
                 <Input.Password />
             </Form.Item>
-            <Form.Item name="role" label="Rôle">
-                <Radio.Group>
-                    <Radio value="user">Adhérent</Radio>
-                    <Radio value="admin">Administrateur</Radio>
-                </Radio.Group>
-            </Form.Item>
-            <Form.Item name="level" label="Niveau d'adhésion" onChange={isInsurance}>
+            <Form.Item name="level" label="Niveau d'adhésion" >
                 <Radio.Group >
                     <Radio value="1">1</Radio>
                     <Radio value="2">2</Radio>
                     <Radio value="3">3</Radio>
                 </Radio.Group>
             </Form.Item>  
-            <Form.Item name="end" label="Année de l'adhésion" >
-                <Radio.Group >
+            <Form.Item name="end" label="Année" >
+                <Radio.Group onChange={onChange} value={value}>
                     <Radio value={year}>{year}</Radio>
-                    <Radio value={year + 1}>{year + 1}</Radio>
+                    <Radio value={year + 1}>{year+1}</Radio>
                 </Radio.Group>
-            </Form.Item>      
-            {insurance && 
-            <Form.Item name="form" label="Formulaire assurance" valuePropName="checked">
-                <Switch />
             </Form.Item>
-            }
+        
             <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button">
                 Créer

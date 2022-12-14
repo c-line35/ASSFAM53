@@ -1,8 +1,7 @@
-.searchBar{
+.usersList{
     display:flex;
-    justify-content: space-between;
-    align-items:center;
-    margin: 20px;
+    flex-direction:column;
+    width: 150%;
 }
 
 .input-control{
@@ -13,7 +12,7 @@
     border-radius: 6px;
     padding:15px;
     input{
-        width: 100%;
+        width: 100vw;
         padding-left: 10px;
         outline: 0;
         border: 0;
@@ -36,61 +35,34 @@
     }
 }
 
-.mainContentUsers{
-    margin:20px;
-    display:flex;
 
-}
-.filter{
-    width:20%;
-    margin-top: 20px;
-    &__title{
-        display:flex;
-        align-items:center;
-        img{
-            width:20px;
-            padding-right: 3px;
-        }
-    }
-}
 .users{
-    width:80%;
+    display:flex;
+    flex-direction: column;
     margin: 20px;
-    padding-left: 20px;
-    border-left: 2px solid #f4f4f4;
+    width: 200%;
 }
-.userTableTitle{
-  display:flex;
-  width: 100%;
-    &__bar{ 
-        display:flex;
-        width: 30%;
-        font-size: 14px;
-        font-weight: bold; 
-        padding: 5px;
-        &:last-child{
-    width: 10%;
-        } 
-    }
+.intro-users{
+    display: flex;
+    justify-content: space-between;
 }
 
-.userTable:nth-child(even){
-    background-color: #f1f9f6;
-}
-.userTable{
-    display: flex;
-   
+.profil{
     &__element{
-        display: flex;
-        align-items: center;
-        width: 30%;
-        padding: 10px;
-        &__admin{
-            padding-left:10px;
-        }
-        &--level{
-           width:10%;
+        margin-bottom: 5px;
+        &__title{
+            font-weight: bold;
         }
     }
-   
+
+}
+.usersButtons{
+    display:flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 10px auto;
+    &__buttons{
+        width: 100%;
+        margin-bottom: 10px;;
+    }
 }
