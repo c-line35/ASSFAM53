@@ -18,9 +18,11 @@ export const usersContext = React.createContext({
     dateFilter:"",
     setFilterDate:()=>{},
     arrayDate:'',
-   getArrayDate:()=>{}
-
+   getArrayDate:()=>{},
+   allAdmins:"",
+   setAllAdmins:()=>{}
 })
+
 const UsersContextProvider=({ children })=>{
 
     const date = new Date()
@@ -45,12 +47,18 @@ const UsersContextProvider=({ children })=>{
     const[afficheAdmins, setAfficheAdmins]= useState(false);
     const[afficheDashBoard, setAfficheDashboard]=useState(true);
     const [isEdit, setIsEdit]=useState(false);
-    const [dateFilter, setFilterDate]=useState(year)
+    const [dateFilter, setFilterDate]=useState(year);
+    const [allAdmins, setAllAdmins]= useState(['']);
   
+
     useEffect(()=>{
         getAllUsers()
     }, [dateFilter, isEdit])
-    
+
+    useEffect(()=>{
+        getAllAdmins()
+    }, [users])
+
     const getAllUsers =() =>{
         token&&
         reqBearer.get('/auth/users')
@@ -60,7 +68,16 @@ const UsersContextProvider=({ children })=>{
                .sort((a,b)=>a.lastName.toLowerCase()>b.lastName.toLowerCase()? 1:-1)) 
         })
     }
-    
+     const getAllAdmins=()=>{
+        token&&
+       reqBearer.get('/auth/users/admins')
+       .then((res)=>{
+       setAllAdmins( res.data
+               .filter(el=>el.lastName.toLowerCase() !== "developpeur")
+               .sort((a,b)=>a.lastName.toLowerCase()>b.lastName.toLowerCase()? 1:-1))
+       })
+     }
+     
     return(
 
         <usersContext.Provider value ={ 
@@ -74,7 +91,8 @@ const UsersContextProvider=({ children })=>{
             afficheUsers, setAfficheUsers,
             isEdit, setIsEdit,
             dateFilter, setFilterDate,
-            getArrayDate
+            getArrayDate, 
+            allAdmins, setAllAdmins  
             } 
             }>
             { children }

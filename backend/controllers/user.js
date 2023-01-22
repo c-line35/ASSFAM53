@@ -57,7 +57,6 @@ exports.login = (req, res, next) =>{
     })
     .catch(error => res.status(500).json({error: 'erreur server'}));
 }
-
 exports.getDataUser = (req, res, next)=>{
 
     const token= req.params.token;
@@ -72,7 +71,6 @@ exports.getDataUser = (req, res, next)=>{
             }
     }) 
 }
-
 exports.getAllUsers = (req, res, next) =>{
     if(req.auth.userRole !== 'admin'){
         return res.status(401).json({error: 'Requête non authentifiée'})
@@ -130,7 +128,7 @@ exports.initPassword=(req, res, next)=>{
 exports.updateUser=(req, res, next)=>{
     const id = req.params.id;
     const{ lastName, firstName, email, phoneNumber, level, adress, post, city } =req.body
-    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights')|| req.auth.userId === id ){
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('users')|| req.auth.userId === id ){
         User.findOne({_id: id})
         .then((data)=>{
             if(!data){
@@ -149,7 +147,6 @@ exports.updateUser=(req, res, next)=>{
 exports.updateAdminRights=(req, res, next)=>{
     const id = req.params.id;
     const{ adminRights } =req.body
-    console.log(req.auth.userRights)
     if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') ){
         User.findOne({_id: id})
         .then((data)=>{
@@ -184,7 +181,7 @@ exports.getUserById=(req, res, next)=>{
 
 exports.deleteUser=(req, res, next)=>{
     const id = req.params.id;
-    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') || req.auth.userId === id){
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('users') || req.auth.userId === id){
         User.deleteOne({_id: req.params.id})
             .then(()=> res.status(200).json({ message: 'Utilisateur supprimé'}))
             .catch(error => res.status(400).json({error}))
@@ -196,7 +193,7 @@ exports.deleteUser=(req, res, next)=>{
 exports.updateUserEnd=(req, res, next)=>{
     const id = req.params.id;
     const newYear = req.body.newYear;
-    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') ){
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('users') ){
         User.findOne({_id: id})
         .then((data)=>{
             if(!data){
@@ -216,3 +213,59 @@ exports.updateUserEnd=(req, res, next)=>{
         return res.status(401).json({message: 'Vous navez pas les droits pour effectuer cette opération'})
     }
 }
+    exports.updateUserAdmin=(req, res, next)=>{
+    const id = req.params.id;
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') ){
+        User.findOne({_id: id})
+        .then((data)=>{
+            if(!data){
+                res.status(404).send({message: 'Utilisateur non trouvé'})
+            }else{
+                if(data.role === "admin"){
+                        return res.status(400).json({message: `L'adhérent ${data.firstName} ${data.lastName} est déjà dans la liste des administrateurs`})
+                    }else{
+                        let role = data.role;
+                        role = "admin";
+                        User.updateOne({_id:id}, {role})
+                        .then(()=> res.status(200).json())
+                        .catch((error)=> res.status(400).json({message:error}))
+                        }}})
+                
+    }else{
+        return res.status(401).json({message: 'Vous navez pas les droits pour effectuer cette opération'})
+    }
+}
+exports.deleteUserAdmin=(req, res, next)=>{
+    const id = req.params.id;
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('adminRights') ){
+        User.findOne({_id: id})
+        .then((data)=>{
+            if(!data){
+                res.status(404).send({message: 'Utilisateur non trouvé'})
+            }else{
+                if(data.role === "user"){
+                        return res.status(400).json({message: `L'adhérent ${data.firstName} ${data.lastName} n'est pas un administrateur`})
+                    }else{
+                        let role = data.role;
+                        let adminRights=data.adminRights;
+                        role = "user";
+                        adminRights=[];
+                        console.log(adminRights)
+                        User.updateOne({_id:id}, {role, adminRights})
+                        .then(()=> res.status(200).json())
+                        .catch((error)=> res.status(400).json({message:error}))
+                        }}})
+                
+    }else{
+        return res.status(401).json({message: 'Vous navez pas les droits pour effectuer cette opération'})
+    }
+}
+exports.getAllAdmins = (req, res, next) =>{
+    if(req.auth.userRole !== 'admin' ){
+        return res.status(401).json({error: 'Requête non authentifiée'})
+    }else{
+        User.find({ role :"admin"})
+        .then((admins)=>res.status(200).json(admins))
+        .catch(error => res.status(400).json({ error }));
+    }
+};

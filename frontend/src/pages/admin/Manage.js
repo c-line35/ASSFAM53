@@ -10,11 +10,14 @@ import UsersList from '../../components/admin/UsersList';
 import AdminRights from '../../components/admin/AdminRights';
 import { NavLink } from 'react-router-dom';
 import { usersContext } from '../../context/UsersContext';
+import { staffContext } from '../../context/StaffContext';
+import StaffList from '../../components/admin/StaffList';
 
 const Manage = () => {
 
-const { authProfil }=useContext(authContext)
+const { authProfil }=useContext(authContext);
 const { afficheDashBoard, afficheAdmins,  afficheUsers }=useContext(usersContext)
+const { afficheStaff }=useContext(staffContext);
 
 
     return (
@@ -27,6 +30,11 @@ const { afficheDashBoard, afficheAdmins,  afficheUsers }=useContext(usersContext
               {afficheAdmins&&
                 <AdminRights /> 
               }
+              {
+                afficheStaff&&
+                <StaffList />
+              }
+
               {afficheDashBoard &&
               <>
                 <div className='dashboard__bloc dashboard__bloc--intro'><AdminIntro/></div>

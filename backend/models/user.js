@@ -14,7 +14,8 @@ const userSchema = mongoose.Schema({
     end: { type: [Number], default: undefined, require: true},
     level: {type: Number, required: true},
     adminRights: {type: [String]}
-});
+    })
+    
 userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', userSchema);

@@ -1,0 +1,33 @@
+.staffList{
+    width: 100%;
+    max-width: 1000px;
+}
+
+.staffProfil{
+    &__ligne{
+        margin-bottom: 5px;
+        &--ca{
+            margin-top: 20px;
+        }
+        &--photo{
+            width:20%;
+        }
+        &--name{
+            font-weight: bold;
+        }
+    }
+}
+
+.checkMission{
+    display: flex;
+   .ant-form-item{
+    width: 80%;
+   }
+}
+.addMission{
+    display: flex;
+}
+.modifyStaff{
+    margin-top: 50px;
+    text-align: center;
+}

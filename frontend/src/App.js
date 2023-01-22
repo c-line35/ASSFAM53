@@ -12,6 +12,7 @@ import Staff from './pages/Staff'
 import InitPassword from './pages/InitPassword';
 import Manage from './pages/admin/Manage';
 import Offers from './pages/Offers';
+import StaffContextProvider from './context/StaffContext';
 
 
 
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <AuthContextProvider>
     <UsersContextProvider>
+    <StaffContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
@@ -32,7 +34,8 @@ const App = () => {
         <Route path="/management" element={<Manage /> } /> 
      
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter> 
+    </StaffContextProvider> 
     </UsersContextProvider>
     </AuthContextProvider>
   )

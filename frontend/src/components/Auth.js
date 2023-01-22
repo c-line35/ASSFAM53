@@ -3,11 +3,11 @@ import {NavLink} from 'react-router-dom';
 import { authContext } from '../context/AuthContext';
 import { Button, Form, Input } from 'antd';
 import ResetPassword from './ResetPassword';
-
+import Home from '../pages/Home'
 
 const Auth = () => {
     
-    const { reqInstance, getProfil } = useContext(authContext)
+    const { reqInstance, getProfil, token } = useContext(authContext)
  
     const onFinish = (values)=>{
        reqInstance.post(
@@ -29,7 +29,11 @@ const Auth = () => {
     
 
     return (
-        <div className='authForm'>
+      <>
+      {token
+      ?<Home />
+   
+       : <div className='authForm'>
           <div className='authForm__form'>
             <NavLink to ='/'className='header__nav__logo'>
                     <img src='./assets/logos/logo.png' alt="logo de l'association"></img>
@@ -88,6 +92,8 @@ const Auth = () => {
     <ResetPassword/>
     </div>
         </div>
+        } 
+  </>
     );
 };
 

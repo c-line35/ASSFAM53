@@ -1,53 +1,85 @@
 import React, { useContext, useState } from 'react';
-import { Collapse, Checkbox, Button} from "antd";
+import { Checkbox, Button, Modal} from "antd";
 import { authContext } from '../../context/AuthContext';
+import { usersContext } from '../../context/UsersContext';
 
 
-const { Panel }=Collapse;
+const AdminCheckRights = ({ admin, isModalVisible, setIsModalVisible }) => {
+    
+    const { lastName, firstName, adminRights, _id } = admin;
 
-const AdminCheckRights = (user) => {
-const { lastName, firstName, adminRights, _id } = user.user
+    const { getAllUsers }= useContext(usersContext)
     const { reqBearer } =useContext(authContext)
+
     const [listOfRights, setListOfRights] = useState([""])
 
     const adminRightsOptions= [
-        {label:"Adhérents", value:"users"}, 
         {label:"Droits des administrateurs", value:"adminRights"}, 
+        {label:"Adhérents", value:"users"}, 
         {label:"Gestion du bureau", value:"staff"}, 
         {label:"Articles et agenda", value:"articles"}, 
         {label:"Bibliothèque", value:"library"}
     ]
 
-
-    const getDefaultChecked=()=>{
-        setListOfRights(adminRights)
+    const handleCancelCreate = () => {
+        setIsModalVisible(false);
     }
 
     const getArrayOfRights=(checkedValues)=>{
     setListOfRights(checkedValues)
-    reqBearer.put(
+    }
+
+    const updateRights=()=>{
+        reqBearer.put(
         `auth/user/updateAdminRights/${_id}`,
-        {adminRights: checkedValues}
+        {adminRights: listOfRights}
     )
     .then(()=>{
         alert (`Vous venez de changer les droits de ${firstName} ${lastName}` )
+        getAllUsers();
+        handleCancelCreate();
     })
     }
   
-   
+    const deleteRights=()=>{
+        reqBearer.put(`auth/user/deleteUserAdmin/${_id}`)
+        .then(()=>{
+            alert (`Vous venez d'enlever les droits d'administrateur de ${firstName} ${lastName}` )
+            getAllUsers();
+            handleCancelCreate();
+        })
+    }
+
     return (
-        <div className="adminList">
-                <Collapse  onChange={getDefaultChecked}>
-                 <Panel key={lastName} header={lastName+" "+ firstName} >
-                                <Checkbox.Group defaultValue={adminRights} options={adminRightsOptions} onChange={getArrayOfRights}>
-                                </Checkbox.Group> 
-                            </Panel>
-                        </Collapse>
-                        <Button>Supprimer cet administrateur</Button>
-                      
-                </div>
-             
-    );
+        <>
+      <Modal
+               title= "Administrateur "
+               visible={isModalVisible} 
+               destroyOnClose={true}
+               onCancel={handleCancelCreate}
+                footer={[
+                   
+                    <Button key="back" onClick={handleCancelCreate}>
+                        Fermer
+                    </Button>,
+                    ]}
+                >
+                    <div className='adminRights-name'>{firstName} {lastName}</div>
+                   
+    <Checkbox.Group 
+      defaultValue={adminRights} 
+      options={adminRightsOptions} 
+      onChange={getArrayOfRights}
+      >
+    </Checkbox.Group>
+    <div className='adminRights-button'>
+      <Button onClick={updateRights}>Mettre à jour</Button>
+      <Button  onClick={deleteRights}>Enlever les droits d'administrateur</Button>
+    </div>
+  </Modal>
+
+   </> 
+   );
 };
 
 export default AdminCheckRights;

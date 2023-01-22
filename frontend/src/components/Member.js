@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { authContext } from '../context/AuthContext';
+
 
 const Member = ({member}) => {
+
+  const { token }=useContext(authContext)
+token?console.log('connecté'):console.log('Pas connecté')
     return (
-        
-            <div key={member.nom} className="member">
+        <>
+        {member&&
+            <div key={member._id} className="member">
               <div className='member__identity'>
-                <div className = "member__identity__name">{member.nom}</div>
-                <div className = "member__identity__firstname">{member.prenom}</div>
+                <div className = "member__identity__name">{member.user.lastName}</div>
+                <div className = "member__identity__firstname">{member.user.firstName}</div>
               </div>
-              <div className = "member__photo"><img src={member.photo} alt={member.grade}/></div>
+              {token
+              ?<div className = "member__photo"><img src={member.imageUrl} alt={member.grade}/></div>
+              :<div className='member__photo'><img src='./assets/images/profil-homme.jpg' alt='profil'/></div>
+              }
+              
               <div className = "member__grade">{member.grade}</div>
-              <div className = "member__missions">{member.missions.map(mission=>(
+              <div className = "member__missions">{member.mission.map(mission=>(
                 <p key = {mission}>{mission} </p>
               ))}</div>
           
           </div>
+          }
+          </>
     );
 };
 

@@ -18,8 +18,8 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
     }
 
     const onFinish = (values)=>{
-        const { email, firstName, lastName, form, level, password, phoneNumber, end, adress, post, city } = values;
-        
+        const { email, firstName,  form, level, password, phoneNumber, end, adress, post, city } = values;
+        const lastName = values.lastName.toUpperCase();
         reqInstance.post(
             "/auth/signup",
             {

@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import staffList from '../data/staffList'
 import Member from '../components/Member'
+import { staffContext } from '../context/StaffContext'
 
 const Staff = () => {
+  const { allStaff }=useContext(staffContext)
+ 
   return (
     <div>
       <Header />
       <div className='memberList'>
-      {staffList.map(member=>(<Member key={member.nom} member={member} />))}
+      {
+      allStaff.length>0
+      ?allStaff.map(member=>(<Member key={member._id} member={member} />))
+    :''
+    }
       </div>
       <Footer />
     </div>

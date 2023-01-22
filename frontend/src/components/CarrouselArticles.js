@@ -15,9 +15,9 @@ const CarrousselArticle=() =>{
     <>
     <Carousel autoplay>
       
-    {articlesList.map((articles)=>(
-    <div style={contentStyle} >  
-    <Article articles={articles} key={articles.position}/> 
+    {articlesList.map((articles, index)=>(
+    <div style={contentStyle} key={index}>  
+    <Article articles={articles} /> 
       </div>) )}
      
   </Carousel>

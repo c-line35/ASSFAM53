@@ -8,12 +8,12 @@
   -webkit-animation: cross 5000ms linear;
           animation: cross 5000ms linear;
   top: 50%;
-  right: 450px;
+  right: 100px;
 }
 .anim--yellow {
   z-index: 4;
   bottom: 50%;
-  left: 50px;
+  left: 475px;
   -webkit-animation: crossNegatif 7000ms linear;
           animation: crossNegatif 7000ms linear;
   -webkit-animation-delay: 4000ms;
@@ -22,7 +22,7 @@
 .anim--pink {
   z-index: 2;
   bottom: 30%;
-  left: 50px;
+  left: 115px;
   -webkit-animation: crossNegatif 6000ms linear;
           animation: crossNegatif 6000ms linear;
   -webkit-animation-delay: 9000ms;
@@ -31,7 +31,7 @@
 .anim--blue {
   z-index: 2;
   bottom: 50%;
-  left: 350px;
+  left: 500px;
   -webkit-animation: crossNegatif 5250ms linear;
           animation: crossNegatif 5250ms linear;
   -webkit-animation-delay: 7000ms;
@@ -510,7 +510,6 @@
 .usersList {
   display: flex;
   flex-direction: column;
-  width: 150%;
 }
 
 .input-control {
@@ -553,8 +552,8 @@
 .users {
   display: flex;
   flex-direction: column;
-  margin: 20px;
-  width: 200%;
+  width: 100%;
+  max-width: 1500px;
 }
 
 .intro-users {
@@ -572,12 +571,51 @@
 .usersButtons {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  margin: 10px auto;
 }
 .usersButtons__buttons {
   width: 100%;
   margin-bottom: 10px;
+}
+
+.adminRights-name {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.adminRights-button {
+  display: flex;
+  padding: 30px 0;
+  justify-content: space-between;
+}
+
+.userToAdmin {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+.userToAdmin__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 0;
+  border-bottom: 1px black solid;
+}
+.userToAdmin__user button {
+  background-color: white;
+  padding: 5px 20px;
+  border: 1px rgb(226, 226, 226) solid;
+  color: rgb(132, 132, 132);
+}
+.userToAdmin__user button:hover {
+  border: #1890ff 1px solid;
+}
+
+.adminRights-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
 }
 
 .authForm {
@@ -694,54 +732,68 @@
     margin: 40px auto;
   }
 }
-.adminList {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid grey;
+.admin-list {
+  width: 80%;
+  margin: 100 auto;
+  background-color: aquamarine;
+}
+
+.admin-list tr {
+  border-bottom: 1px black solid;
 }
 
 .dashboard {
-  display: grid;
-  width: 90%;
-  min-height: 100vh;
-  margin: auto;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 1fr 1fr 1fr 150px 1fr 1fr;
-  grid-template-areas: "a a a a a a" "b b b c c c" "b b b c c c" "b b b l e e" "d d d d e e" "d d d d e e";
+  width: 80%;
+  margin: 100px auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 .dashboard__bloc {
-  margin: 10px;
-  border-radius: 10px;
-  padding: 10px;
-}
-.dashboard__bloc--intro {
-  background-color: #e0ec89;
-  grid-area: a;
-}
-.dashboard__bloc--users {
-  background-color: #a8d58a;
-  grid-area: b;
-}
-.dashboard__bloc--staff {
-  background-color: #c8d8e8;
-  grid-area: c;
-}
-.dashboard__bloc--articles {
-  background-color: #dfc8ef;
-  grid-area: d;
-}
-.dashboard__bloc--books {
-  background-color: #f8c1b8;
-  grid-area: e;
-}
-.dashboard__bloc--logo {
-  grid-area: l;
   display: flex;
+  width: calc(33% - 30px);
+  min-width: 300px;
+  border: rgb(218, 218, 218) 1px solid;
+  margin-bottom: 50px;
   justify-content: center;
 }
-.dashboard__bloc--logo a img {
+.dashboard__bloc--intro {
   width: 100%;
+  justify-content: flex-start;
+}
+
+.staffList {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.staffProfil__ligne {
+  margin-bottom: 5px;
+}
+.staffProfil__ligne--ca {
+  margin-top: 20px;
+}
+.staffProfil__ligne--photo {
+  width: 20%;
+}
+.staffProfil__ligne--name {
+  font-weight: bold;
+}
+
+.checkMission {
+  display: flex;
+}
+.checkMission .ant-form-item {
+  width: 80%;
+}
+
+.addMission {
+  display: flex;
+}
+
+.modifyStaff {
+  margin-top: 50px;
+  text-align: center;
 }
 
 .mySwiper {
@@ -857,6 +909,7 @@
   display: flex;
   margin: 15px auto;
   width: 50%;
+  height: 60%;
 }
 .member__photo img {
   width: 100%;
@@ -1105,4 +1158,7 @@ h4 {
   .partner {
     display: none;
   }
+}
+#map {
+  height: 50vh;
 }/*# sourceMappingURL=style.css.map */

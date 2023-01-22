@@ -1,48 +1,19 @@
 .dashboard{
-    display:grid;
-    width: 90%;
-    min-height: 100vh;
-    margin: auto;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr 1fr 1fr 150px 1fr 1fr;
-    grid-template-areas:
-    'a a a a a a'
-    'b b b c c c'
-    "b b b c c c"
-    "b b b l e e"
-    "d d d d e e"
-    "d d d d e e";
+    width:80%;
+    margin: 100px auto;
+    display:flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     &__bloc{
-        margin: 10px;
-        border-radius: 10px;
-        padding: 10px;
+        display:flex;
+        width: calc(33% - 30px);
+        min-width: 300px;
+        border: rgb(218, 218, 218) 1px solid;
+        margin-bottom: 50px;
+        justify-content: center;
         &--intro{
-                background-color:#e0ec89 ;
-                grid-area: a;
-            }
-        &--users{
-                background-color:#a8d58a ;
-                grid-area: b;
-            }
-        &--staff{
-                background-color: #c8d8e8;
-                grid-area: c;
-            } 
-        &--articles{
-                background-color: #dfc8ef;
-                grid-area: d
-            }
-        &--books{
-                background-color: #f8c1b8;
-                grid-area: e;
-            }
-        &--logo {
-            grid-area: l;
-            display: flex;
-            justify-content: center;
-            a img{
-                width: 100%;
-            }
+            width: 100%;
+            justify-content: flex-start;
         }
-    }  
+    }
 }

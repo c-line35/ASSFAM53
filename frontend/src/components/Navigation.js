@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom'
 import { authContext } from '../context/AuthContext';
+import { staffContext } from '../context/StaffContext';
 
 
 const Navigation = () => {
 
   const { authProfil } = useContext(authContext)
+  const { getAllStaff } = useContext(staffContext)
   const { role }= authProfil;
   const [ isAdmin, setIsAdmin]=useState(false)
   
@@ -26,7 +28,7 @@ const Navigation = () => {
       <NavLink to="/join" className={(nav)=>(nav.isActive? 'nav-active':"")}>
         <div>Adhérer</div>
       </NavLink>
-      <NavLink to="/staff" className={(nav)=>(nav.isActive? 'nav-active':"")}>
+      <NavLink to="/staff" onClick={()=>getAllStaff()} className={(nav)=>(nav.isActive? 'nav-active':"" )}>
         <div >Le Bureau</div>
       </NavLink>
       <NavLink to="/partners" className={(nav)=>(nav.isActive? 'nav-active':"")}>

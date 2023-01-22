@@ -10,14 +10,22 @@ export const authContext = React.createContext({
     initToken:()=>{},
     token:"",
     isAdminUser:false,
-    setIsAdminUser:()=>{}
+    setIsAdminUser:()=>{},
+    isAdminAdmin:false,
+    setIsAdminAdmin:()=>{},
+    isAdminStaff:"",
+    setIsAdminStaff:()=>{}
 });
 
 const AuthContextProvider=({ children })=>{
-
+  
     const [authProfil, setAuthProfil] = useState('');
     const [ token, setToken ] = useState('');
     const [isAdminUser, setIsAdminUser]=useState(false);
+    const [isAdminAdmin, setIsAdminAdmin]=useState(false);
+    const [isAdminStaff, setIsAdminStaff]=useState(false);
+
+
     const initToken=()=>{
         setToken(localStorage.getItem('token'))
     }
@@ -26,18 +34,20 @@ const AuthContextProvider=({ children })=>{
         getProfil()
     },[token])
     const reqInstance = axios.create({
-        baseURL: 
-         'http://localhost:3001/api'
-      // 'https://assfamaccueil53.org/api'
+        baseURL: process.env.REACT_APP_URL_REQ
+        
+       // "http://localhost:3001/api"
+     //  'https://assfamaccueil53.org/api'
             }) 
 
     const reqBearer = axios.create({
         headers:{
             Authorization: `Bearer ${token}`,
                 },
-        baseURL: 
-           'http://localhost:3001/api'
- // ' https://assfamaccueil53.org/api'
+       
+        baseURL: process.env.REACT_APP_URL_REQ
+        // 'http://localhost:3001/api'
+   // ' https://assfamaccueil53.org/api'
                     })
     
 
@@ -49,9 +59,14 @@ const AuthContextProvider=({ children })=>{
             )
             .then((res)=>{
                 setAuthProfil(res.data)
-                if(res.data.adminRights.includes('adminRights')){
-                    
+                if(res.data.adminRights.includes('users')){
                     setIsAdminUser(true)
+                }
+                if(res.data.adminRights.includes('adminRights')){
+                    setIsAdminAdmin(true)
+                }
+                if(res.data.adminRights.includes('staff')){
+                    setIsAdminStaff(true)
                 }
             })
         :setAuthProfil('')
@@ -59,7 +74,15 @@ const AuthContextProvider=({ children })=>{
        
     return(
 
-        <authContext.Provider value={ {authProfil, setAuthProfil, getProfil, initToken, token, reqInstance, reqBearer, isAdminUser, setIsAdminUser} }>
+        <authContext.Provider value={ {
+            authProfil, setAuthProfil, 
+            getProfil, 
+            initToken, token, 
+            reqInstance, reqBearer, 
+            isAdminUser, setIsAdminUser,
+            isAdminAdmin, setIsAdminAdmin,
+            isAdminStaff, setIsAdminStaff
+            } }>
             { children}
         </authContext.Provider>
     )

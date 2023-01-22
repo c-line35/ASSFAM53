@@ -1,6 +1,8 @@
-.adminList{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom:2px solid grey
+.admin-list{
+    width:80%;
+    margin: 100 auto;
+    background-color: aquamarine;
+}
+.admin-list tr{
+    border-bottom: 1px black solid;
 }

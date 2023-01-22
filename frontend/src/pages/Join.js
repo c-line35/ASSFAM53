@@ -1,9 +1,12 @@
-import React from 'react';
+
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import JoinLevel from '../components/JoinLevel';
 
+
+
 const Join = () => {
+
   return (
     <div>
       <Header />
