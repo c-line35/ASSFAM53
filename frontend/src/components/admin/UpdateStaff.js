@@ -33,6 +33,7 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
 
     const updateStaff =()=>{
       setIsEdit('true')
+      setTmpMission(staff.mission)
     }
     const deleteStaff =()=>{
       reqBearer.delete(`/staff/${staff._id}`)
@@ -47,17 +48,14 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
     const onFinish=()=>{
         let coordArray=[]
         getCoordonnees&& coordArray.push(getCoordonnees)
-        
-        
         const caLength = Object.keys(ca).length;
         const gradeLength = Object.keys(grade).length;
-        const tmpMissionLength = Object.keys(tmpMission).length
         const getCoordonneesLength = Object.keys(getCoordonnees).length
         const data={
             ca: caLength===0?staff.ca: ca,
             grade: gradeLength===0? staff.grade:grade,
-            mission: tmpMissionLength===0? staff.mission:tmpMission,
-            coordonnees: coordArray
+            mission: tmpMission,
+            coordonnees: getCoordonneesLength===0?staff.coordonnees:getCoordonnees
         }
         const form = new FormData()
         form.append('image', image);
@@ -68,6 +66,7 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
                 setIsEdit(false)
                 setIsModalVisible(false)
                 setMessageError('')
+                setTmpMission('')
         })
         .catch((error)=>{
             error.response.data.error?
@@ -81,7 +80,6 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
         setGrade(e?e.target.value:staff.grade)
     }
     const updateCoordonnees=(e)=>{
-      
         setGetCoordonnees(e.target.value)
     }
     const updateCa=(e)=>{
@@ -94,6 +92,7 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
     const deleteMission=(mission)=>{
         let tab=tmpMission.filter((el)=>el!==mission)  
         setTmpMission(tab) 
+        console.log(tab)
     }
   const checkMission=(e)=>{
         setNewMission(e.target.value)
@@ -159,7 +158,7 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
                     <div>Adresse: {staff.user.adress} {staff.user.city}</div>
                     <a href="https://www.google.fr/maps" alt="google map" target="_blank" rel="noreferrer">Google Maps</a>
                     <Form.Item
-                   label="Coordonnées"
+                    label="Coordonnées"
                     initialValue={staff.coordonnees}
                     name="coordonnees"                         
                     onChange ={updateCoordonnees}
@@ -187,7 +186,7 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
                    
                     <h3>Missions</h3>
                    
-                        {tmpMission.map((m, index)=><div key={index} className="updateMission">
+                        {tmpMission&& tmpMission.map((m, index)=><div key={index} className="updateMission">
                             <Form
                             >
                                 <div className='checkMission'>

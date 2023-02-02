@@ -5,6 +5,7 @@ import { usersContext } from '../../context/UsersContext';
 import { authContext } from '../../context/AuthContext';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import { staffContext } from '../../context/StaffContext';
 
 
 
@@ -12,6 +13,7 @@ const { Panel} = Collapse
 
 const UsersList = () => {
   const { users, year,  setAfficheDashboard, setAfficheUsers, getArrayDate, setFilterDate, getAllUsers } = useContext(usersContext);
+  const { getAllStaff }= useContext(staffContext);
 const { reqBearer, isAdminUser } = useContext(authContext)
 const [isModalVisible, setIsModalVisible] = useState(false);
  const [user, setUser]=useState();
@@ -107,7 +109,10 @@ const getDataSource=()=>{
           if(window.confirm(`Cette action supprimera définitivement les adhérents sélectionnés`)){
             for(let id of selectedRowKeys){
               reqBearer.delete(`auth/${id}`)
-              .then(()=>getAllUsers())
+              .then(()=>{
+                getAllUsers();
+                getAllStaff();              
+              })
               .catch((error)=>{
                 if(error.response){
                   arrayError.push(error.response.data.message)
@@ -255,7 +260,7 @@ const getDataSource=()=>{
 
         return (
           <div className='users'>
-      <h1>LISTE DES ADHERENTS</h1>
+      <h4>LISTE DES ADHERENTS</h4>
       {messageError&& 
         messageError.map((message)=>(<div className='message-error' key={message}>{message}</div>))
      }
@@ -269,11 +274,10 @@ const getDataSource=()=>{
             </Radio.Group> 
             </Panel>
           </Collapse>
-      <div className='backDashboard' onClick={back}>
-          <img src="./assets/icones/dashboard.png" alt='tableau de bord'/>
-          Retour
-       
-      </div> 
+          <div className='backDashboard' onClick={back}>
+            <img src="../assets/icones/dashboardColor.png" alt='tableau de bord'/>
+            Retour
+          </div> 
       </div> 
           <p> {users.length} adhérents correspondent à votre recherche</p> 
          

@@ -2,6 +2,7 @@ import articlesList from'../data/articlesList';
 import Article from './Article';
 import { Carousel } from 'antd';
 
+
 const contentStyle = {
   height: '160px',
   color: '#000',
@@ -13,15 +14,16 @@ const CarrousselArticle=() =>{
 
   return (
     <>
-    <Carousel autoplay>
-      
+   <Carousel autoplay>
+
     {articlesList.map((articles, index)=>(
     <div style={contentStyle} key={index}>  
     <Article articles={articles} /> 
       </div>) )}
      
-  </Carousel>
-     
+  </Carousel> 
+ 
+   
     </>
   );
 }

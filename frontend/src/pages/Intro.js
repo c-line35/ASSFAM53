@@ -6,9 +6,8 @@ import { authContext } from '../context/AuthContext';
 
 const Intro = () => {
 
-    const { token }=useContext(authContext)
-    const [connect, setConnect]=useState(false);
-
+    const { token, connect, setConnect, authProfil }=useContext(authContext)
+   
     const getConnect=()=>{
         setConnect(true);
     }
@@ -40,18 +39,19 @@ const Intro = () => {
                 ?<div>
                 <NavLink to ="/home" ><h2 className='level level--visit'>Visiteurs</h2></NavLink> 
                 <NavLink to ="/home" ><h2 className='level level--adher'>Adhérents</h2></NavLink>
-                <NavLink to ="/management"><h2 className='level level--admin'>Administrateurs</h2></NavLink> 
+                {authProfil.role ==="admin"
+                    ?<NavLink to ="/management"><h2 className='level level--admin'>Administrateurs</h2></NavLink> 
+                    :<NavLink to ="/home"><h2 className='level level--admin'>Administrateurs</h2></NavLink>
+                }
                 <NavLink to ="/offers"><h2 className='level level--child'>Le coin des enfants</h2></NavLink> 
                 </div>
              :<div>
-            
-               <div>
                 <NavLink to ="/home" ><h2 className='level level--visit'>Visiteurs</h2></NavLink> 
                 <h2 className='level level--adher' onClick={getConnect}>Adhérents</h2>
-                <NavLink to ="/management"><h2 className='level level--admin'>Administrateurs</h2></NavLink> 
+                <h2 className='level level--admin' onClick={getConnect}>Administrateurs</h2> 
                 <NavLink to ="/offers"><h2 className='level level--child'>Le coin des enfants</h2></NavLink> 
-                </div>   
-                </div>  }
+                </div> 
+                 }
         
                 <div className='partner'>
                     <img src='./assets/logos/icone-fnaf.png' alt='logo fnaf'/>

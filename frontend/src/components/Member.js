@@ -5,7 +5,7 @@ import { authContext } from '../context/AuthContext';
 const Member = ({member}) => {
 
   const { token }=useContext(authContext)
-token?console.log('connecté'):console.log('Pas connecté')
+
     return (
         <>
         {member&&

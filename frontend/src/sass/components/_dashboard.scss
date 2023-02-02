@@ -7,13 +7,50 @@
     &__bloc{
         display:flex;
         width: calc(33% - 30px);
+        height: 300px;
+        padding:20px;
         min-width: 300px;
-        border: rgb(218, 218, 218) 1px solid;
         margin-bottom: 50px;
-        justify-content: center;
-        &--intro{
-            width: 100%;
-            justify-content: flex-start;
-        }
+        border-radius: 10px;
+       div{
+        display:flex;
+        justify-content: space-between;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 100%;
+       }
+       &--users{
+        background-color: #a8d58a50;
+       }
+       &--staff{
+        background-color: #c8d8e875;
+       }
+       &--books{
+        background-color: #f8c1b875;
+       }
+       &--articles{
+        background-color: #dfc8ef75;
+       }
     }
+}
+.backDashboard{
+    text-align: end;
+}
+.dashboardMain{
+    margin-top: 50px;
+}
+@media screen and (max-width: 900px){
+
+.dashboard{
+    width: 100%;
+    margin:50px auto;
+    &__bloc{
+        width: 100%;
+        border-radius:0;
+        padding:10px;
+        text-align: center;
+        height: 200px;
+       
+    }
+}    
 }

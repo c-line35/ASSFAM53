@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Marker, useMap } from "react-leaflet";
+import { Marker, useMap, Popup } from "react-leaflet";
 
 
 
@@ -21,7 +21,9 @@ import iconRed from "../assets/iconeRed"
     }, [map]);
 
     return position === null ? null : (
-      <Marker position={position} icon={iconRed}></Marker>
+      <Marker position={position} icon={iconRed}>
+        <Popup>Vous êtes ici</Popup>
+      </Marker>
     );
   }
   export default LocationMarker

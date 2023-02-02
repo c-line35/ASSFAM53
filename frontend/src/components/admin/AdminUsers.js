@@ -35,16 +35,15 @@ const seeAdmins=()=>{
 
     return (
         <div>
-            
-            <h1>Les adhérents</h1>
+            <h3>Les adhérents</h3>
            <div className='usercounter'>Il y a {users.length} adhérents à l'association.</div> 
-           <div className='usersButtons'>
-           <Button className='usersButtons__buttons' onClick={seeUsers}>Voir tous les adhérents</Button> 
-           <Button className='usersButtons__buttons' onClick={seeAdmins}>Voir les administrateurs</Button> 
+          
+           <button className='button1' onClick={seeUsers}>Voir tous les adhérents</button> 
+           <button className='button1' onClick={seeAdmins}>Voir les administrateurs</button> 
  {isAdminUser&&
    <>
-            <div className='createUserModal'>
-                <Button className='usersButtons__buttons' type="primary" onClick={showModalCreate}>Créer un nouvel adhérent</Button>
+            
+                <button className='button1' type="primary" onClick={showModalCreate}>Créer un nouvel adhérent</button>
                 <Modal
                title="Créer un nouvel adhérent" 
                visible={isModalCreateVisible} 
@@ -58,12 +57,12 @@ const seeAdmins=()=>{
                 >
                     <AdminCreateUser setIsModalVisible={setIsModalCreateVisible} />
                 </Modal>
-            </div>
+           
   </>
 }  
 </div>
 
-    </div>
+  
     );
 };
 

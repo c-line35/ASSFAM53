@@ -70,4 +70,15 @@
           }
       }
   }
-  
+.carousselBox{
+    display:flex;
+    width:100%;
+    justify-content:space-between;
+}
+.carousselImg{
+    width: 50%;
+    object-fit: cover;
+}
+.carousselInfos{
+    width:50%;
+}

@@ -105,8 +105,13 @@ const StaffList = () => {
 
 
     return (
-        <div className='staffList'>
-          <h2>Gestion des membres du bureau</h2>
+        <div className='staffList'> 
+         
+          <h4>Gestion des membres du bureau</h4> 
+          <div className='backDashboard' onClick={back}>
+            <img src="../assets/icones/dashboardColor.png" alt='tableau de bord'/>
+            Retour
+          </div> 
             <div className='adminRights-head'>
            {isAdminStaff&&
             <Space direction="vertical">
@@ -120,10 +125,7 @@ const StaffList = () => {
     />
     </Space>
     } 
-       <div className='backDashboard' onClick={back}>
-         <img src="../assets/icones/dashboard.png" alt='tableau de bord'/>
-         Retour
-       </div> 
+      
     </div>
     {messageError&&
     <div className='message-error'>{messageError}</div>

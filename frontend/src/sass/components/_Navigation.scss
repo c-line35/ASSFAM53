@@ -1,7 +1,14 @@
 .navigation{
     display:flex;
     justify-content: space-between;
-    padding-top: 15px;
+    align-items: center;
+    padding:3px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.299);
+    img{
+        width:24px;
+        height:24px;
+    }
     a{
         display: flex;
         text-decoration:  none;
@@ -11,13 +18,27 @@
             font-weight: bold;
         }
     }
+    &--pages{
+       justify-content: flex-start;
+        width: 50%;
+        background-color: rgba(255, 255, 255, 0);
+    }
+    &--connect{
+        color: $color-quaternary;
+        justify-content: flex-end;
+        align-items: center;
+        width:25%;
+        gap:10px;
+        background-color: rgba(255, 255, 255, 0);
+       
+    }
 }
 .nav-active{
     position: relative;
     font-style: italic;
     &::after{ 
         position: absolute;
-        top: 20%;
+        top: 100%;
         left: 50%;
         content:"";
         height: 3px;
@@ -27,6 +48,9 @@
         animation: anim 600ms ease forwards;
     }
 }
+.navigationRes{
+    display:none;
+}
 @keyframes anim{
     to{
         width: 100%;
@@ -34,12 +58,7 @@
 }
 @media screen and (max-width: 900px){
     .navigation{
-       
-        font-size: 12px;
-      
-        a{
-            margin: 0 7px;
-        }
+       display:none;
     }
     .nav-active{
         border-bottom: 2px solid $color-quaternary;
@@ -47,5 +66,30 @@
             display:none;
         }  
     
+    }
+    .navigationRes{
+        display:flex;
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.299);
+        width: 100%;
+        padding:3px;
+        img{
+            width:24px;
+            height:24px;
+        }
+        a{
+            display: flex;
+            text-decoration:  none;
+            color: $color-quaternary;
+            margin: 0 20px;
+            &:hover{
+                font-weight: bold;
+            }
+        }
+        &__icones{
+            display: flex;
+            justify-content: space-between;
+            color:$color-quaternary;
+        }
     }
 }

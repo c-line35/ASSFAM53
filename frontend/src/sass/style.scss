@@ -1,3 +1,5 @@
+
+
 @import './utils/butterfly-anim';
 @import './utils/variables';
 @import './utils/mixins';
@@ -19,6 +21,7 @@
 @import './layout/carrousel';
 @import './layout/messageError';
 @import './layout/member';
+@import './layout/button1';
 @import './pages/Home.scss';
 @import './pages/Join.scss';
 
@@ -41,11 +44,13 @@ h2{
     text-align: center;
     font-family: 'Oswald', sans-serif;
 }
+
 h3{
     color:$color-quaternary;
     font-family: 'Oswald', sans-serif;
     font-weight: bold;
     border-bottom: 1px double $color-quaternary;
+    width: 100%;
 }
 h4{
     color:$color-quaternary;
@@ -89,4 +94,5 @@ h4{
        display: none;
     }
 }
+
 

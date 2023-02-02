@@ -1,13 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {NavLink} from 'react-router-dom';
 import { authContext } from '../context/AuthContext';
 import { Button, Form, Input } from 'antd';
 import ResetPassword from './ResetPassword';
 import Home from '../pages/Home'
-
+import Manage from '../pages/admin/Manage'
+import { staffContext } from '../context/StaffContext';
 const Auth = () => {
     
-    const { reqInstance, getProfil, token } = useContext(authContext)
+    const { reqInstance, getProfil, token, authProfil, setConnect } = useContext(authContext)
+    const { getAllStaff }=useContext(staffContext)
+    
+    const [messageError, setMessageError]=useState('');
  
     const onFinish = (values)=>{
        reqInstance.post(
@@ -17,25 +21,30 @@ const Auth = () => {
         })
         .then((res)=>{
           localStorage.setItem('token', res.data.token);
-          getProfil()
+          getProfil();
+          getAllStaff();
         })
-        .catch((error)=>alert(error))
+        .catch(()=>setMessageError('Adresse e-mail ou mot de passe incorrect'))
     }
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+       console.log(errorInfo)
       };
 
     
 
     return (
       <>
-      {token
-      ?<Home />
-   
-       : <div className='authForm'>
+      {token?
+      <>
+      {authProfil.role==="admin"
+        ?<Manage/>
+        : <Home/>
+      }</>
+    
+     : <div className='authForm'>
           <div className='authForm__form'>
-            <NavLink to ='/'className='header__nav__logo'>
+            <NavLink to ='/'className='header__nav__logo' onClick={()=>{setConnect(false)}}>
                     <img src='./assets/logos/logo.png' alt="logo de l'association"></img>
             </NavLink> 
             <Form
@@ -84,16 +93,24 @@ const Auth = () => {
           span: 16,
         }}
       >
+     
         <Button type="primary" htmlType="submit">
-          Connexion
-        </Button>
+        Connexion
+      </Button> 
+        
+       
+     
       </Form.Item>
-    </Form>
+     
+    </Form> 
+    {messageError&&
+      <div className="message-error">{messageError}</div>
+      }
     <ResetPassword/>
     </div>
-        </div>
-        } 
-  </>
+        </div>   
+      
+    }</>
     );
 };
 

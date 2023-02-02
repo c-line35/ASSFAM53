@@ -6,14 +6,28 @@ import { staffContext } from '../context/StaffContext'
 
 const Staff = () => {
   const { allStaff }=useContext(staffContext)
- 
+  
   return (
     <div>
       <Header />
+     
       <div className='memberList'>
+         <h3>Le bureau</h3>
       {
       allStaff.length>0
-      ?allStaff.map(member=>(<Member key={member._id} member={member} />))
+      ?allStaff
+      .filter((el)=>el.ca===true)
+      .map(member=>(
+      <Member key={member._id} member={member} />))
+    :''
+    }
+      <h3>Les membres</h3>
+      
+      {
+      allStaff.length>0
+      ?allStaff
+      .filter((el)=>el.ca===false)
+      .map(member=>(<Member key={member._id} member={member} />))
     :''
     }
       </div>

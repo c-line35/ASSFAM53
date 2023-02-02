@@ -3,6 +3,10 @@ import { Button, Cascader, Form, Input }from 'antd';
 import { authContext } from '../../context/AuthContext';
 import { usersContext } from '../../context/UsersContext';
 
+
+const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.":{}!?;]{1,2000}$/i);
+const nameRegexp = new RegExp(/^[a-z\séèçêëàù'-]{1,2000}$/i);
+
 const UpdateUser = ({ 
     user, setUser, 
     setGetLastName, getLastName, 
@@ -17,9 +21,10 @@ const UpdateUser = ({
         }) => {
             
     const { lastName, firstName, email, phoneNumber, level, _id, adress, post, city} = user;
-    const { setIsEdit  }=useContext(usersContext)
-    const { reqBearer }= useContext(authContext)
-   
+    const { setIsEdit  }=useContext(usersContext);
+    const { reqBearer }= useContext(authContext);
+            
+    const [updateError, setUpdateError]=useState();
 
   
 
@@ -84,9 +89,8 @@ const UpdateUser = ({
             setGetCity("")
         }) 
         .catch((error)=>{
-            if(error.response){
-              setMessageError(error.response.data.message)
-            }
+              setMessageError(error.response.data.message);
+              setUpdateError('Une erreur est survenue')
           })
         
     }
@@ -106,10 +110,10 @@ const UpdateUser = ({
                     name="lastName"                         
                     onChange ={updateLastName}
                     rules={[
-                        {
-                        required: true,
-                        message: "Oups, vous avez oublié d'écrire un message!",
-                        },
+                    {
+                    pattern: nameRegexp,
+                    message:"Format invalide"
+                    }
                         ]}
                     >
                         <Input/>
@@ -120,10 +124,10 @@ const UpdateUser = ({
                         name="firstName"                         
                         onChange ={updateFirstName}
                     rules={[
-                        {
-                        required: true,
-                        message: "Oups, vous avez oublié d'écrire un message!",
-                        },
+                      {
+                    pattern: nameRegexp,
+                    message:"Format invalide"
+                }
                         ]}
                     >
                         <Input/>
@@ -134,10 +138,10 @@ const UpdateUser = ({
                         initialValue={email}                        
                         onChange ={updateEmail}
                     rules={[
-                        {
-                        required: true,
-                        message: "Oups, vous avez oublié d'écrire un message!",
-                        },
+                    {
+                        type: "email", 
+                        message: 'adresse email non valide'
+                    },
                         ]}
                     >
                         <Input/>
@@ -148,10 +152,10 @@ const UpdateUser = ({
                         name="phoneNumber"                         
                         onChange ={updatePhone}
                     rules={[
-                        {
-                        required: true,
-                        message: "Oups, vous avez oublié d'écrire un message!",
-                        },
+                    {
+                        pattern: txtRegexp,
+                        message:"Format invalide"
+                    }
                         ]}
                     >
                         <Input/>
@@ -161,6 +165,12 @@ const UpdateUser = ({
                     initialValue={adress}
                         name="adress"                         
                         onChange ={updateAdress}
+                            rules={[
+                    {
+                        pattern:txtRegexp,
+                        message:"Format invalide"
+                    }
+                    ]}
                     >
                         <Input/>
                     </Form.Item>
@@ -169,6 +179,12 @@ const UpdateUser = ({
                     initialValue={post}
                         name="post"                         
                         onChange ={updatePost}
+                        rules={[
+                    {
+                        pattern:txtRegexp,
+                        message:"Format invalide"
+                    }
+                    ]}
                     >
                         <Input/>
                     </Form.Item>
@@ -177,6 +193,12 @@ const UpdateUser = ({
                         initialValue={city}                      
                         name="city"                         
                         onChange ={updateCity}
+                         rules={[
+                    {
+                        pattern: nameRegexp,
+                        message:"Format invalide"
+                    }
+                    ]}
                     >
                         <Input/>
                     </Form.Item>
@@ -199,6 +221,7 @@ const UpdateUser = ({
                     <Button htmlType='submit'>Valider</Button>
                 </Form>  
                 {messageError&&<div className="message-error">{messageError}</div>}
+                {updateError&&<div className="message-error">{updateError}</div>}
         </div>
     );
 };

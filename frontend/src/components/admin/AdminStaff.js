@@ -15,12 +15,9 @@ const AdminStaff = () => {
 
     return (
         <div>
-            <h1>Conseil d'administration</h1>
-            <div>Le conseil d'administration compte {allStaff.length} membres</div>
-                <div className='usersButtons'>
-                    <Button className='usersButtons__buttons' onClick={seeStaff}>Voir membres</Button> 
-                </div>
-                
+            <h3>Conseil d'administration</h3>
+            <div>Le conseil d'administration compte {allStaff.length} membres</div> 
+            <button className='button1' onClick={seeStaff}>Voir les membres</button> 
         </div>
     );
 };

@@ -3,7 +3,7 @@ import React from 'react';
 const AdminBooks = () => {
     return (
         <div>
-            <h1>Bibliothèque</h1>
+            <h3>Bibliothèque</h3>
         </div>
     );
 };

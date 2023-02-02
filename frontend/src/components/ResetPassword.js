@@ -61,7 +61,7 @@ const ResetPassword = () => {
                     </Button>
                 ]}
                 >
-                    <div>Indiquer votre adresse email, vous recevrez un message avec un lien pour réinitialiser votre mot de passe</div>
+                    <div>Indiquer votre adresse email, si vous êtes adhérent, vous recevrez un lien pour réinitialiser votre mot de passe.</div>
                     <Form
                     name="normal_login"
                     className="login-form"
@@ -75,8 +75,12 @@ const ResetPassword = () => {
                         rules={[
                         {
                             required: true,
-                            message: 'Veuillez indiquer votre adresse email!',
+                            message: 'Veuillez indiquer votre adresse email',
                         },
+                        {
+                            type: "email", 
+                            message: 'adresse email non valide'
+                        }
                         ]}
                     >
                         <Input className="site-form-item-icon" placeholder='Email'/>

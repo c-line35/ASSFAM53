@@ -10,13 +10,12 @@ exports.createStaff=(req, res, next)=>{
     const staff = new Staff({
         user, imageUrl, grade, mission, coordonnees
     })
-   
-    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('staff')){
-        staff.save()
-        .then((data)=>res.status(201).json(data))
-        .catch((error)=>res.status(400).json({error}))
-    }else{
-        return res.status(401).json({error: 'Requête non authentifiée'})
+        if(req.auth.userRole === 'admin' && req.auth.userRights.includes('staff')){
+            staff.save()
+            .then((data)=>res.status(201).json(data))
+            .catch((error)=>res.status(400).json({error}))
+        }else{
+            return res.status(401).json({error: 'Requête non authentifiée'})
     }
 }
     exports.getStaffById=(req, res, next)=>{
@@ -33,6 +32,7 @@ exports.createStaff=(req, res, next)=>{
         }else{     
             return res.status(401).json({error: 'Requête non authentifiée'})
         }
+    
 }
 exports.getAllStaff = (req, res, next) =>{
         Staff.find()
@@ -62,7 +62,7 @@ exports.updateStaff=(req, res, next)=>{
     const coordonnees = staffObject.coordonnees;
 
     const valideGrade=inputRegexp.test(staffObject.grade);
-    const valideMission=inputRegexp.test(staffObject.grade);
+    const valideMission=inputRegexp.test(staffObject.mission);
     const valideCoordonnees=inputRegexp.test(staffObject.coordonnees);
 
     if(!valideGrade || !valideMission|| !valideCoordonnees){

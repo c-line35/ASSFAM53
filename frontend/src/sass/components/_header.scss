@@ -9,28 +9,35 @@
         align-items: center;
         @include background-header;
     }
-    &__nav{
+    &__head{
         display:flex;
-        justify-content: space-between;
-        width: 100%;
-        padding-top: 15px; 
-        a{
-            text-decoration: none;
-           
-        }
-    }
-    &__title{
-        display: flex;
         justify-content: space-around;
-        width: 100%;
-        &--color{
-            margin-top: -35px;
-            margin-left: 100px;
+        align-items: center;
+        width:100%;
+        margin-bottom: 30px;
+        &__title{
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            &--color{
+                margin-top: -35px;
+                margin-left: 100px;
+            }
+        }
+        &__nav{
+            &__logo{
+                height:130px;
+            }
         }
     }
-    img{
-        height: 130px;
-    }
+}
+.home-icone{
+    width:24px;
+    height:24px;
+}
+.navbar{
+    width: 100%;
+    background-color: none;
 }
 
 
@@ -41,10 +48,7 @@
         width: 100%;
     }
     .header{
-        &__nav{
-            flex-direction: column;
-            align-items: center;
-        }
+      
         &__title{
             &--color{
                 margin: 20px 0 0 0;

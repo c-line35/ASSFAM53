@@ -1,16 +1,5 @@
-.intro{
-margin: 40px;
-padding: 20px;
-background-color: rgba(255, 255, 255, 0.438);
-border-radius: 50px;
-    p{
-    margin: 0;
-    color: $color-quaternary;
-    text-align: center;
-    
-    }
-}
-.container{
+
+.containerHome{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,22 +7,30 @@ border-radius: 50px;
     width:100%; 
     background-image: radial-gradient(circle at 69% 86%, rgba(165, 165, 165,0.06) 0%, rgba(165, 165, 165,0.06) 25%,rgba(193, 193, 193,0.06) 25%, rgba(193, 193, 193,0.06) 50%,rgba(221, 221, 221,0.06) 50%, rgba(221, 221, 221,0.06) 75%,rgba(249, 249, 249,0.06) 75%, rgba(249, 249, 249,0.06) 100%),radial-gradient(circle at 49% 76%, rgba(129, 129, 129,0.06) 0%, rgba(129, 129, 129,0.06) 25%,rgba(164, 164, 164,0.06) 25%, rgba(164, 164, 164,0.06) 50%,rgba(200, 200, 200,0.06) 50%, rgba(200, 200, 200,0.06) 75%,rgba(235, 235, 235,0.06) 75%, rgba(235, 235, 235,0.06) 100%),radial-gradient(circle at 22% 64%, rgba(173, 173, 173,0.06) 0%, rgba(173, 173, 173,0.06) 25%,rgba(119, 119, 119,0.06) 25%, rgba(119, 119, 119,0.06) 50%,rgba(64, 64, 64,0.06) 50%, rgba(64, 64, 64,0.06) 75%,rgba(10, 10, 10,0.06) 75%, rgba(10, 10, 10,0.06) 100%),linear-gradient(307deg, rgb(255,255,255),rgb(255,255,255));
     &__carrousel{
+        margin-top:50px;
         width:100%;
-        height: 850px;
-     
+    }
+    &__map{
+        display:flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 100px;
     }
 }
 
 .testimony{
     display: flex;
+    
     justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
+    width:23%;
+    margin:100px auto;
     gap: 100px;
 }
 .events{
     width: 100%;
-    margin-top: 200px;
+    margin-top: 50px;
     padding-top: 20px;
     background-color: white;
     &__title{
@@ -63,16 +60,25 @@ border-radius: 50px;
         }
     }
 }
+#map{
+    width: 50%;
+    height: 300px;
+}
+
 
 @media screen and (max-width: 900px){
-    .intro{
-        padding: 20px 0;
-        background-color: rgba(255, 255, 255, 0);
-        border-radius: 0;
-        margin: 20px;    
+    .containerHome{
+       &__map{
+        flex-direction: column;
+       }
+    }
+   .testimony{
+    flex-direction: column-reverse;
+    gap:0;
+    margin-top: 50px;
     }
     .events{
-        margin-top: 300px;
+        margin-top: 50px;
         &__content{
             flex-direction: column; 
             margin-top: 20px;
@@ -87,4 +93,8 @@ border-radius: 50px;
         }
        
     }
+    #map{
+        width:100%;
+    }
+
 }

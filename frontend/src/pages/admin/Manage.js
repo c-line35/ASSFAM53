@@ -12,6 +12,8 @@ import { NavLink } from 'react-router-dom';
 import { usersContext } from '../../context/UsersContext';
 import { staffContext } from '../../context/StaffContext';
 import StaffList from '../../components/admin/StaffList';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 const Manage = () => {
 
@@ -21,9 +23,15 @@ const { afficheStaff }=useContext(staffContext);
 
 
     return (
-        <div>
+        <div> 
+          <Header/>
+         
+          
           {authProfil.role === "admin"
-            ?<div className='dashboard'>
+            ? <div className="dashboardMain">
+            <h2>Tableau de bord Administrateur</h2>
+            <div className='dashboard'>
+             
               {afficheUsers&&
                 <UsersList />
               }
@@ -37,17 +45,19 @@ const { afficheStaff }=useContext(staffContext);
 
               {afficheDashBoard &&
               <>
-                <div className='dashboard__bloc dashboard__bloc--intro'><AdminIntro/></div>
+                 
                 <div className='dashboard__bloc dashboard__bloc--users'><AdminUsers/></div>
                 <div className='dashboard__bloc dashboard__bloc--staff'><AdminStaff/></div>
                 <div className='dashboard__bloc dashboard__bloc--books'><AdminBooks/></div>
                 <div className='dashboard__bloc dashboard__bloc--articles'><AdminArticles/></div>
-                <div className='dashboard__bloc dashboard__bloc--logo'><NavLink to="/"><img src='./assets/logos/logo.png' alt='assfam53'/></NavLink></div>
               </>
               }
-            </div>
+              </div> 
+            </div> 
           :<Auth />
         }
+        
+        <Footer/>
         </div>
     );
 };

@@ -4,7 +4,11 @@ import { authContext } from '../../context/AuthContext';
 import { usersContext } from '../../context/UsersContext';
 
 const date = new Date()
-const year = date.getFullYear()
+const year = date.getFullYear();
+
+const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.":{}!?;]{1,2000}$/i);
+const nameRegexp = new RegExp(/^[a-z\séèçêëàù'-]{1,2000}$/i);
+const validePassword = new RegExp (/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/)
 
 const AdminCreateUser = ({ setIsModalVisible }) => {
 
@@ -12,13 +16,14 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
     const { getAllUsers }=useContext(usersContext)
 
     const [value, setValue] = useState(1);
+    const [messageError, setMessageError]=useState()
 
     const onChange = (e) => {
       setValue(e.target.value);
     }
 
     const onFinish = (values)=>{
-        const { email, firstName,  form, level, password, phoneNumber, end, adress, post, city } = values;
+        const { email, firstName, level, password, phoneNumber, end, adress, post, city } = values;
         const lastName = values.lastName.toUpperCase();
         reqInstance.post(
             "/auth/signup",
@@ -26,7 +31,6 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 email,
                 firstName,
                 lastName,
-                form,
                 level, 
                 password,
                 role:'user',
@@ -42,6 +46,7 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
             getAllUsers()
             setIsModalVisible(false)
         })
+        .catch((err)=>setMessageError('Une erreur est survenue'))
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -66,8 +71,12 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 rules={[
                 {
                     required: true,
-                    message: 'Veuillez entrer votre nom!',
+                    message: 'Veuillez entrer un nom',
                 },
+                {
+                    pattern: nameRegexp,
+                    message:"Format invalide"
+                }
                 ]}
             >
                 <Input />
@@ -78,8 +87,12 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 rules={[
                 {
                     required: true,
-                    message: 'Veuillez entrer votre prénom!',
+                    message: 'Veuillez entrer un prénom',
                 },
+                {
+                    pattern: nameRegexp,
+                    message:"Format invalide"
+                }
                 ]}
             >
                 <Input />
@@ -88,9 +101,13 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 label="email"
                 name="email"
                 rules={[
+                {type: "email", 
+                    message: 'adresse email non valide'
+                   
+                },
                 {
                     required: true,
-                    message: 'Veuillez entrer votre adresse email!',
+                    message: 'Veuillez entrer un email',
                 },
                 ]}
             >
@@ -104,6 +121,10 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                     required: true,
                     message: 'Veuillez entrer un numéro de téléhone',
                 },
+                {
+                    pattern: txtRegexp,
+                    message:"Format invalide"
+                }
                 ]}
             >
                 <Input
@@ -115,6 +136,12 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
             <Form.Item
                 name="adress"
                 label="Adresse"
+                rules={[
+                    {
+                        pattern:txtRegexp,
+                        message:"Format invalide"
+                    }
+                    ]}
             >
                 <Input
                 style={{
@@ -125,6 +152,12 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
             <Form.Item
                 name="post"
                 label="Code Postal"
+                rules={[
+                    {
+                        pattern: txtRegexp,
+                        message:"Format invalide"
+                    }
+                    ]}
             >
                 <Input
                 style={{
@@ -135,6 +168,12 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
             <Form.Item
                 name="city"
                 label="Ville"
+                rules={[
+                    {
+                        pattern: nameRegexp,
+                        message:"Format invalide"
+                    }
+                    ]}
             >
                 <Input
                 style={{
@@ -146,11 +185,20 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                 label="Mot de passe"
                 name="password"
                 rules={[
-                {
-                    message: 'Veuillez entrer un mot de passe!',
-                    required: true
-                },
-                ]}
+                    {
+                      required: true,
+                      message: 'Veuillez rentrer un mot de passe',
+                    },
+                    {
+                      pattern: validePassword,
+                      message:`Votre mot de passe doit contenir entre 
+                      8 à 15 caractères__
+                      au moins une lettre minuscule__
+                      au moins une lettre majuscule__
+                      au moins un chiffre__
+                      au moins un de ces caractères spéciaux: $ @ % * + - _ !`
+                    }
+                  ]}
             >
                 <Input.Password />
             </Form.Item>
@@ -167,7 +215,7 @@ const AdminCreateUser = ({ setIsModalVisible }) => {
                     <Radio value={year + 1}>{year+1}</Radio>
                 </Radio.Group>
             </Form.Item>
-        
+            {messageError&& <div className='message-error'>{messageError}</div>}
             <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button">
                 Créer

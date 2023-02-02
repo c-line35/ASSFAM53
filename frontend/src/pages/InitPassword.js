@@ -6,6 +6,9 @@ import { NavLink } from 'react-router-dom';
 let urlPage = window.location.href ;
 let url = new URL(urlPage);
 let token = url.searchParams.get("token")
+
+const validePassword = new RegExp (/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/)
+
 const InitPassword = () => {
 
     const { reqInstance }=useContext(authContext)
@@ -65,8 +68,17 @@ const InitPassword = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Veuillez inscrire votre mot de passe!',
+                    message: 'Veuillez rentrer un mot de passe',
                   },
+                  {
+                    pattern: validePassword,
+                    message:`Votre mot de passe doit contenir entre 
+                    8 à 15 caractères__
+                    au moins une lettre minuscule__
+                    au moins une lettre majuscule__
+                    au moins un chiffre__
+                    au moins un de ces caractères spéciaux: $ @ % * + - _ !`
+                  }
                 ]}
               >
                 <Input.Password />

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { staffContext } from './StaffContext';
 
 
 export const authContext = React.createContext({
@@ -14,13 +15,18 @@ export const authContext = React.createContext({
     isAdminAdmin:false,
     setIsAdminAdmin:()=>{},
     isAdminStaff:"",
-    setIsAdminStaff:()=>{}
+    setIsAdminStaff:()=>{},
+    connect:"",
+    setConnect:()=>{}
 });
 
 const AuthContextProvider=({ children })=>{
-  
+    
+const { getAllStaff }=useContext(staffContext);
+
     const [authProfil, setAuthProfil] = useState('');
-    const [ token, setToken ] = useState('');
+    const [token, setToken ] = useState('');
+    const [connect, setConnect]=useState(false);
     const [isAdminUser, setIsAdminUser]=useState(false);
     const [isAdminAdmin, setIsAdminAdmin]=useState(false);
     const [isAdminStaff, setIsAdminStaff]=useState(false);
@@ -34,10 +40,11 @@ const AuthContextProvider=({ children })=>{
         getProfil()
     },[token])
     const reqInstance = axios.create({
-        baseURL: process.env.REACT_APP_URL_REQ
-        
-       // "http://localhost:3001/api"
-     //  'https://assfamaccueil53.org/api'
+        baseURL: 
+        //'https://assfamaccueil53.org/api'
+        //process.env.REACT_APP_URL_REQ
+       "http://localhost:3001/api"
+     
             }) 
 
     const reqBearer = axios.create({
@@ -45,9 +52,11 @@ const AuthContextProvider=({ children })=>{
             Authorization: `Bearer ${token}`,
                 },
        
-        baseURL: process.env.REACT_APP_URL_REQ
-        // 'http://localhost:3001/api'
-   // ' https://assfamaccueil53.org/api'
+                baseURL: 
+                //'https://assfamaccueil53.org/api'
+                //process.env.REACT_APP_URL_REQ
+               "http://localhost:3001/api"
+      
                     })
     
 
@@ -68,6 +77,7 @@ const AuthContextProvider=({ children })=>{
                 if(res.data.adminRights.includes('staff')){
                     setIsAdminStaff(true)
                 }
+                getAllStaff()
             })
         :setAuthProfil('')
     }
@@ -81,7 +91,8 @@ const AuthContextProvider=({ children })=>{
             reqInstance, reqBearer, 
             isAdminUser, setIsAdminUser,
             isAdminAdmin, setIsAdminAdmin,
-            isAdminStaff, setIsAdminStaff
+            isAdminStaff, setIsAdminStaff,
+            connect, setConnect
             } }>
             { children}
         </authContext.Provider>

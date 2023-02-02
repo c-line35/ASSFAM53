@@ -126,7 +126,7 @@ const columns = [
   
     return (
       <div>
-           <h2>Droits des administrateurs</h2>
+           <h4>Droits des administrateurs</h4>
            <div className='adminRights-head'>
            {isAdminAdmin&&
             <Space direction="vertical">
@@ -141,7 +141,7 @@ const columns = [
     </Space>
     } 
        <div className='backDashboard' onClick={back}>
-         <img src="../assets/icones/dashboard.png" alt='tableau de bord'/>
+         <img src="../assets/icones/dashboardColor.png" alt='tableau de bord'/>
          Retour
        </div> 
     </div>
