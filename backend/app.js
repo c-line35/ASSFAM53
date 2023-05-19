@@ -14,6 +14,7 @@ mongoose.connect(process.env.URL_MONGOOSE,
 
 const userRoutes = require('./routes/user');
 const staffRoutes = require('./routes/staff');
+const articleRoutes = require('./routes/article');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
@@ -21,6 +22,7 @@ app.use(cors());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
 app.use('/api/staff', staffRoutes);
+app.use('/api/article', articleRoutes);
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 

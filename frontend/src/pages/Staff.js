@@ -7,6 +7,7 @@ import { staffContext } from '../context/StaffContext'
 const Staff = () => {
   const { allStaff }=useContext(staffContext)
   
+  
   return (
     <div>
       <Header />

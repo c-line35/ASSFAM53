@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { staffContext } from '../../context/StaffContext';
 import { authContext } from '../../context/AuthContext';
@@ -89,14 +89,20 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
         setImage(e.file?e.file:staff.imageUrl)
     }
 
-    const deleteMission=(mission)=>{
-        let tab=tmpMission.filter((el)=>el!==mission)  
-        setTmpMission(tab) 
-        console.log(tab)
+    const deleteMission=(e)=>{
+        let i = e.currentTarget.getAttribute('data-index');
+        tmpMission.splice(i, 1)
+        e.currentTarget.parentNode.setAttribute('class', 'inputToDelete');
     }
+
+  const editMission=(e)=>{
+        let i = e.target.getAttribute('data-index');
+        tmpMission.splice(i, 1, e.target.value)
+    } 
   const checkMission=(e)=>{
         setNewMission(e.target.value)
     } 
+
     const addMission=()=>{
         if(newMission.length>0){
             let foundEl=tmpMission.find((el)=>el === newMission)
@@ -185,15 +191,14 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
                     </Form>
                    
                     <h3>Missions</h3>
-                   
                         {tmpMission&& tmpMission.map((m, index)=><div key={index} className="updateMission">
-                            <Form
-                            >
-                                <div className='checkMission'>
-                                    <Form.Item initialValue={m}  onChange={checkMission}>
-                                        <TextArea defaultValue={m} rows={1} ></TextArea>
+                            
+                            <Form>
+                                <div className='checkMission' >
+                                    <Form.Item initialValue={m}  onChange={editMission}  >
+                                        <TextArea defaultValue={m} rows={1} data-index={index}></TextArea>
                                     </Form.Item> 
-                                    <Button type='text' onClick={()=>{deleteMission(m)}} ><DeleteOutlined /></Button>
+                                    <Button type='text' data-index={index} onClick={deleteMission} ><DeleteOutlined /></Button>
                                 </div> 
                             </Form>
                             </div>)}
@@ -235,8 +240,6 @@ const UpdateStaff = ({ staff, setStaff, isModalVisible, setIsModalVisible}) => {
                     </div>
                    
                 </div>
-
-
                 }
             </Modal>
    </> 

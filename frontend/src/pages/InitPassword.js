@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { authContext } from '../context/AuthContext';
-import { NavLink } from 'react-router-dom';
+import Auth from '../components/Auth';
 
 let urlPage = window.location.href ;
 let url = new URL(urlPage);
@@ -15,7 +15,8 @@ const InitPassword = () => {
 
     const [ newPassword, setNewPassword ]=useState('')
     const [ confirm, setConfirm]=useState('')
-    const [ isPasswordModif, setIsPasswordModif]=useState(false)
+    const [ isPasswordModif, setIsPasswordModif]=useState(false);
+    const [messageError, setMessageError]=useState();
 
     const getNewPassword=(e)=>{
       setNewPassword(e.target.value)
@@ -36,19 +37,16 @@ const InitPassword = () => {
             setConfirm('')
             setNewPassword('')
             setIsPasswordModif(true)
+            alert('Votre mot de passe a bien été modifié')
           })
+          .catch(()=>setMessageError('Une erreur est survenue'))
         }
       } 
       return (
         <div className = 'initPassword'>
         {
           isPasswordModif
-          ?<div className='initPassword__form'>
-              <p>Votre mot de pass a été modifié</p>
-              <NavLink to="/admin"> 
-                <p>Retour à la page d'identification</p>
-              </NavLink> 
-          </div>
+          ?<Auth />
           :<div className='initPassword__form'>
               <div className='initPassword__form__header'>
                 <img src='../assets/logos/logo.png' alt="logo de l'association"></img>
@@ -103,6 +101,7 @@ const InitPassword = () => {
                   Envoyer
                 </Button>
               </Form.Item>
+              {messageError&& <div className='message-error'>{messageError}</div>}
             </Form>
           </div>
           }

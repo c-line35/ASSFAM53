@@ -15,7 +15,9 @@ const StaffContextProvider=({ children })=>{
     const [allStaff, setAllStaff]= useState(['']);
     const [afficheStaff, setAfficheStaff]=useState(false);
 
-
+    useEffect(()=>{
+        getAllStaff()
+   },[] )
     const getAllStaff=()=>{
         token?
         reqBearer.get('/staff/infos/conn')

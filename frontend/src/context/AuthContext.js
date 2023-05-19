@@ -16,6 +16,8 @@ export const authContext = React.createContext({
     setIsAdminAdmin:()=>{},
     isAdminStaff:"",
     setIsAdminStaff:()=>{},
+    isAdminArticle:"",
+    setIsAdminArticle:()=>{},
     connect:"",
     setConnect:()=>{}
 });
@@ -30,6 +32,7 @@ const { getAllStaff }=useContext(staffContext);
     const [isAdminUser, setIsAdminUser]=useState(false);
     const [isAdminAdmin, setIsAdminAdmin]=useState(false);
     const [isAdminStaff, setIsAdminStaff]=useState(false);
+    const [isAdminArticle, setIsAdminArticle]=useState(false);
 
 
     const initToken=()=>{
@@ -41,9 +44,9 @@ const { getAllStaff }=useContext(staffContext);
     },[token])
     const reqInstance = axios.create({
         baseURL: 
-        //'https://assfamaccueil53.org/api'
+        // 'https://assfamaccueil53.org/api'
         //process.env.REACT_APP_URL_REQ
-       "http://localhost:3001/api"
+      "http://localhost:3001/api"
      
             }) 
 
@@ -53,9 +56,9 @@ const { getAllStaff }=useContext(staffContext);
                 },
        
                 baseURL: 
-                //'https://assfamaccueil53.org/api'
+               //'https://assfamaccueil53.org/api'
                 //process.env.REACT_APP_URL_REQ
-               "http://localhost:3001/api"
+                "http://localhost:3001/api"
       
                     })
     
@@ -77,6 +80,9 @@ const { getAllStaff }=useContext(staffContext);
                 if(res.data.adminRights.includes('staff')){
                     setIsAdminStaff(true)
                 }
+                if(res.data.adminRights.includes('articles')){
+                    setIsAdminArticle(true)
+                }
                 getAllStaff()
             })
         :setAuthProfil('')
@@ -92,6 +98,7 @@ const { getAllStaff }=useContext(staffContext);
             isAdminUser, setIsAdminUser,
             isAdminAdmin, setIsAdminAdmin,
             isAdminStaff, setIsAdminStaff,
+            isAdminArticle, setIsAdminArticle,
             connect, setConnect
             } }>
             { children}

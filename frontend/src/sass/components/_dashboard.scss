@@ -35,6 +35,10 @@
 }
 .backDashboard{
     text-align: end;
+    a{
+        text-decoration: none;
+        color:$color-quaternary;
+    }
 }
 .dashboardMain{
     margin-top: 50px;

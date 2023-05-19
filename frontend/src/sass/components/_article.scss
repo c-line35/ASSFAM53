@@ -1,0 +1,26 @@
+.parag{
+    margin-bottom: 15px;
+    display:flex;
+    flex-direction: column;
+    &__number{
+        text-decoration: underline;
+    }
+    &__content{
+        display:flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        &__text{
+            display: flex;
+            width: 90%;
+            padding: 15px;
+            border-left:rgba(0, 0, 0, 0.123) 1px solid;
+            border-right:rgba(0, 0, 0, 0.123) 1px solid;
+            margin: 20px 20px;
+            }
+        &__buttons{
+            display:flex;
+            flex-direction: column;
+        }
+    }
+}

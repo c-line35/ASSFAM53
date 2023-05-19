@@ -14,6 +14,7 @@
 @import './components/user';
 @import './components/authForm';
 @import './components/modifPassword';
+@import './components/article';
 @import './layout/level';
 @import './components/adminList';
 @import './components/dashboard';
@@ -24,6 +25,7 @@
 @import './layout/button1';
 @import './pages/Home.scss';
 @import './pages/Join.scss';
+@import './pages/articlesList.scss';
 
 
 *{
@@ -94,5 +96,7 @@ h4{
        display: none;
     }
 }
-
+.inputToDelete{
+    display:none;
+}
 

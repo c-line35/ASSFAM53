@@ -1,0 +1,73 @@
+.pageArticles{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 100px auto;
+    &__liste{
+        margin-top: 50px;
+    }
+}
+
+.listArticles{
+    display:flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.adminArticle{
+    display:flex;
+    flex-direction: column;
+    width: 30%; 
+    min-width: 400px;
+    margin: 50px;
+    border: 1px rgb(212, 212, 212) solid; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 7px; 
+    justify-content:flex-end;
+    &:hover{
+        border: 1px rgb(197, 197, 197) solid; 
+        box-shadow: 0 5px 9px 2px rgba(0, 0, 0, 0.3), 0 7px 21px 2px rgba(0, 0, 0, 0.29);
+    }
+    &__content{
+        display:flex;
+        flex-direction: column;
+        padding: 15px;
+        img{
+            display: flex;
+            margin:auto;
+            width:50%;
+            object-fit: cover;
+        }
+    }
+    &__settings{
+        display:flex;
+        justify-content: space-around;
+        border-top: 1px solid rgb(212, 212, 212);
+        &--first{
+             border-right: 1px solid rgb(212, 212, 212)!important;
+        }
+        button{
+            display:flex;
+            justify-content: center;
+            background-color: white;
+            border: none;
+            margin:10px 0;
+            width: 50%;
+            img{
+                width: 20px;
+                margin:10px 50px; 
+                &:hover{
+                cursor: pointer;
+                }
+            }
+        }
+    }
+}
+.updateArticleForm{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+}
+.imageActuelle{
+    width: 30%;
+}

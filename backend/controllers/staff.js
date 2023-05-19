@@ -104,7 +104,7 @@ exports.deleteStaff=(req, res, next)=>{
            if(req.auth.userRole === 'admin' && req.auth.userRights.includes('staff')) {
                 if(staff.imageUrl){
                     const filename= staff.imageUrl.split('/images/')[1];       
-                    fs.unlink(`images/${filename}`, (err)=>{
+                    fs.unlink(`images/staff/${filename}`, (err)=>{
                         if(err)console.log(err)
                         else console.log('ancienne image supprimée')})                
                 }}})

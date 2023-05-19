@@ -9,6 +9,10 @@
         font-weight: bold;
         background-color: rgba(255, 255, 255, 0.751);
     }
+    a{
+        text-decoration: none;
+        color: $color-quaternary;
+    }
 }
 @media screen and (max-width: 900px){
     .button1{

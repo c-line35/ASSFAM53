@@ -15,6 +15,8 @@ import Manage from './pages/admin/Manage';
 import Offers from './pages/Offers';
 import Profil from './pages/Profil';
 import StaffContextProvider from './context/StaffContext';
+import ArticlesPage from './pages/admin/ArticlesPage';
+import ArticlesContextProvider from './context/ArticlesContext';
 
 
 
@@ -24,6 +26,7 @@ const App = () => {
     <AuthContextProvider>
     <UsersContextProvider>
     <StaffContextProvider>
+    <ArticlesContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
@@ -32,12 +35,13 @@ const App = () => {
         <Route path="/partners" element={<Partners />} />
         <Route path="/staff" element={<Staff />} />
         <Route path="/offers" element={<Offers />} />                 
-        <Route path="/initpassword" element={<InitPassword /> } /> 
+        <Route path="/initpassword/:token" element={<InitPassword /> } /> 
         <Route path="/management" element={<Manage /> } /> 
         <Route path="/profil" element={<Profil /> } /> 
-     
+        <Route path="/adminarticles" element={<ArticlesPage/> } /> 
       </Routes>
     </BrowserRouter> 
+    </ArticlesContextProvider>
     </StaffContextProvider> 
     </UsersContextProvider>
     </AuthContextProvider>

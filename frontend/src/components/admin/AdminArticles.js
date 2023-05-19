@@ -1,9 +1,57 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { Button, Modal } from 'antd';
+import { authContext } from '../../context/AuthContext';
+import AdminCreateArticle from './AdminCreateArticle';
+import { NavLink } from 'react-router-dom'
 
 const AdminArticles = () => {
+
+    const [isModalArticleVisible, setIsModalArticleVisible] = useState(false);
+    const [isModalEventVisible, setIsModalEventVisible] = useState(false);
+
+ 
+    const { isAdminArticle }=useContext(authContext);
+
+    const handleCancel = () => {
+        setIsModalArticleVisible(false);
+        setIsModalEventVisible(false);
+    };
+    
     return (
         <div>
-            <h3>Articles à la une</h3>
+            <h3>Articles à la une / Agenda</h3>
+            {isAdminArticle&& 
+            <>
+                <button className='button1' onClick={()=>setIsModalArticleVisible(true)} >Créer un nouvel article</button> 
+                <button className='button1' ><NavLink to="/adminarticles">Voir tous les articles</NavLink></button> 
+                <button className='button1' onClick={()=>setIsModalEventVisible(true)}>Créer un nouvel évènement</button>
+            </>
+            }  
+            <Modal
+               title="Nouvel article" 
+               visible={isModalArticleVisible} 
+               destroyOnClose={true}
+               onCancel={handleCancel}
+                footer={[
+                    <Button key="back" onClick={handleCancel}>
+                        Fermer
+                    </Button>,
+                    ]}
+                >
+                <AdminCreateArticle />
+            </Modal>
+            <Modal
+               title="Nouvel Evenement" 
+               visible={isModalEventVisible} 
+               destroyOnClose={true}
+               onCancel={handleCancel}
+                footer={[
+                    <Button key="back" onClick={handleCancel}>
+                        Fermer
+                    </Button>,
+                    ]}
+                >
+            </Modal>
         </div>
     );
 };
