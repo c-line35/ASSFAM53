@@ -19,7 +19,9 @@ export const authContext = React.createContext({
     isAdminArticle:"",
     setIsAdminArticle:()=>{},
     connect:"",
-    setConnect:()=>{}
+    setConnect:()=>{},
+    isAuthenticate:false,
+    setIsAuthenticate:()=>{}
 });
 
 const AuthContextProvider=({ children })=>{
@@ -29,6 +31,7 @@ const { getAllStaff }=useContext(staffContext);
     const [authProfil, setAuthProfil] = useState('');
     const [token, setToken ] = useState('');
     const [connect, setConnect]=useState(false);
+     const [isAuthenticate, setIsAuthenticate]= useState(false)
     const [isAdminUser, setIsAdminUser]=useState(false);
     const [isAdminAdmin, setIsAdminAdmin]=useState(false);
     const [isAdminStaff, setIsAdminStaff]=useState(false);
@@ -71,6 +74,7 @@ const { getAllStaff }=useContext(staffContext);
             )
             .then((res)=>{
                 setAuthProfil(res.data)
+                setIsAuthenticate(true)
                 if(res.data.adminRights.includes('users')){
                     setIsAdminUser(true)
                 }
@@ -99,7 +103,8 @@ const { getAllStaff }=useContext(staffContext);
             isAdminAdmin, setIsAdminAdmin,
             isAdminStaff, setIsAdminStaff,
             isAdminArticle, setIsAdminArticle,
-            connect, setConnect
+            connect, setConnect,
+            isAuthenticate, setIsAuthenticate
             } }>
             { children}
         </authContext.Provider>

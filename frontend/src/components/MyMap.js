@@ -9,7 +9,7 @@ import iconGreen from "../assets/iconeGreen"
 
 const MyMap = () => {
  
-  const { allStaff, getAllStaff }=useContext(staffContext);
+  const { staffWithCoord, getAllStaff }=useContext(staffContext);
 
   useEffect(()=>{
     getAllStaff()
@@ -24,8 +24,8 @@ const MyMap = () => {
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
      <LocationMarker/>
-   {allStaff&&
-    allStaff.map((staff, index)=><LocationStaff key={index} staff={staff}/>)}
+   {staffWithCoord&&
+    staffWithCoord.map((staff, index)=><LocationStaff key={index} staff={staff}/>)}
    <Marker position={[48.085598080446765, -0.7560736737355223]} icon={iconGreen}>
         <Popup>
           Siège<br/>
