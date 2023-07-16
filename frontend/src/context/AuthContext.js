@@ -31,7 +31,7 @@ const { getAllStaff }=useContext(staffContext);
     const [authProfil, setAuthProfil] = useState('');
     const [token, setToken ] = useState('');
     const [connect, setConnect]=useState(false);
-     const [isAuthenticate, setIsAuthenticate]= useState(false)
+    const [isAuthenticate, setIsAuthenticate]= useState(false)
     const [isAdminUser, setIsAdminUser]=useState(false);
     const [isAdminAdmin, setIsAdminAdmin]=useState(false);
     const [isAdminStaff, setIsAdminStaff]=useState(false);
@@ -41,10 +41,7 @@ const { getAllStaff }=useContext(staffContext);
     const initToken=()=>{
         setToken(localStorage.getItem('token'))
     }
- 
-    useEffect(()=>{
-        getProfil()
-    },[token])
+
     const reqInstance = axios.create({
         baseURL: 
         // 'https://assfamaccueil53.org/api'
@@ -68,8 +65,8 @@ const { getAllStaff }=useContext(staffContext);
 
     const getProfil = ()=>{
         initToken()
-        token
-        ?reqBearer.get(
+        if(token){
+        reqBearer.get(
             `/auth/user/${token}`,
             )
             .then((res)=>{
@@ -89,9 +86,15 @@ const { getAllStaff }=useContext(staffContext);
                 }
                 getAllStaff()
             })
-        :setAuthProfil('')
+            .catch(()=>{
+                setAuthProfil([''])
+            })
+        }
     }
-       
+    useEffect(()=>{
+        getProfil()
+    },[token])
+
     return(
 
         <authContext.Provider value={ {

@@ -8,7 +8,7 @@ import { authContext } from '../context/AuthContext';
 
 const Home = () => {
 
-  const { token }=useContext(authContext)
+  const { isAuthenticate }=useContext(authContext)
  
   return (
     <div>
@@ -24,7 +24,7 @@ const Home = () => {
           </video>
           <h1>Témoignages... </h1>
         </div>   */}
-         {token&& 
+         {isAuthenticate&& 
          <div className='containerHome__map'>
           <h2>Besoin de renseignements? <br/>Trouver un membre du bureau proche de chez vous</h2>
           <MyMap />
