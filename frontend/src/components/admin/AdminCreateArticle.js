@@ -29,7 +29,7 @@ const AdminCreateArticle = () => {
             title,
             content,
             position,
-            document:false
+            document:''
         }
         console.log(data)
         const form = new FormData();

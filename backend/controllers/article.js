@@ -1,7 +1,7 @@
 const Article =require('../models/articles')
 const fs = require('fs')
 
-const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.?":{}]{0,200}$/i);
+const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.?":{}]{0,20000}$/i);
 
 exports.createArticle=(req, res, next)=>{
     let articleObject = JSON.parse(req.body.data);
@@ -22,12 +22,13 @@ exports.createArticle=(req, res, next)=>{
             if(req.file){
                 const host = req.get('host')
                 let imageUrl=`${req.protocol}://${host}/images/${req.file.filename}`
-                const article = new Article({ title, imageUrl, content, position})
+                let document=''
+                const article = new Article({ title, imageUrl, content, position, document})
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
             }else{
-                const article = new Article({title, content, position} )
+                const article = new Article({title, content, position, document} )
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
@@ -88,9 +89,15 @@ exports.addDoc=(req, res, next)=>{
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
                 Article.findOne({_id:id})
                 .then((article)=>{
+                    if(article.document){
+                        const filename= article.document.split('/articleDoc/')[1];       
+                        fs.unlink(`articleDoc/${filename}`, (err)=>{
+                            if(err)console.log(err)
+                            else console.log('ancien document supprimé')})                
+                    }
                     const host = req.get('host')
-                    let doc = `${req.protocol}://${host}/articleDoc/${req.file.filename}`
-                    Article.updateOne({_id:id}, {doc})
+                    let document = `${req.protocol}://${host}/articleDoc/${req.file.filename}`
+                    Article.updateOne({_id:id}, { document })
                     .then(() => res.status(200).json({ message: 'document ajouté !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
                 })

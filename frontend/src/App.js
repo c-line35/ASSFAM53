@@ -18,9 +18,6 @@ import StaffContextProvider from './context/StaffContext';
 import ArticlesPage from './pages/admin/ArticlesPage';
 import ArticlesContextProvider from './context/ArticlesContext';
 
-
-
-
 const App = () => {
   return (
     <AuthContextProvider>

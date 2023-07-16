@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Article = ({articles}) => {
-
+console.log(articles.document)
     return (
       
         <div className="article">
@@ -16,9 +16,9 @@ const Article = ({articles}) => {
         <div className="article__text">{articles.content.map((texte, index)=>(
           <p key = {index} >{texte}</p>))}
         </div>
-        {articles.openPage? <div className="button">
-          <a href={'./assets/'+ articles.pdfLink +'.pdf'} target="blank">En savoir plus</a>
-        </div>:""}
+        {articles.document&& <div className="button">
+          <a href={articles.document} target="blank">En savoir plus</a>
+        </div>}
     </div>
       
     );

@@ -15,6 +15,7 @@ const AdminArticles = () => {
     const handleCancel = () => {
         setIsModalArticleVisible(false);
         setIsModalEventVisible(false);
+
     };
     
     return (
@@ -40,6 +41,7 @@ const AdminArticles = () => {
                 >
                 <AdminCreateArticle />
             </Modal>
+           
             <Modal
                title="Nouvel Evenement" 
                visible={isModalEventVisible} 
