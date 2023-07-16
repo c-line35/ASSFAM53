@@ -6,7 +6,7 @@ import UpdateArticle from '../../components/admin/UpdateArticle';
 
 const ArticlesPage = () => {
 
-    const { articlesList, editArticle, getEditArticle} = useContext(articlesContext);
+    const { articlesList, editArticle, getEditArticle, addArticleDoc, getAddArticleDoc} = useContext(articlesContext);
 
     return (
         <div className='pageArticles'>
@@ -31,8 +31,9 @@ const ArticlesPage = () => {
                                         <p>{article.content[0]}...</p>
                                     </div>
                                     <div className='adminArticle__settings'>
-                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--first' onClick={()=>{getEditArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>
-                                        <button><img alt='supprimer' src="../assets/icones/poubelle.png"/></button>
+                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Modifier' onClick={()=>{getEditArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>
+                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un document' onClick={()=>{getAddArticleDoc(article)}}><img alt='ajouter un document' src="../assets/icones/document.png"/></button>
+                                        <button data-id={article._id} type='button'className='adminArticle__settings' title='Supprimer'><img alt='supprimer' src="../assets/icones/poubelle.png"/></button>
                                     </div>
                             </div>
                         ))

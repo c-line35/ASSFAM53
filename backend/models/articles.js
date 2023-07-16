@@ -4,8 +4,7 @@ const articleSchema=mongoose.Schema({
     title:{type: String, required:true},
     imageUrl:{type: String},
     content:{type:[String]},
-    document:{type: Boolean, default:false},
-    link:{type:String},
+    document:{type: String},
     position:{type: Number}
 
 })

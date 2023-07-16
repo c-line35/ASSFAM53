@@ -1,7 +1,7 @@
 const Article =require('../models/articles')
 const fs = require('fs')
 
-const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.":{}]{0,200}$/i);
+const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.?":{}]{0,200}$/i);
 
 exports.createArticle=(req, res, next)=>{
     let articleObject = JSON.parse(req.body.data);
@@ -81,5 +81,19 @@ exports.updateArticle=(req, res, next)=>{
         }else{
             return res.status(401).json({message: 'Requête non authentifiée'})
         }
+    }
+}
+exports.addDoc=(req, res, next)=>{
+    const { id }= req.params;
+        if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
+                Article.findOne({_id:id})
+                .then((article)=>{
+                    const host = req.get('host')
+                    let doc = `${req.protocol}://${host}/articleDoc/${req.file.filename}`
+                    Article.updateOne({_id:id}, {doc})
+                    .then(() => res.status(200).json({ message: 'document ajouté !'}))
+                    .catch(error => res.status(400).json({ message: error.message}));
+                })
+                .catch((error)=> res.status(400).send({message: error.message}))
     }
 }
