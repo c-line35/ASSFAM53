@@ -6,20 +6,21 @@ allSatff:[''],
 getAllStaff:()=>{},
 afficheStaff:"",
 setAfficheSatff:()=>{},
+staffWithCoord:[''],
+setStaffWithCoord:()=>{}
 
 })
 
 const StaffContextProvider=({ children })=>{
-    const { reqBearer, token } = useContext(authContext);
+    const { reqBearer, isAuthenticate } = useContext(authContext);
 
     const [allStaff, setAllStaff]= useState(['']);
     const [afficheStaff, setAfficheStaff]=useState(false);
+    const [staffWithCoord, setStaffWithCoord]=useState([''])
 
-    useEffect(()=>{
-        getAllStaff()
-   },[] )
+  
     const getAllStaff=()=>{
-        token?
+        isAuthenticate?
         reqBearer.get('/staff/infos/conn')
         .then((res)=>{
            setAllStaff(res.data)
@@ -29,14 +30,34 @@ const StaffContextProvider=({ children })=>{
            setAllStaff(res.data)
         })
     }
+    const getStaffWithCoord=()=>{
+        if (allStaff.length>1){
+            const newStaff = []
+            for(let staff of allStaff){
+                if(staff.coordonnees && staff.coordonnees.length>0){
+                    newStaff.push(staff)
+                }
+            }
+        setStaffWithCoord(newStaff)
+        }
+    }
 
-    
+    useEffect(()=>{
+        getAllStaff()
+   },[] )
+
+   useEffect(()=>{
+    getStaffWithCoord()
+   },[allStaff])
+
+
 return(
     <staffContext.Provider value ={
         {
         allStaff, getAllStaff,
         afficheStaff, setAfficheStaff,
-    }
+        staffWithCoord
+        }
     }>
         { children }
     </staffContext.Provider>

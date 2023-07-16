@@ -13,8 +13,10 @@ import iconBlue from "../assets/iconeBlue"
     let long;
 
 const getCoordonnees=()=>{
-  lat = staff.coordonnees[0].split(', ')[0]
-  long = staff.coordonnees[0].split(', ')[1]
+  if(staff.coordonnees.length>0){
+    lat = staff.coordonnees[0].split(', ')[0]
+    long = staff.coordonnees[0].split(', ')[1]
+  }
 
 }
 
