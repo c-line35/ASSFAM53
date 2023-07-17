@@ -2,6 +2,12 @@ const Article =require('../models/articles')
 const fs = require('fs')
 
 const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.?":{}]{0,20000}$/i);
+const linkRegexp = new RegExp('^(https?:\\/\\/)?'+ // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
 
 exports.createArticle=(req, res, next)=>{
     let articleObject = JSON.parse(req.body.data);
@@ -23,12 +29,13 @@ exports.createArticle=(req, res, next)=>{
                 const host = req.get('host')
                 let imageUrl=`${req.protocol}://${host}/images/${req.file.filename}`
                 let document=''
-                const article = new Article({ title, imageUrl, content, position, document})
+                let lien=''
+                const article = new Article({ title, imageUrl, content, position, document, lien})
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
             }else{
-                const article = new Article({title, content, position, document} )
+                const article = new Article({title, content, position, document, lien} )
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
@@ -121,5 +128,23 @@ exports.deleteDoc=(req, res, next)=>{
                     .catch(error => res.status(400).json({ message: error.message}));
                 })
                 .catch((error)=> res.status(400).send({message: error.message}))
+    }
+}
+exports.addLink=(req, res, next)=>{
+    const lien=req.body.lien
+    const valideLien = linkRegexp.test(lien);
+    const { id }= req.params;
+    if(!valideLien && lien.length>0){
+        return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisée'})
+    }else{
+        if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
+                Article.findOne({_id:id})
+                .then(()=>{
+                    Article.updateOne({_id:id}, { lien })
+                    .then(() => res.status(200).json({ message: 'lien modifié !'}))
+                    .catch(error => res.status(400).json({ message: error.message}));
+                })
+                .catch((error)=> res.status(400).send({message: error.message}))
+        }
     }
 }

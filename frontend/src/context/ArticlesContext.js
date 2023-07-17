@@ -9,10 +9,7 @@ export const articlesContext = React.createContext({
     getArticlesList:()=>{},
     editArticle:(''),
     setEditArticle:()=>{}, 
-    getEditArticle:()=>{},
-    addArticleDoc:()=>{},
-    setAddArticleDoc:()=>{},
-    getAddArticleDoc:()=>{}
+    getEditArticle:()=>{}
 })
 
 const ArticlesContextProvider = ({ children }) => {
@@ -21,7 +18,6 @@ const { reqInstance }=useContext(authContext)
 
 const [articlesList, setArticlesList]=useState("");
 const [editArticle, setEditArticle]=useState('');
-const [addArticleDoc, setAddArticleDoc]=useState('')
 
 const getArticlesList=()=>{
     reqInstance.get("/article")
@@ -35,16 +31,10 @@ const getEditArticle=(articleToEdit)=>{
     
 }
 
-const getAddArticleDoc=(article)=>{
-    console.log(article)
-}
-
-
     return (
        <articlesContext.Provider value={{
         articlesList, getArticlesList,
-        editArticle, setEditArticle,getEditArticle, 
-        addArticleDoc, setAddArticleDoc, getAddArticleDoc
+        editArticle, setEditArticle,getEditArticle
         }}>
             { children }
        </articlesContext.Provider>

@@ -120,7 +120,7 @@ const UpdateArticle = () => {
                     >
                         <div className='checkMission'>
                             <Form.Item  onChange={editParag}  >
-                                <TextArea defaultValue={p} value={p} rows={5}></TextArea>
+                                <TextArea defaultValue={p} rows={5} data-index={index}></TextArea>
                             </Form.Item> 
                             <Button type='text' data-contenttext={p} onClick={deleteParag} ><DeleteOutlined /></Button>
                         </div> 

@@ -6,31 +6,43 @@ import { UploadOutlined } from '@ant-design/icons';
 import { articlesContext } from '../../context/ArticlesContext';
 import UpdateArticle from '../../components/admin/UpdateArticle';
 import { authContext } from '../../context/AuthContext';
+import TextArea from 'antd/lib/input/TextArea';
 
 const ArticlesPage = () => {
 
     const { reqBearer } = useContext(authContext)
-    const { getArticlesList, articlesList, editArticle, setEditArticle, getEditArticle, addArticleDoc, getAddArticleDoc} = useContext(articlesContext);
+    const { getArticlesList, articlesList, editArticle, setEditArticle, getEditArticle} = useContext(articlesContext);
 
     const [isModalArticleDocumentVisible, setIsModalArticleDocumentVisible]=useState(false);
+    const [isModalArticleLienVisible, setIsModalArticleLienVisible]=useState(false);
     const [selectedArticle, setSelectedArticle]=useState('');
     const [document, setDocument]=useState('');
+    const [lien, setLien]=useState('');
 
     const headers = 'Content-Type : multipart/form-data';
 
     const handleCancel = () => {
-        setIsModalArticleDocumentVisible(false);
+        setIsModalArticleDocumentVisible&& setIsModalArticleDocumentVisible(false);
+        setIsModalArticleLienVisible&& setIsModalArticleLienVisible(false);
         setSelectedArticle('');
     };
 
     const selectArticle= (article) =>{
-        setIsModalArticleDocumentVisible(true);
         setSelectedArticle(articlesList.find((art)=>art._id === article._id))
+    }
+
+    const editDocArticle = (article)=>{
+        setIsModalArticleDocumentVisible(true);
+        selectArticle(article)
+    }
+    const editLienArticle = (article)=>{
+        setIsModalArticleLienVisible(true);
+        selectArticle(article)
     }
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
-    const onFinish = () =>{
+    const onFinishDoc = () =>{
         const form = new FormData()
         form.append('articleDoc', document);
         reqBearer.put(`/article/doc/${selectedArticle._id}`, form, headers)
@@ -53,6 +65,19 @@ const ArticlesPage = () => {
     })
     .catch((error)=>{console.log(error)}) 
     }
+    const editLien = (e) =>{
+        e.target.value.length===0?setLien(''):setLien(e.target.value)
+        
+    }
+    const onFinishLien=()=>{
+        reqBearer.put(`/article/lien/${selectedArticle._id}`, { lien })
+        .then(()=>{
+            getArticlesList()
+            handleCancel()
+    })
+    .catch((error)=>{console.log(error)}) 
+    }
+
     return (
         <div className='pageArticles'>
             <div className='backDashboard'>
@@ -81,17 +106,18 @@ const ArticlesPage = () => {
                                     </div>
                                     <div className='adminArticle__settings'>
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Modifier' onClick={()=>{getEditArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>
-                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un document' onClick={()=>{selectArticle(article)}}><img data-id={article._id} alt='ajouter un document' src="../assets/icones/document.png"/></button>
-                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un lien' onClick={()=>{selectArticle(article)}}><img data-id={article._id} alt='ajouter un lien' src="../assets/icones/lien.png"/></button>
+                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un document' onClick={()=>{editDocArticle(article)}}><img data-id={article._id} alt='ajouter un document' src="../assets/icones/document.png"/></button>
+                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un lien' onClick={()=>{editLienArticle(article)}}><img data-id={article._id} alt='ajouter un lien' src="../assets/icones/lien.png"/></button>
                                         <button data-id={article._id} type='button'className='adminArticle__settings' title='Supprimer'><img alt='supprimer' src="../assets/icones/poubelle.png"/></button>
                                     </div>
+{/* --------------------------------------------------MODAL AJOUT DOC------------------------------------------------------- */}
                                     <Modal
                                         title="Ajouter un document" 
                                         visible={isModalArticleDocumentVisible} 
                                         destroyOnClose={true}
                                         onCancel={handleCancel}
                                             footer={[
-                                                <Button type="primary" key='valid' onClick={onFinish}>Valider</Button>,
+                                                <Button type="primary" key='valid' onClick={onFinishDoc}>Valider</Button>,
                                                 <Button key="back" onClick={handleCancel}>Annuler</Button>
                                                 ]}
                                             >      
@@ -101,7 +127,7 @@ const ArticlesPage = () => {
                                                     ?<div>
                                                        <div className='documentArticle'>
                                                     <Form
-                                                    onFinish={onFinish}
+                                                    onFinish={onFinishDoc}
                                                     onFinishFailed={onFinishFailed}
                                                     className='updateArticleForm'
                                                     >
@@ -126,7 +152,7 @@ const ArticlesPage = () => {
                                                   
                                                   :<div className='documentArticle'>
                                                     <Form
-                                                    onFinish={onFinish}
+                                                    onFinish={onFinishDoc}
                                                     onFinishFailed={onFinishFailed}
                                                     className='updateArticleForm'
                                                     >
@@ -145,8 +171,29 @@ const ArticlesPage = () => {
                                                             </Upload>
                                                         </Form.Item> 
                                                     </Form>
-                                                </div>}</div>}
+                                                </div>}
+                                            </div>}
                                         </Modal>
+{/* --------------------------------------------------MODAL AJOUT DOC------------------------------------------------------- */}
+                                        <Modal
+                                        title="Ajouter un lien" 
+                                        visible={isModalArticleLienVisible} 
+                                        destroyOnClose={true}
+                                        onCancel={handleCancel}
+                                            footer={[
+                                                <Button type="primary" key='valid' onClick={onFinishLien}>Valider</Button>,
+                                                <Button key="back" onClick={handleCancel}>Annuler</Button>
+                                                ]}
+                                            >      
+                                                {selectedArticle&&
+                                                <div>
+                                                    <div className='documentArticle'>
+                                                        <Form.Item  onChange={editLien}  >
+                                                            <TextArea defaultValue={selectedArticle.lien?selectedArticle.lien:''} rows={1}></TextArea>
+                                                        </Form.Item> 
+                                                    </div> 
+                                                </div>}
+                                            </Modal>
                             </div>
                         ))
                         }

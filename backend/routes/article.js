@@ -10,5 +10,6 @@ router.get("", articleCtrl.getAllArticles);
 router.put("/:id", auth, multerImage, articleCtrl.updateArticle);
 router.put("/doc/:id", auth, multerArticleDoc,articleCtrl.addDoc); 
 router.put("/doc/delete/:id", auth, multerArticleDoc,articleCtrl.deleteDoc); 
+router.put("/lien/:id", auth, articleCtrl.addLink); 
 
 module.exports = router;

@@ -5,6 +5,7 @@ const articleSchema=mongoose.Schema({
     imageUrl:{type: String},
     content:{type:[String]},
     document:{type: String},
+    lien:{type: String},
     position:{type: Number}
 
 })
