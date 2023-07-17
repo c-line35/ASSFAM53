@@ -10,7 +10,7 @@ import { authContext } from '../../context/AuthContext';
 const ArticlesPage = () => {
 
     const { reqBearer } = useContext(authContext)
-    const { getArticlesList, articlesList, editArticle, getEditArticle, addArticleDoc, getAddArticleDoc} = useContext(articlesContext);
+    const { getArticlesList, articlesList, editArticle, setEditArticle, getEditArticle, addArticleDoc, getAddArticleDoc} = useContext(articlesContext);
 
     const [isModalArticleDocumentVisible, setIsModalArticleDocumentVisible]=useState(false);
     const [selectedArticle, setSelectedArticle]=useState('');
@@ -45,10 +45,21 @@ const ArticlesPage = () => {
         setDocument(e.file?e.file:selectedArticle.document)
     }
 
+    const deleteDocument = ()=>{
+        reqBearer.put(`/article/doc/delete/${selectedArticle._id}`)
+        .then(()=>{
+            getArticlesList()
+            handleCancel()
+    })
+    .catch((error)=>{console.log(error)}) 
+    }
     return (
         <div className='pageArticles'>
             <div className='backDashboard'>
-                <NavLink to={'/management'}><img src="../assets/icones/dashboardColor.png" alt='tableau de bord'/>Retour</NavLink>
+                {editArticle
+                ? <div onClick={()=>{setEditArticle(false)}}><img src="../assets/icones/dashboardColor.png" alt='tableau de bord'/>Retour</div>
+                :<NavLink to={'/management'}><img src="../assets/icones/dashboardColor.png" alt='tableau de bord'/>Retour</NavLink>
+                }
             </div> 
             <h4>Liste des articles</h4>
             {articlesList&&
@@ -80,13 +91,40 @@ const ArticlesPage = () => {
                                         destroyOnClose={true}
                                         onCancel={handleCancel}
                                             footer={[
-                                                <Button key="back" onClick={handleCancel}>
-                                                    Fermer
-                                                </Button>,
+                                                <Button type="primary" key='valid' onClick={onFinish}>Valider</Button>,
+                                                <Button key="back" onClick={handleCancel}>Annuler</Button>
                                                 ]}
                                             >      
                                             {selectedArticle&&
-                                                <div>
+                                            <div>
+                                                {selectedArticle.document
+                                                    ?<div>
+                                                       <div className='documentArticle'>
+                                                    <Form
+                                                    onFinish={onFinish}
+                                                    onFinishFailed={onFinishFailed}
+                                                    className='updateArticleForm'
+                                                    >
+                                                        <Form.Item
+                                                        name="upload"
+                                                        valuePropName="fileList"
+                                                        getValueFromEvent={normFile}
+                                                        >
+                                                            <Upload 
+                                                            name="image" 
+                                                            listType="picture"  
+                                                            maxCount = {1}
+                                                            beforeUpload="false"                     
+                                                            >
+                                                                <Button icon={<UploadOutlined />}>Modifier le document</Button>
+                                                            </Upload>
+                                                        </Form.Item> 
+                                                    </Form>
+                                                </div> 
+                                                <Button onClick={deleteDocument}>Supprimer le document</Button>
+                                                    </div>
+                                                  
+                                                  :<div className='documentArticle'>
                                                     <Form
                                                     onFinish={onFinish}
                                                     onFinishFailed={onFinishFailed}
@@ -107,8 +145,7 @@ const ArticlesPage = () => {
                                                             </Upload>
                                                         </Form.Item> 
                                                     </Form>
-                                                    <Button onClick={onFinish}>Valider</Button>
-                                                </div>}
+                                                </div>}</div>}
                                         </Modal>
                             </div>
                         ))

@@ -104,3 +104,22 @@ exports.addDoc=(req, res, next)=>{
                 .catch((error)=> res.status(400).send({message: error.message}))
     }
 }
+exports.deleteDoc=(req, res, next)=>{
+    const { id }= req.params;
+        if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
+                Article.findOne({_id:id})
+                .then((article)=>{
+                    if(article.document){
+                        const filename= article.document.split('/articleDoc/')[1];       
+                        fs.unlink(`articleDoc/${filename}`, (err)=>{
+                            if(err)console.log(err)
+                            else console.log('ancien document supprimé')})                
+                    }
+                    let document = ''
+                    Article.updateOne({_id:id}, { document })
+                    .then(() => res.status(200).json({ message: 'document supprimé !'}))
+                    .catch(error => res.status(400).json({ message: error.message}));
+                })
+                .catch((error)=> res.status(400).send({message: error.message}))
+    }
+}
