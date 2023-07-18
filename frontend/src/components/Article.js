@@ -19,6 +19,7 @@ console.log(articles.document)
         {articles.document&& <div className="button">
           <a href={articles.document} target="blank">En savoir plus</a>
         </div>}
+        {articles.lien&& <a target='blank' href={articles.lien}>En savoir plus</a>}
     </div>
       
     );

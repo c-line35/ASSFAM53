@@ -77,6 +77,15 @@ const ArticlesPage = () => {
     })
     .catch((error)=>{console.log(error)}) 
     }
+    const deleteLien=()=>{
+        setLien('')
+        reqBearer.put(`/article/lien/${selectedArticle._id}`, { lien })
+        .then(()=>{
+            getArticlesList()
+            handleCancel()
+    })
+    .catch((error)=>{console.log(error)}) 
+    }
 
     return (
         <div className='pageArticles'>
@@ -103,6 +112,7 @@ const ArticlesPage = () => {
                                         <p>{article.title}</p>
                                         <p>{article.content[0]}...</p>
                                         {article.document&& <p>Document: {article.document.split('http://localhost:3001/articleDoc/')}</p>}
+                                        {article.lien&& <a href={article.lien} target='blank'>lien</a>}
                                     </div>
                                     <div className='adminArticle__settings'>
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Modifier' onClick={()=>{getEditArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>
@@ -181,17 +191,16 @@ const ArticlesPage = () => {
                                         destroyOnClose={true}
                                         onCancel={handleCancel}
                                             footer={[
-                                                <Button type="primary" key='valid' onClick={onFinishLien}>Valider</Button>,
+                                                <Button type="primary" key='valid' onClick={onFinishLien}>{selectedArticle.lien?'Modifier':'Valider'}</Button>,
                                                 <Button key="back" onClick={handleCancel}>Annuler</Button>
                                                 ]}
                                             >      
                                                 {selectedArticle&&
-                                                <div>
-                                                    <div className='documentArticle'>
+                                                <div className='lienArticle'>
                                                         <Form.Item  onChange={editLien}  >
-                                                            <TextArea defaultValue={selectedArticle.lien?selectedArticle.lien:''} rows={1}></TextArea>
+                                                            <TextArea defaultValue={selectedArticle.lien?selectedArticle.lien:''} rows={1} placeholder='lien'></TextArea>
                                                         </Form.Item> 
-                                                    </div> 
+                                                        {selectedArticle.lien&&<div className='deleteButton'><Button onClick={deleteLien}>Supprimer</Button></div>}
                                                 </div>}
                                             </Modal>
                             </div>
