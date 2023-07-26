@@ -39,7 +39,7 @@ const AdminArticles = () => {
                     </Button>,
                     ]}
                 >
-                <AdminCreateArticle />
+                <AdminCreateArticle setIsModalArticleVisible={setIsModalArticleVisible} />
             </Modal>
            
             <Modal

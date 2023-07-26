@@ -6,20 +6,19 @@ const pattern =
   /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
 
 const linkRegexp = new RegExp(pattern); 
+let date = Date.now()
+
 
 exports.createArticle=(req, res, next)=>{
     let articleObject = JSON.parse(req.body.data);
     const title = articleObject.title;
     const content = articleObject.content;
-    const position = articleObject.position;
-    
 
     const valideTitle = inputRegexp.test(title);
     const valideContent = inputRegexp.test(content);
-    const validePosition = inputRegexp.test(position);
  
 
-    if(!valideTitle || !valideContent || !validePosition){
+    if(!valideTitle || !valideContent){
         return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisée'})
     }else{
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
@@ -28,12 +27,14 @@ exports.createArticle=(req, res, next)=>{
                 let imageUrl=`${req.protocol}://${host}/images/${req.file.filename}`
                 let document=''
                 let lien=''
-                const article = new Article({ title, imageUrl, content, position, document, lien})
+                const article = new Article({ title, imageUrl, content, document, lien, date})
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
             }else{
-                const article = new Article({title, content, position, document, lien} )
+                let document=''
+                let lien=''
+                const article = new Article({title, content, document, lien, date} )
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
@@ -46,11 +47,12 @@ exports.createArticle=(req, res, next)=>{
 
 exports.getAllArticles = (req, res, next)=>{
     Article.find()
-    .then((articles)=>res.status(200).json(articles))
+    .then((articles)=>{res.status(200).json(articles)})
     .catch(error=>res.status(400).json({error:error}))
 }
 
 exports.updateArticle=(req, res, next)=>{
+    let date = Date.now()
     const { id }= req.params;
     let articleObject = JSON.parse(req.body.data);
     const title = articleObject.title;
@@ -74,13 +76,13 @@ exports.updateArticle=(req, res, next)=>{
                     }
                     const host = req.get('host')
                     let imageUrl = `${req.protocol}://${host}/images/${req.file.filename}`
-                    Article.updateOne({_id:id}, {title, content, imageUrl})
+                    Article.updateOne({_id:id}, {title, content, imageUrl, date})
                     .then(() => res.status(200).json({ message: 'Objet modifié !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
                 })
                 .catch((error)=> res.status(400).send({message: error.message}))
             }else{
-                Article.updateOne({_id:id}, { title, content } )
+                Article.updateOne({_id:id}, { title, content, date } )
                 .then(() => res.status(200).json({message: "article modifié" }))
                 .catch(error => res.status(400).json({ error }));
             }
@@ -90,6 +92,7 @@ exports.updateArticle=(req, res, next)=>{
     }
 }
 exports.addDoc=(req, res, next)=>{
+    let date = Date.now()
     const { id }= req.params;
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
                 Article.findOne({_id:id})
@@ -102,7 +105,7 @@ exports.addDoc=(req, res, next)=>{
                     }
                     const host = req.get('host')
                     let document = `${req.protocol}://${host}/articleDoc/${req.file.filename}`
-                    Article.updateOne({_id:id}, { document })
+                    Article.updateOne({_id:id}, { document, date })
                     .then(() => res.status(200).json({ message: 'document ajouté !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
                 })
@@ -110,6 +113,7 @@ exports.addDoc=(req, res, next)=>{
     }
 }
 exports.deleteDoc=(req, res, next)=>{
+    let date = Date.now()
     const { id }= req.params;
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
                 Article.findOne({_id:id})
@@ -121,7 +125,7 @@ exports.deleteDoc=(req, res, next)=>{
                             else console.log('ancien document supprimé')})                
                     }
                     let document = ''
-                    Article.updateOne({_id:id}, { document })
+                    Article.updateOne({_id:id}, { document, date })
                     .then(() => res.status(200).json({ message: 'document supprimé !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
                 })
@@ -129,6 +133,7 @@ exports.deleteDoc=(req, res, next)=>{
     }
 }
 exports.addLink=(req, res, next)=>{
+    let date = Date.now()
     const lien=req.body.lien
     const valideLien = linkRegexp.test(lien);
     const { id }= req.params;
@@ -138,11 +143,32 @@ exports.addLink=(req, res, next)=>{
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
                 Article.findOne({_id:id})
                 .then(()=>{
-                    Article.updateOne({_id:id}, { lien })
+                    Article.updateOne({_id:id}, { lien, date })
                     .then(() => res.status(200).json({ message: 'lien modifié !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
                 })
                 .catch((error)=> res.status(400).send({message: error.message}))
         }
+    }
+}
+
+exports.deleteArticle=(req, res, next)=>{
+    const id = req.params.id;
+    if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles') || req.auth.userId === id){
+        Article.findOne({_id:id})
+        .then((article)=>{
+           if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')) {
+                if(article.imageUrl){
+                    const filename= article.imageUrl.split('/images/')[1];       
+                    fs.unlink(`images/${filename}`, (err)=>{
+                        if(err)console.log(err)
+                        else console.log('ancienne image supprimée')})                
+                }
+            }})
+        Article.deleteOne({_id: req.params.id})
+            .then(()=> res.status(200).json({ message: 'article supprimé'}))
+            .catch(error => res.status(400).json({error}))
+    }else{     
+        return res.status(401).json({message: 'Vous navez pas les droits pour effectuer cette opération'})
     }
 }

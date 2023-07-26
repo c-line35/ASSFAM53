@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Article = ({articles}) => {
-console.log(articles.document)
     return (
       
         <div className="article">

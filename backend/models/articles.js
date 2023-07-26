@@ -6,7 +6,7 @@ const articleSchema=mongoose.Schema({
     content:{type:[String]},
     document:{type: String},
     lien:{type: String},
-    position:{type: Number}
+    date:{type: Date, required: true}
 
 })
 module.exports = mongoose.model('Article', articleSchema);

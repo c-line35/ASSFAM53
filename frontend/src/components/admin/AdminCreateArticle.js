@@ -1,22 +1,24 @@
 import React, { useState, useContext } from 'react';
 import {Button,Form, Input, Upload} from "antd";
-import { UploadOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import { authContext } from '../../context/AuthContext';
+import { articlesContext } from '../../context/ArticlesContext';
+
 
 
 const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.":{}!?;]{1,2000}$/i);
 
-const AdminCreateArticle = () => {
+const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
 
-    const {  reqBearer } = useContext(authContext);
+    const { reqBearer } = useContext(authContext);
+    const { getArticlesList }= useContext(articlesContext)
 
     const [image, setImage] = useState('');
     const [content, setContent]=useState([]);
     const [newParagraphe, setNewParagraphe]=useState(false);
     const [paragraphe, setParagraphe]=useState("")
     const [title, setTitle]=useState("");
-    const [position, setPosition]=useState ("");
 
     const headers = 'Content-Type : multipart/form-data';
 
@@ -28,15 +30,16 @@ const AdminCreateArticle = () => {
         const data ={
             title,
             content,
-            position,
             document:''
         }
-        console.log(data)
         const form = new FormData();
         form.append('image', image);
         form.append ('data', JSON.stringify(data))
         reqBearer.post(`/article`, form, headers)
-        .then((data)=>console.log(data))
+        .then(()=>{
+            setIsModalArticleVisible(false)
+            getArticlesList()
+        })
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -67,9 +70,7 @@ const AdminCreateArticle = () => {
     const getTitle=(e)=>{
         setTitle(e.target.value)
     }
-    const getPosition=(e)=>{
-        setPosition(e.target.value)
-    }
+
     return (
         <div>
              <Form
@@ -109,18 +110,6 @@ const AdminCreateArticle = () => {
                            <a href='https://www.resizepixel.com/fr' alt="réduire la taille" rel="noreferrer" target="_blank">réduire la taille</a>                  
                         </Upload>
                     </Form.Item> 
-                <Form.Item
-                name="position"
-                onChange={getPosition}
-                rules={[
-                {
-                    pattern: txtRegexp,
-                    message:"Format invalide"
-                }
-                ]}
-                >
-                    <Input placeholder='position' />
-                </Form.Item>
             </Form> 
             {content.length>0
                 ?

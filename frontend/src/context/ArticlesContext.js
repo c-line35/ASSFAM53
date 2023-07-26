@@ -5,7 +5,7 @@ import { authContext } from './AuthContext';
 
 
 export const articlesContext = React.createContext({
-    articlesList:[''],
+    articlesList:[],
     getArticlesList:()=>{},
     editArticle:(''),
     setEditArticle:()=>{}, 
@@ -16,12 +16,14 @@ const ArticlesContextProvider = ({ children }) => {
 
 const { reqInstance }=useContext(authContext)
 
-const [articlesList, setArticlesList]=useState("");
+const [articlesList, setArticlesList]=useState([]);
 const [editArticle, setEditArticle]=useState('');
 
 const getArticlesList=()=>{
     reqInstance.get("/article")
-    .then((res)=>setArticlesList(res.data))
+    .then((res)=>{
+        setArticlesList(res.data.sort((a,b)=>a.date<b.date? 1:-1))
+    })
 }
 
 useEffect(()=>{getArticlesList()}, [])
@@ -32,10 +34,8 @@ const getEditArticle=(articleToEdit)=>{
 }
 
     return (
-       <articlesContext.Provider value={{
-        articlesList, getArticlesList,
-        editArticle, setEditArticle,getEditArticle
-        }}>
+       <articlesContext.Provider value={ { articlesList, getArticlesList,
+        editArticle, setEditArticle,getEditArticle } }>
             { children }
        </articlesContext.Provider>
     );

@@ -15,6 +15,7 @@ const ArticlesPage = () => {
 
     const [isModalArticleDocumentVisible, setIsModalArticleDocumentVisible]=useState(false);
     const [isModalArticleLienVisible, setIsModalArticleLienVisible]=useState(false);
+    const [isModalArticleDeleteVisible, setIsModalArticleDeleteVisible]=useState(false);
     const [selectedArticle, setSelectedArticle]=useState('');
     const [document, setDocument]=useState('');
     const [lien, setLien]=useState('');
@@ -24,6 +25,7 @@ const ArticlesPage = () => {
     const handleCancel = () => {
         setIsModalArticleDocumentVisible&& setIsModalArticleDocumentVisible(false);
         setIsModalArticleLienVisible&& setIsModalArticleLienVisible(false);
+        setIsModalArticleDeleteVisible&& setIsModalArticleDeleteVisible(false);
         setSelectedArticle('');
     };
 
@@ -39,6 +41,12 @@ const ArticlesPage = () => {
         setIsModalArticleLienVisible(true);
         selectArticle(article)
     }
+
+    const deleteArticle = (article)=>{
+        selectArticle(article)
+        setIsModalArticleDeleteVisible(true)
+    }
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
@@ -87,6 +95,15 @@ const ArticlesPage = () => {
     .catch((error)=>{console.log(error)}) 
     }
 
+    const onFinishDelete=()=>{
+        reqBearer.delete(`/article/${selectedArticle._id}`)
+        .then(()=>{
+            getArticlesList()
+            handleCancel()
+    })
+    .catch((error)=>{console.log(error)}) 
+    }
+
     return (
         <div className='pageArticles'>
             <div className='backDashboard'>
@@ -118,7 +135,7 @@ const ArticlesPage = () => {
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Modifier' onClick={()=>{getEditArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un document' onClick={()=>{editDocArticle(article)}}><img data-id={article._id} alt='ajouter un document' src="../assets/icones/document.png"/></button>
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un lien' onClick={()=>{editLienArticle(article)}}><img data-id={article._id} alt='ajouter un lien' src="../assets/icones/lien.png"/></button>
-                                        <button data-id={article._id} type='button'className='adminArticle__settings' title='Supprimer'><img alt='supprimer' src="../assets/icones/poubelle.png"/></button>
+                                        <button data-id={article._id} type='button'className='adminArticle__settings' title='Supprimer' onClick={()=>deleteArticle(article)}><img alt='supprimer' src="../assets/icones/poubelle.png"/></button>
                                     </div>
 {/* --------------------------------------------------MODAL AJOUT DOC------------------------------------------------------- */}
                                     <Modal
@@ -202,6 +219,19 @@ const ArticlesPage = () => {
                                                         </Form.Item> 
                                                         {selectedArticle.lien&&<div className='deleteButton'><Button onClick={deleteLien}>Supprimer</Button></div>}
                                                 </div>}
+                                            </Modal>
+{/* --------------------------------------------------MODAL SUPPRESSION ARTICLE------------------------------------------------------- */}
+                                            <Modal
+                                            title="Supprimer cet article" 
+                                            visible={isModalArticleDeleteVisible} 
+                                            destroyOnClose={true}
+                                            onCancel={handleCancel}
+                                                footer={[
+                                                    <Button type="primary" key='valid' onClick={onFinishDelete}>Supprimer</Button>,
+                                                    <Button key="back" onClick={handleCancel}>Annuler</Button>
+                                                    ]}
+                                            >      
+                                                <div>Etes-vous sûr de vouloir supprimer cet article?</div>
                                             </Modal>
                             </div>
                         ))
