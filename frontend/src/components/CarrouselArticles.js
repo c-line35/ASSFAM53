@@ -14,14 +14,9 @@ const contentStyle = {
 const CarrousselArticle=() =>{
 
   const { articlesList, getArticlesList } = useContext(articlesContext);
-  const seeDate = ()=>{
-    for (let article in articlesList){
-      console.log(article)
-    }
-  }
+  
   useEffect(()=>{
     getArticlesList()
-    seeDate()
   },[])
 
  
@@ -29,12 +24,11 @@ const CarrousselArticle=() =>{
     <>
    <Carousel autoplay>
     {articlesList&&
-      articlesList
-      
-      .map((articles, index)=>(
-        <div style={contentStyle} key={index}>  
-        <Article articles={articles} /> 
-        </div>) )
+        articlesList
+        .map((articles, index)=>(
+          <div style={contentStyle} key={index}>  
+            <Article articles={articles} /> 
+          </div>) )
      }
   </Carousel> 
  

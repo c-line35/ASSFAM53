@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {Button, Form, Input, Upload} from "antd";
+import React, {useState, useContext} from 'react';
+import {Button, Form, Input, Upload, Checkbox} from "antd";
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import { authContext } from '../../context/AuthContext';
@@ -15,15 +15,19 @@ const UpdateArticle = () => {
     const [title, setTitle]=useState('');
     const [newParag, setNewParag]=useState('');
     const [tmpParag, setTmpParag]=useState(editArticle.content);
-
     const [seeAddParag, setSeeAddParag]=useState(false);
     const [messageError, setMessageError]=useState();
+    const [visibility, setVisibility]=useState(editArticle.visibility)
+
+    const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàùîï%°'\-,.":{}!?@;]{1,2000}$/i);
+
     
     const onFinish =()=>{
        const titleLenght =Object.keys(title).length;
        const data={
         title: titleLenght===0?editArticle.title:title,
-        content: tmpParag
+        content: tmpParag,
+        visibility: visibility
        }
        const form = new FormData()
        form.append('image', image);
@@ -49,7 +53,6 @@ const UpdateArticle = () => {
 
     const normFile = (e)=>{
             setImage(e.file?e.file:editArticle.imageUrl)
-           
     }
 
     const updateTitle=(e)=>{
@@ -63,7 +66,6 @@ const UpdateArticle = () => {
                 tmpParag.push(newParag)
             }
         setSeeAddParag(false)}
-
     };
 
     const checkParag=(e)=>setNewParag(e.target.value);
@@ -80,6 +82,10 @@ const UpdateArticle = () => {
     
     const checkAddParag=()=>setSeeAddParag(true)
 
+    const changeVisibility = () => {
+        visibility? setVisibility(false):setVisibility(true);
+      };
+
     return (
         <div>
             <Form
@@ -90,11 +96,23 @@ const UpdateArticle = () => {
                 <Form.Item
                 label="TITRE"
                 initialValue={editArticle.title}
-                name="lastName"                         
+                name="titre"                         
                 onChange ={updateTitle}
-                >
+                rules={[
+                    {
+                        pattern: txtRegexp,
+                        message:"Format invalide"
+                    }
+                ]}
+            >
                     <Input/>
-                </Form.Item>                 
+                </Form.Item>   
+                <Form.Item>
+                   { visibility
+                    ?<Checkbox onChange={changeVisibility} defaultChecked={true}>Visible par tous</Checkbox>
+                    :<Checkbox onChange={changeVisibility} defaultChecked={false}>Visible par tous</Checkbox>
+                    }
+                </Form.Item>              
                 <Form.Item
                 name="upload"
                 valuePropName="fileList"
@@ -119,7 +137,16 @@ const UpdateArticle = () => {
                     className='updateArticleForm'
                     >
                         <div className='checkMission'>
-                            <Form.Item  onChange={editParag}  >
+                            <Form.Item  
+                            name='parag'
+                            onChange={editParag}  
+                            rules={[
+                                {
+                                    pattern: txtRegexp,
+                                    message:"Format invalide"
+                                }
+                            ]}
+                            >
                                 <TextArea defaultValue={p} rows={5} data-index={index}></TextArea>
                             </Form.Item> 
                             <Button type='text' data-contenttext={p} onClick={deleteParag} ><DeleteOutlined /></Button>

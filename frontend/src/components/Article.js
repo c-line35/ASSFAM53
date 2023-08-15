@@ -2,7 +2,7 @@ import React from 'react';
 
 const Article = ({articles}) => {
     return (
-      
+     
         <div className="article">
         <div className="article__content">
           <div className="article__content__title">{articles.title}</div>
@@ -20,7 +20,6 @@ const Article = ({articles}) => {
         </div>}
         {articles.lien&& <a target='blank' href={articles.lien}>En savoir plus</a>}
     </div>
-      
     );
 };
 

@@ -1,7 +1,7 @@
 const Article =require('../models/articles')
 const fs = require('fs')
 
-const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.?":{}]{0,20000}$/i);
+const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàùîï'\-,.?":{}]{0,20000}$/i);
 const pattern =/(https?|http):\/\/[a-z0-9\/:%_+.,#?!@&=-]+/
 const linkRegexp = new RegExp(pattern); 
 let date = Date.now()
@@ -11,13 +11,14 @@ exports.createArticle=(req, res, next)=>{
     let articleObject = JSON.parse(req.body.data);
     const title = articleObject.title;
     const content = articleObject.content;
+    const visibility = articleObject.visibility;
 
     const valideTitle = inputRegexp.test(title);
     const valideContent = inputRegexp.test(content);
  
 
     if(!valideTitle || !valideContent){
-        return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisée'})
+        return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisés'})
     }else{
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
             if(req.file){
@@ -25,14 +26,14 @@ exports.createArticle=(req, res, next)=>{
                 let imageUrl=`${req.protocol}://${host}/images/${req.file.filename}`
                 let document=''
                 let lien=''
-                const article = new Article({ title, imageUrl, content, document, lien, date})
+                const article = new Article({ title, imageUrl, content, document, lien, date, visibility})
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
             }else{
                 let document=''
                 let lien=''
-                const article = new Article({title, content, document, lien, date} )
+                const article = new Article({title, content, document, lien, date, visibility} )
                 article.save()
                 .then((data)=>res.status(201).json(data))
                 .catch((error)=>res.status(400).json({error}))
@@ -55,6 +56,7 @@ exports.updateArticle=(req, res, next)=>{
     let articleObject = JSON.parse(req.body.data);
     const title = articleObject.title;
     const content = articleObject.content;
+    const visibility = articleObject.visibility;
 
     const valideTitle = inputRegexp.test(title);
     const valideContent = inputRegexp.test(content);
@@ -74,13 +76,13 @@ exports.updateArticle=(req, res, next)=>{
                     }
                     const host = req.get('host')
                     let imageUrl = `${req.protocol}://${host}/images/${req.file.filename}`
-                    Article.updateOne({_id:id}, {title, content, imageUrl, date})
+                    Article.updateOne({_id:id}, {title, content, imageUrl, date, visibility})
                     .then(() => res.status(200).json({ message: 'Objet modifié !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
                 })
                 .catch((error)=> res.status(400).send({message: error.message}))
             }else{
-                Article.updateOne({_id:id}, { title, content, date } )
+                Article.updateOne({_id:id}, { title, content, date, visibility } )
                 .then(() => res.status(200).json({message: "article modifié" }))
                 .catch(error => res.status(400).json({ error }));
             }

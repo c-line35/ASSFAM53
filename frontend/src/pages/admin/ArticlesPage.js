@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useState} from 'react';
+import { useContext, useState, useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button, Modal, Form, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
@@ -21,6 +21,10 @@ const ArticlesPage = () => {
     const [lien, setLien]=useState('');
 
     const headers = 'Content-Type : multipart/form-data';
+
+    useEffect(()=>{
+        getArticlesList()
+      },[])    
 
     const handleCancel = () => {
         setIsModalArticleDocumentVisible&& setIsModalArticleDocumentVisible(false);
@@ -88,7 +92,6 @@ const ArticlesPage = () => {
     }
     const deleteLien=()=>{
         setLien('')
-        console.log(lien)
         reqBearer.put(`/article/lien/${selectedArticle._id}`, { lien })
         .then(()=>{
             getArticlesList()
@@ -132,6 +135,7 @@ const ArticlesPage = () => {
                                         <p>{article.content[0]}...</p>
                                         {article.document&& <p>Document: {article.document.split('http://localhost:3001/articleDoc/')}</p>}
                                         {article.lien&& <a href={article.lien} target='blank'>lien</a>}
+                                        {article.visibility&& <p style={{color: 'red'}}>Cet article visible par tous</p>}
                                     </div>
                                     <div className='adminArticle__settings'>
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Modifier' onClick={()=>{getEditArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>

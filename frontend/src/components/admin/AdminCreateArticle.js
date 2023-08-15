@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import {Button,Form, Input, Upload} from "antd";
+import {Button,Form, Input, Upload, Checkbox} from "antd";
+
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import { authContext } from '../../context/AuthContext';
@@ -7,7 +8,7 @@ import { articlesContext } from '../../context/ArticlesContext';
 
 
 
-const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.":{}!?;]{1,2000}$/i);
+const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàùîï%°'\-,.":{}!?@;]{3,2000}$/i);
 
 const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
 
@@ -19,18 +20,23 @@ const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
     const [newParagraphe, setNewParagraphe]=useState(false);
     const [paragraphe, setParagraphe]=useState("")
     const [title, setTitle]=useState("");
+    const [visibility, setVisibility]=useState(false);
+    const [messageError, setMessageError]=useState();
+
 
     const headers = 'Content-Type : multipart/form-data';
 
     const normFile = (e)=>{
         setImage(e.file?e.file:"")
+        setMessageError('')
     }
 
     const onFinish=()=>{
         const data ={
             title,
             content,
-            document:''
+            document:'', 
+            visibility
         }
         const form = new FormData();
         form.append('image', image);
@@ -40,6 +46,11 @@ const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
             setIsModalArticleVisible(false)
             getArticlesList()
         })
+        .catch((error)=>{
+            error.response.data.error?
+            setMessageError(error.response.data.error)
+            :setMessageError("une erreur est survenue, vérifier la taille de votre fichier")        
+        }) 
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -70,6 +81,9 @@ const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
     const getTitle=(e)=>{
         setTitle(e.target.value)
     }
+    const changeVisibility = () => {
+        visibility? setVisibility(false):setVisibility(true);
+      };
 
     return (
         <div>
@@ -92,6 +106,9 @@ const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
                 ]}
                 >
                     <Input placeholder='titre' />
+                </Form.Item>
+                <Form.Item>
+                    <Checkbox onChange={changeVisibility}>Visible par tous</Checkbox>
                 </Form.Item>
                 <Form.Item
                         name="upload"
@@ -132,7 +149,16 @@ const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
                 ?<Form
                 onFinish={addNewParag}
                 >
-                    <Form.Item onChange={checkParagraphe}>
+                    <Form.Item 
+                        name="parag"
+                        onChange={checkParagraphe}
+                        rules={[
+                            {
+                                pattern: txtRegexp,
+                                message:"Format invalide"
+                            }
+                        ]}
+                    >
                         <TextArea rows={5}/>
                     </Form.Item>
                     <Button onClick={addNewParag}>Ajouter</Button>
@@ -144,6 +170,7 @@ const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
             <Button type="primary" htmlType="submit" className="login-form-button" onClick={onFinish}>
                 Créer
             </Button>
+            {messageError&& <div className="message-error">Erreur: {messageError}</div>}  
         </div>
     );
 };
