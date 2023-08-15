@@ -2,9 +2,7 @@ const Article =require('../models/articles')
 const fs = require('fs')
 
 const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàù'\-,.?":{}]{0,20000}$/i);
-const pattern =
-  /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g;
-
+const pattern =/(https?|http):\/\/[a-z0-9\/:%_+.,#?!@&=-]+/
 const linkRegexp = new RegExp(pattern); 
 let date = Date.now()
 
@@ -62,7 +60,7 @@ exports.updateArticle=(req, res, next)=>{
     const valideContent = inputRegexp.test(content);
 
     if(!valideTitle || !valideContent){
-        return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisée'})
+        return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisés'})
     }else{
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
             if(req.file){
@@ -138,7 +136,7 @@ exports.addLink=(req, res, next)=>{
     const valideLien = linkRegexp.test(lien);
     const { id }= req.params;
     if(!valideLien && lien.length>0){
-        return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisée'})
+        return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisés'})
     }else{
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
                 Article.findOne({_id:id})

@@ -74,19 +74,21 @@ const ArticlesPage = () => {
     .catch((error)=>{console.log(error)}) 
     }
     const editLien = (e) =>{
-        e.target.value.length===0?setLien(''):setLien(e.target.value)
-        
+        e.target.value.length===0?setLien(''):setLien(e.target.value) 
     }
     const onFinishLien=()=>{
+        console.log(lien)
         reqBearer.put(`/article/lien/${selectedArticle._id}`, { lien })
         .then(()=>{
             getArticlesList()
             handleCancel()
+            setLien('')
     })
     .catch((error)=>{console.log(error)}) 
     }
     const deleteLien=()=>{
         setLien('')
+        console.log(lien)
         reqBearer.put(`/article/lien/${selectedArticle._id}`, { lien })
         .then(()=>{
             getArticlesList()
@@ -201,7 +203,7 @@ const ArticlesPage = () => {
                                                 </div>}
                                             </div>}
                                         </Modal>
-{/* --------------------------------------------------MODAL AJOUT DOC------------------------------------------------------- */}
+{/* --------------------------------------------------MODAL AJOUT LIEN------------------------------------------------------- */}
                                         <Modal
                                         title="Ajouter un lien" 
                                         visible={isModalArticleLienVisible} 
@@ -215,7 +217,7 @@ const ArticlesPage = () => {
                                                 {selectedArticle&&
                                                 <div className='lienArticle'>
                                                         <Form.Item  onChange={editLien}  >
-                                                            <TextArea defaultValue={selectedArticle.lien?selectedArticle.lien:''} rows={1} placeholder='lien'></TextArea>
+                                                            <TextArea defaultValue={selectedArticle.lien?selectedArticle.lien:''} rows={2} placeholder='lien'></TextArea>
                                                         </Form.Item> 
                                                         {selectedArticle.lien&&<div className='deleteButton'><Button onClick={deleteLien}>Supprimer</Button></div>}
                                                 </div>}
