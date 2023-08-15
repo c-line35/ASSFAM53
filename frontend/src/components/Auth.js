@@ -8,7 +8,7 @@ import Manage from '../pages/admin/Manage'
 import { staffContext } from '../context/StaffContext';
 const Auth = () => {
     
-    const { reqInstance, getProfil, token, authProfil, setConnect } = useContext(authContext)
+    const { reqInstance, getProfil, setConnect, authProfil, setIsAuthenticate, isAuthenticate } = useContext(authContext)
     const { getAllStaff }=useContext(staffContext)
     
     const [messageError, setMessageError]=useState('');
@@ -35,7 +35,7 @@ const Auth = () => {
 
     return (
       <>
-      {token?
+      {isAuthenticate?
       <>
       {authProfil.role==="admin"
         ?<Manage/>

@@ -6,7 +6,7 @@ import { staffContext } from '../context/StaffContext';
 
 const Navigation = () => {
 
-  const { token, initToken,  setIsAdminUser, setIsAdminAdmin, setIsAdminStaff} = useContext(authContext)
+  const { initToken,  setIsAdminUser, setIsAdminAdmin, setIsAdminStaff, isAuthenticate, setIsAuthentiacte} = useContext(authContext)
   const { authProfil, setConnect } = useContext(authContext)
   const { getAllStaff }=useContext(staffContext);
   
@@ -18,6 +18,7 @@ const Navigation = () => {
   
   const disconnect = () =>{
     localStorage.removeItem('token')
+    setIsAuthentiacte(false)
     initToken()
     setIsAdminUser(false)
     setIsAdminAdmin(false)
@@ -62,7 +63,7 @@ const getConnect=()=>{
         <div >Partenaires</div>
       </NavLink>
     </div>
-    {token
+    {isAuthenticate
     ?<div className='navigation navigation--connect'>   
         {isAdmin &&
         <NavLink to="/management">
@@ -81,7 +82,7 @@ const getConnect=()=>{
     <div className="navigationRes">
       <div className='navigationRes__icones'>
         <img src='assets/icones/menu.png' alt="menu" onClick={()=>{setShowNav(showNav?false:true)}}/>
-        {token
+        {isAuthenticate
         ? <NavLink to="/" onClick={disconnect}>Déconnexion</NavLink>
         :  <NavLink to="/" onClick={getConnect}>Connexion</NavLink>
         }
@@ -102,7 +103,7 @@ const getConnect=()=>{
             <div >Partenaires</div>
           </NavLink>
         </div>
-        {token&&
+        {isAuthenticate&&
         <div className='navigationRes navigationRes--connect'>   
             {isAdmin &&
             <NavLink to="/management" onClick={()=>{showNav(false)}}> Administration </NavLink>

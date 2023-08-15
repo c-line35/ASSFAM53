@@ -73,8 +73,13 @@ exports.login = (req, res, next) =>{
 exports.getDataUser = (req, res, next)=>{
 
     const token= req.params.token;
-    const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
-    const  id  = decodedToken.userId;
+    let id;
+    try{
+        const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
+        id  = decodedToken.userId;
+    }catch{
+        id=null
+    }
         User.findOne({_id: id})
         .then((data)=>{
             if(!data){

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import{NavLink} from 'react-router-dom';
 import Auth from '../components/Auth';
 import ButterfliesAnim from '../components/ButterfliesAnim';
@@ -6,7 +6,7 @@ import { authContext } from '../context/AuthContext';
 
 const Intro = () => {
 
-    const { token, connect, setConnect, authProfil }=useContext(authContext)
+    const { connect, setConnect, authProfil, isAuthenticate }=useContext(authContext)
    
     const getConnect=()=>{
         setConnect(true);
@@ -14,7 +14,7 @@ const Intro = () => {
 
     return (
         <>
-        {connect&& <Auth />} 
+        {connect &&  <Auth />} 
         {!connect&&
         <div>
             <ButterfliesAnim />
@@ -35,7 +35,7 @@ const Intro = () => {
                 pour mieux prendre son envol."
                 </p>
 
-                {token
+                {isAuthenticate
                 ?<div>
                 <NavLink to ="/home" ><h2 className='level level--visit'>Visiteurs</h2></NavLink> 
                 <NavLink to ="/home" ><h2 className='level level--adher'>Adhérents</h2></NavLink>
