@@ -15,12 +15,10 @@ import Footer from '../../components/Footer';
 
 const Manage = () => {
 
-const { authProfil, isAuthenticate}=useContext(authContext);
+const { authProfil }=useContext(authContext);
 const { afficheDashBoard, afficheAdmins,  afficheUsers }=useContext(usersContext)
 const { afficheStaff }=useContext(staffContext);
-useEffect(()=>{
-  console.log(isAuthenticate)
-},[])
+
     return (
         <div> 
           <Header/>
@@ -44,7 +42,6 @@ useEffect(()=>{
 
               {afficheDashBoard &&
               <>
-                 
                 <div className='dashboard__bloc dashboard__bloc--users'><AdminUsers/></div>
                 <div className='dashboard__bloc dashboard__bloc--staff'><AdminStaff/></div>
                 <div className='dashboard__bloc dashboard__bloc--books'><AdminBooks/></div>
