@@ -1,7 +1,7 @@
 const Article =require('../models/articles')
 const fs = require('fs')
 
-const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàùîï'\-,.?":{}]{0,20000}$/i);
+const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàâùîïô/'\-,.?":{}]{0,20000}$/i);
 const pattern =/(https?|http):\/\/[a-z0-9\/:%_+.,#?!@&=-]+/
 const linkRegexp = new RegExp(pattern); 
 let date = Date.now()
