@@ -3,6 +3,7 @@ import Article from './Article';
 import { Carousel } from 'antd';
 import  React, { useContext, useEffect } from 'react';
 import { articlesContext } from '../context/ArticlesContext';
+import { authContext } from '../context/AuthContext';
 
 const contentStyle = {
   height: '160px',
@@ -14,7 +15,7 @@ const contentStyle = {
 const CarrousselArticle=() =>{
 
   const { articlesList, getArticlesList } = useContext(articlesContext);
-  
+  const { isAuthenticate }=useContext(authContext)
   useEffect(()=>{
     getArticlesList()
   },[])
@@ -24,11 +25,20 @@ const CarrousselArticle=() =>{
     <>
    <Carousel autoplay>
     {articlesList&&
-        articlesList
+      isAuthenticate
+        ?articlesList
         .map((articles, index)=>(
           <div style={contentStyle} key={index}>  
             <Article articles={articles} /> 
           </div>) )
+        :articlesList
+        .filter(article=>article.visibility===true)
+        .sort((a,b)=>a.date<b.date? 1:-1)
+        .map((articles, index)=>(
+          <div style={contentStyle} key={index}>  
+            <Article articles={articles} /> 
+          </div>) )
+        
      }
   </Carousel> 
  

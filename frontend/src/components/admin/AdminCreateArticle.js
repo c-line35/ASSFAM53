@@ -8,7 +8,7 @@ import { articlesContext } from '../../context/ArticlesContext';
 
 
 
-const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàâùûîïô%°'-,.":{}!?@;/]{3,2000}$/i);
+const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàâùûîïô%°'-,.":{}!?@;/()]{3,2000}$/i);
 
 const AdminCreateArticle = ({ setIsModalArticleVisible }) => {
 

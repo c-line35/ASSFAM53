@@ -79,7 +79,7 @@ exports.updateStaff=(req, res, next)=>{
                         else console.log('ancienne image supprimée')})                
                 }
                const host = req.get('host')
-                let imageUrl = `${req.protocol}://${host}/images/${req.file.filename}`
+                let imageUrl = `https://${host}/images/${req.file.filename}`
                 Staff.updateOne({_id:id}, {grade, ca, mission, coordonnees, imageUrl})
                 .then(() => res.status(200).json({ message: 'Objet modifié !'}))
                 .catch(error => res.status(400).json({ message: error.message}));

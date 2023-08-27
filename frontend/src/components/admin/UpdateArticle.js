@@ -19,7 +19,7 @@ const UpdateArticle = () => {
     const [messageError, setMessageError]=useState();
     const [visibility, setVisibility]=useState(editArticle.visibility)
 
-    const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàâùûîïô%°'-,.":{}!?@;/]{3,2000}$/i);
+    const txtRegexp = new RegExp(/^[a-z0-9\séèçêëàâùûîïô%°'-,.":{}!?@;/()]{3,2000}$/i);
     
     const onFinish =()=>{
        const titleLenght =Object.keys(title).length;

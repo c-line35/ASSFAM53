@@ -14,7 +14,7 @@ export const articlesContext = React.createContext({
 
 const ArticlesContextProvider = ({ children }) => {
 
-const { reqInstance, isAuthenticate }=useContext(authContext)
+const { reqInstance }=useContext(authContext)
 
 const [articlesList, setArticlesList]=useState([]);
 const [editArticle, setEditArticle]=useState('');
@@ -22,15 +22,12 @@ const [editArticle, setEditArticle]=useState('');
 const getArticlesList=()=>{
     reqInstance.get("/article")
     .then((res)=>{
-        isAuthenticate
-            ?setArticlesList(res.data.sort((a,b)=>a.date<b.date? 1:-1))
-            :setArticlesList(res.data.filter(article=>article.visibility===true).sort((a,b)=>a.date<b.date? 1:-1))
+      setArticlesList(res.data.sort((a,b)=>a.date<b.date? 1:-1))
     })
 }
 
 useEffect(()=>{
     getArticlesList()
-    console.log(isAuthenticate)
 }, [])
 
 const getEditArticle=(articleToEdit)=>{

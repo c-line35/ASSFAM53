@@ -1,7 +1,7 @@
 const Article =require('../models/articles')
 const fs = require('fs')
 
-const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàâùîïô/'\-,.?":{}]{0,20000}$/i);
+const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàâùîïôq°<Q/'\-,.?":{}()]{0,20000}$/i);
 const pattern =/(https?|http):\/\/[a-z0-9\/:%_+.,#?!@&=-]+/
 const linkRegexp = new RegExp(pattern); 
 let date = Date.now()
@@ -23,7 +23,7 @@ exports.createArticle=(req, res, next)=>{
         if(req.auth.userRole === 'admin' && req.auth.userRights.includes('articles')){
             if(req.file){
                 const host = req.get('host')
-                let imageUrl=`${req.protocol}://${host}/images/${req.file.filename}`
+                let imageUrl=`https://${host}/images/${req.file.filename}`
                 let document=''
                 let lien=''
                 const article = new Article({ title, imageUrl, content, document, lien, date, visibility})
@@ -75,7 +75,7 @@ exports.updateArticle=(req, res, next)=>{
                             else console.log('ancienne image supprimée')})                
                     }
                     const host = req.get('host')
-                    let imageUrl = `${req.protocol}://${host}/images/${req.file.filename}`
+                    let imageUrl = `https://${host}/images/${req.file.filename}`
                     Article.updateOne({_id:id}, {title, content, imageUrl, date, visibility})
                     .then(() => res.status(200).json({ message: 'Objet modifié !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
@@ -104,7 +104,7 @@ exports.addDoc=(req, res, next)=>{
                             else console.log('ancien document supprimé')})                
                     }
                     const host = req.get('host')
-                    let document = `${req.protocol}://${host}/articleDoc/${req.file.filename}`
+                    let document = `https://${host}/articleDoc/${req.file.filename}`
                     Article.updateOne({_id:id}, { document, date })
                     .then(() => res.status(200).json({ message: 'document ajouté !'}))
                     .catch(error => res.status(400).json({ message: error.message}));
