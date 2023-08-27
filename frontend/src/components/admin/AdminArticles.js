@@ -3,6 +3,7 @@ import { Button, Modal } from 'antd';
 import { authContext } from '../../context/AuthContext';
 import AdminCreateArticle from './AdminCreateArticle';
 import { NavLink } from 'react-router-dom'
+import AdminCreateEvent from './AdminCreateEvent';
 
 const AdminArticles = () => {
 
@@ -53,6 +54,7 @@ const AdminArticles = () => {
                     </Button>,
                     ]}
                 >
+                    <AdminCreateEvent setIsModalEventVisible={setIsModalEventVisible} />
             </Modal>
         </div>
     );

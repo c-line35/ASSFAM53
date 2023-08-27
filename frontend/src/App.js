@@ -17,13 +17,18 @@ import Profil from './pages/Profil';
 import StaffContextProvider from './context/StaffContext';
 import ArticlesPage from './pages/admin/ArticlesPage';
 import ArticlesContextProvider from './context/ArticlesContext';
+import EventContextProvider from './context/EventContext';
+import { ConfigProvider } from 'antd';
+import frFR from 'antd/es/locale/fr_FR';
 
 const App = () => {
   return (
+    <ConfigProvider locale={frFR}>
     <AuthContextProvider>
     <UsersContextProvider>
     <StaffContextProvider>
     <ArticlesContextProvider>
+    <EventContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
@@ -38,10 +43,12 @@ const App = () => {
         <Route path="/adminarticles" element={<ArticlesPage/> } /> 
       </Routes>
     </BrowserRouter> 
+    </EventContextProvider>
     </ArticlesContextProvider>
     </StaffContextProvider> 
     </UsersContextProvider>
     </AuthContextProvider>
+    </ConfigProvider>
   )
 }
 

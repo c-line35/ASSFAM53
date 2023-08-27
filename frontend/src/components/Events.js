@@ -1,27 +1,52 @@
 import React from 'react';
+import { useContext } from 'react';
+import { eventContext } from '../context/EventContext';
+import { useEffect } from 'react';
+import { authContext } from '../context/AuthContext';
 
 const Events = () => {
+
+    const { getEventList, eventList }=useContext(eventContext);
+    const { isAuthenticate }=useContext(authContext)
+
+    const dateFormater = (date) =>{
+        let newdate = new Date(date).toLocaleDateString('fr-FR', {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: 'numeric'
+        })
+        return newdate
+    }
+
+    useEffect(()=>{
+        getEventList()
+    }, [])
+    
     return (
         <div className='events'>
             <div className='events__title'>Prochains évènements</div>
-            <div className='events__content'>
-                <div className='events__content__item'>
-                    <h4>Assemblée Générale</h4>
-                    <p>L'assemblée Générale est l'occasion pour nous de faire le point sur l'année écoulée.</p>
-                    <p>Nous aborderons notamment le rapport financier, moral, et d'activité</p>
-                    <p>C'est surtout, pour nous, un moment de partage et d'échange.</p>
-                </div>
-                <div className='events__content__item'>
-                    <h4>La sortie d'été</h4>
-                    <p>Pendant l'été, nous nous réunissons lors d'une journée conviviale, accompgnés des enfants,</p>
-                    <p> autour d'activités (activités nautiques à La Rincerie, visite du Château de Lassay Les Châteaux, parc animalier de l'Arche de Noé...).</p>
-                    <p>Un goûter est offert à la fin de cette journée pour tous les participants.</p>
-                </div>
-                <div className='events__content__item'>
-                    <h4>Journée à thème</h4>
-                    <p>Rencontre animée par un professionnel autour du thème : "Accompagner le vécu du deuil de l'enfant placé."</p>
-                    <p>Un certificat de présence sera transmis aux stagiaires à l'issu de la conférence.</p>
-                </div>
+                <div className='events__content'>
+                {
+                    eventList&&
+                    eventList.map((events, id )=>(
+                        <div className='events__content__item' key={id}>
+                            <h4>{events.title}</h4>
+                            {
+                                events.content&&
+                                events.content.map((parag, index)=>(
+                                    <p key={index}>{parag}</p>
+                                ))
+                            }
+                            {isAuthenticate&&
+                            <div>
+                            <p><img src='./assets/icones/calendrier.png' alt='calendrier'/>{dateFormater(events.date)}</p>
+                            <p><img src='./assets/icones/place.png' alt='localisation'/> {events.place}</p>
+                            </div>}
+                        </div>
+                    ))
+                }
             </div>
         </div>
     );
