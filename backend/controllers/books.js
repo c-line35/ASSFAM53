@@ -46,3 +46,26 @@ exports.createbook=(req, res, next)=>{
         }
     }
 }
+
+exports.getAllBooks=(req, res, next)=>{
+    Book.find()
+    .then((library)=>{res.status(200).json(library)})
+    .catch((error)=>{res.status(400).json(error)})
+}
+
+exports.getOneBook=(req, res, next)=>{
+    const id = req.params.id
+    if(req.auth.userRole === 'user'||req.auth.userRole === 'admin'){
+        Book.findOne({_id:id})
+        .then((data)=>{
+            if(!data){
+                res.status(404).send({message: 'Livre non trouvé'})
+            }else{
+                res.status(200).json(data)
+            }
+        })
+        .catch(error=>res.status(400).json({ error }))
+    }else{
+        return res.status(401).json({message: 'Requête non authentifiée'}) 
+    }
+}

@@ -37,6 +37,6 @@ var upload = multer({
       }
     },
     limits: { fileSize: maxSize },
-  }).single('image');
+  }).single('imageBook');
   
 module.exports = upload;
