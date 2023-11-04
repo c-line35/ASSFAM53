@@ -7,6 +7,7 @@ import { authContext } from './AuthContext';
         eventListe:[],
         getEventList:()=>{},
         editEvent:(''),
+        setEditEvent:()=>{},
         getEditEvent:()=>{},
         id:(''),
         setId:()=>{}
@@ -26,11 +27,9 @@ const EventContext = ({ children }) => {
             setEventList(res.data.sort((a,b)=>a.date>b.date? 1:-1))
         })
     }
-    const getEditEvent=()=>{
-        reqInstance.get(`/agenda/:${id}`)
-        .then((res)=>{
-            setEditEvent(res.data)
-        })
+    
+    const getEditEvent=(eventToEdit)=>{
+        setEditEvent(eventList.find((ev)=>ev._id === eventToEdit._id))     
     }
 
     useEffect(()=>{
@@ -41,7 +40,7 @@ const EventContext = ({ children }) => {
     return (
          <eventContext.Provider value={ { 
             eventList, getEventList,
-            editEvent, getEditEvent,
+            editEvent, setEditEvent, getEditEvent,
             id, setId
           } }>
             { children }

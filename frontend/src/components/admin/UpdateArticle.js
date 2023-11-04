@@ -5,7 +5,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import { authContext } from '../../context/AuthContext';
 import { articlesContext } from '../../context/ArticlesContext';
 
-const UpdateArticle = () => {
+const UpdateArticle = ({ tmpParag, setTmpParag}) => {
 
     const { reqBearer } = useContext(authContext)
     const { getArticlesList, editArticle, setEditArticle}= useContext(articlesContext);
@@ -14,7 +14,7 @@ const UpdateArticle = () => {
     const [image, setImage]=useState('');
     const [title, setTitle]=useState('');
     const [newParag, setNewParag]=useState('');
-    const [tmpParag, setTmpParag]=useState(editArticle.content);
+   
     const [seeAddParag, setSeeAddParag]=useState(false);
     const [messageError, setMessageError]=useState();
     const [visibility, setVisibility]=useState(editArticle.visibility)
@@ -70,8 +70,10 @@ const UpdateArticle = () => {
     const checkParag=(e)=>setNewParag(e.target.value);
 
     const deleteParag=(e)=>{
-        let content = e.currentTarget.getAttribute('data-contenttext');
-        setTmpParag(tmpParag.filter(el=>el!==content))
+        let i = e.currentTarget.getAttribute('data-index');
+        tmpParag.splice(i,1)
+        e.currentTarget.parentNode.setAttribute('class', 'inputToDelete');
+
     }
 
     const editParag=(e)=>{
@@ -84,6 +86,11 @@ const UpdateArticle = () => {
     const changeVisibility = () => {
         visibility? setVisibility(false):setVisibility(true);
       };
+
+    const cancelEditing=()=>{
+        setEditArticle('')
+        getArticlesList()
+    }
 
     return (
         <div>
@@ -148,7 +155,7 @@ const UpdateArticle = () => {
                             >
                                 <TextArea defaultValue={p} rows={5} data-index={index}></TextArea>
                             </Form.Item> 
-                            <Button type='text' data-contenttext={p} onClick={deleteParag} ><DeleteOutlined /></Button>
+                            <Button type='text' data-index={index} onClick={deleteParag} ><DeleteOutlined /></Button>
                         </div> 
                     </Form>
                 </div>)}
@@ -172,9 +179,8 @@ const UpdateArticle = () => {
                 }  
                         <div className='modifyStaff'>
                             <Button key="submit" type="primary" onClick={onFinish} >Enregistrer les modifications</Button>
+                            <Button onClick={cancelEditing}>Annuler</Button>
                         </div>
-                        <Button>Valider</Button>
-                        <Button onClick={()=>setEditArticle('')}>Annuler</Button>
                         {messageError&& <div className="message-error">Erreur: {messageError}</div>}  
                     </div>
     );

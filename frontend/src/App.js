@@ -16,6 +16,7 @@ import Offers from './pages/Offers';
 import Profil from './pages/Profil';
 import StaffContextProvider from './context/StaffContext';
 import ArticlesPage from './pages/admin/ArticlesPage';
+import EventsPage from './pages/admin/EventsPage';
 import ArticlesContextProvider from './context/ArticlesContext';
 import EventContextProvider from './context/EventContext';
 import { ConfigProvider } from 'antd';
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="/management" element={<Manage /> } /> 
         <Route path="/profil" element={<Profil /> } /> 
         <Route path="/adminarticles" element={<ArticlesPage/> } /> 
+        <Route path="/adminevent" element={<EventsPage/> } /> 
       </Routes>
     </BrowserRouter> 
     </EventContextProvider>

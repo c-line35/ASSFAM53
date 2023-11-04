@@ -27,6 +27,7 @@ const AdminArticles = () => {
                 <button className='button1' onClick={()=>setIsModalArticleVisible(true)} >Créer un nouvel article</button> 
                 <button className='button1' ><NavLink to="/adminarticles">Voir tous les articles</NavLink></button> 
                 <button className='button1' onClick={()=>setIsModalEventVisible(true)}>Créer un nouvel évènement</button>
+                <button className='button1' ><NavLink to="/adminevent">Voir tous les évènements</NavLink></button>
             </>
             }  
             <Modal

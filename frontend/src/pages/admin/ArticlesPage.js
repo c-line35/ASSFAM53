@@ -19,6 +19,7 @@ const ArticlesPage = () => {
     const [selectedArticle, setSelectedArticle]=useState('');
     const [document, setDocument]=useState('');
     const [lien, setLien]=useState('');
+    const [tmpParag, setTmpParag]=useState(editArticle?editArticle.content:'');
 
     const headers = 'Content-Type : multipart/form-data';
 
@@ -30,11 +31,19 @@ const ArticlesPage = () => {
         setIsModalArticleDocumentVisible&& setIsModalArticleDocumentVisible(false);
         setIsModalArticleLienVisible&& setIsModalArticleLienVisible(false);
         setIsModalArticleDeleteVisible&& setIsModalArticleDeleteVisible(false);
-        setSelectedArticle('');
+        getArticlesList();
+        setSelectedArticle('')
+
+       
     };
 
     const selectArticle= (article) =>{
         setSelectedArticle(articlesList.find((art)=>art._id === article._id))
+    }
+
+    const editingArticle= (article) =>{
+        getEditArticle(article)
+        setTmpParag(article.content)
     }
 
     const editDocArticle = (article)=>{
@@ -122,7 +131,10 @@ const ArticlesPage = () => {
             <div className='pageArticles__liste'>
                 {editArticle
                     ?
-                   <UpdateArticle />
+                   <UpdateArticle 
+                   tmpParag={ tmpParag }
+                   setTmpParag={ setTmpParag }
+                   />
                     :
                     <div className='listArticles'>
                         {articlesList.map((article)=>(
@@ -138,7 +150,7 @@ const ArticlesPage = () => {
                                         {article.visibility&& <p style={{color: 'red'}}>Cet article visible par tous</p>}
                                     </div>
                                     <div className='adminArticle__settings'>
-                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Modifier' onClick={()=>{getEditArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>
+                                        <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Modifier' onClick={()=>{editingArticle(article)}} ><img data-id={article._id} alt='edit' src="../assets/icones/edit.png"/></button>
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un document' onClick={()=>{editDocArticle(article)}}><img data-id={article._id} alt='ajouter un document' src="../assets/icones/document.png"/></button>
                                         <button data-id={article._id} type='button'className='adminArticle__settings adminArticle__settings--ligne' title='Ajouter un lien' onClick={()=>{editLienArticle(article)}}><img data-id={article._id} alt='ajouter un lien' src="../assets/icones/lien.png"/></button>
                                         <button data-id={article._id} type='button'className='adminArticle__settings' title='Supprimer' onClick={()=>deleteArticle(article)}><img alt='supprimer' src="../assets/icones/poubelle.png"/></button>

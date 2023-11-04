@@ -19,7 +19,6 @@ const AdminCreateEvent = ({ setIsModalEventVisible }) => {
     const [newParagraphe, setNewParagraphe]=useState(false);
     const [paragraphe, setParagraphe]=useState("")
     const [title, setTitle]=useState("");
-    const [date, setDate]=useState("");
     const [day, setDay]=useState("");
     const [time, setTime]=useState("");
     const [place, setPlace]=useState("");
