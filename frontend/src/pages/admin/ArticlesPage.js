@@ -34,7 +34,6 @@ const ArticlesPage = () => {
         getArticlesList();
         setSelectedArticle('')
 
-       
     };
 
     const selectArticle= (article) =>{

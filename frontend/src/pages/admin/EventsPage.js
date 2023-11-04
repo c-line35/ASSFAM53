@@ -4,14 +4,19 @@ import { NavLink } from 'react-router-dom';
 import { eventContext } from '../../context/EventContext';
 import { useEffect } from 'react';
 import UpdateEvent from '../../components/admin/UpdateEvent';
+import { authContext } from '../../context/AuthContext';
+import { Button, Modal } from 'antd';
 
 const EventsPage = () => {
+
+    const { reqBearer } = useContext(authContext)
 
     const { getEventList, eventList, setEditEvent, getEditEvent, editEvent} = useContext(eventContext);
     
     const [isModalEditEventVisible, setIsModalEditEventVisible]=useState(false);
-
-  const [tmpParag, setTmpParag]=useState(editEvent ?editEvent.content: '');
+    const [isModalEventDeleteVisible, setIsModalEventDeleteVisible]=useState(false);
+    const [tmpParag, setTmpParag]=useState(editEvent ?editEvent.content: '');
+    const [eventToDelete, setEventToDelete]=useState('');
    
     useEffect(()=>{
         getEventList()
@@ -28,14 +33,27 @@ const EventsPage = () => {
         return newdate
     }
 
-    const deleteEvent=(e)=>{
-        console.log(e._id)
+    const handleCancel = () => {
+        setIsModalEventDeleteVisible&& setIsModalEventDeleteVisible(false);
+        getEventList();
+    };
+
+    const onFinishDelete=()=>{
+        let id=eventToDelete._id
+        reqBearer.delete(`/agenda/${id}`)
+        .then(()=>handleCancel())
+        .catch((error)=>console.log(error))
     }
  
     const eventEditing=(event)=>{
         setIsModalEditEventVisible(true)
         getEditEvent(event)
         setTmpParag(event.content)
+    }
+
+    const deleteEvent=(event)=>{
+        setIsModalEventDeleteVisible('true')
+        setEventToDelete(event)
     }
 
     return (
@@ -76,7 +94,20 @@ const EventsPage = () => {
             setTmpParag={setTmpParag}
         />
          }
-    </div>
+{/* ------------------------------------------MODAL SUPPRESSION EVENT-------------------- */}    
+        <Modal
+            title="Supprimer cet évènement" 
+            visible={isModalEventDeleteVisible} 
+            destroyOnClose={true}
+            onCancel={handleCancel}
+            footer={[
+                <Button type="primary" key='valid' onClick={onFinishDelete}>Supprimer</Button>,
+                <Button key="back" onClick={handleCancel}>Annuler</Button>
+                     ]}
+        >      
+            <div>Etes-vous sûr de vouloir supprimer cet article?</div>
+        </Modal>
+</div>
 )};
 
 export default EventsPage;
