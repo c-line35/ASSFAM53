@@ -17,6 +17,7 @@ const staffRoutes = require('./routes/staff');
 const articleRoutes = require('./routes/article');
 const agendaRoutes = require('./routes/agenda');
 const bookRoutes = require('./routes/book');
+const noticeRoutes = require('./routes/notice');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
@@ -29,6 +30,7 @@ app.use('/api/staff', staffRoutes);
 app.use('/api/article', articleRoutes);
 app.use('/api/agenda', agendaRoutes);
 app.use('/api/library', bookRoutes);
+app.use('/api/notice', noticeRoutes);
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 

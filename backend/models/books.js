@@ -9,6 +9,6 @@ const bookSchema=mongoose.Schema({
     theme:{type:[String]},
     imageUrl:{type: String},
     likes:{type:[String]},
-    notice:{type:[String]}
+    notice:{type: [mongoose.Schema.Types.Mixed], ref:"Notice"}
 })
 module.exports = mongoose.model('Book', bookSchema);
