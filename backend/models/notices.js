@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const noticeSchema=mongoose.Schema({
-    userId:{type: String, required: true},
+    userId:{type: mongoose.Schema.Types.ObjectId, ref:"User"},
     bookId:{type:String, required: true},
     content:{type:String, required: true},
     date:{type: Date, required: true},

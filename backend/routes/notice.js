@@ -8,5 +8,6 @@ router.get("/book/:bookId", auth, noticeCtrl.getBookNotices);
 router.get("/:id", auth, noticeCtrl.getOneNotice);
 router.get("/user/:userId", auth, noticeCtrl.getUserNotice);
 router.put("/:id", auth, noticeCtrl.updateNotice);
+router.delete("/:noticeId/:userId", auth, noticeCtrl.deleteNotice);
 
 module.exports = router;

@@ -49,7 +49,7 @@ exports.createbook=(req, res, next)=>{
 }
 
 exports.getAllBooks=(req, res, next)=>{
-    Book.find()
+    Book.find().populate('notice', '-_id -__v -userId -bookId -content -date')
     .then((library)=>{res.status(200).json(library)})
     .catch((error)=>{res.status(400).json(error)})
 }
@@ -58,8 +58,8 @@ exports.getOneBook=(req, res, next)=>{
     const id = req.params.id
     if(req.auth.userRole === 'user'||req.auth.userRole === 'admin'){
         Book.findOne({_id:id})
+        .populate('notice', '-__v -_id -userId -bookId')
         .then((data)=>{
-            console.log(data._id)
             if(!data){
                 res.status(404).send({message: 'Livre non trouvé'})
             }else{
