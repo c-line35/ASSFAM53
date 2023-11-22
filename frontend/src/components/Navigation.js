@@ -62,6 +62,13 @@ const getConnect=()=>{
       <NavLink to="/partners" className={(nav)=>(nav.isActive? 'nav-active':"")}>
         <div >Partenaires</div>
       </NavLink>
+      {isAuthenticate
+    ?<NavLink to="/library" className={(nav)=>(nav.isActive? 'nav-active':"")}>
+    <div >Bibliothèque</div>
+  </NavLink>
+    :''
+      }
+
     </div>
     {isAuthenticate
     ?<div className='navigation navigation--connect'>   
@@ -74,7 +81,6 @@ const getConnect=()=>{
         <NavLink to="/" onClick={disconnect}>Déconnexion</NavLink>
     </div>
     : 
-    
     <NavLink to="/" onClick={getConnect}>Connexion</NavLink>
     }
     </div>

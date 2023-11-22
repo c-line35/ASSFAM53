@@ -4,21 +4,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './sass/style.css';
 import AuthContextProvider from './context/AuthContext'
 import UsersContextProvider from './context/UsersContext'
+import StaffContextProvider from './context/StaffContext';
+import ArticlesContextProvider from './context/ArticlesContext';
+import EventContextProvider from './context/EventContext';
+
 
 import Intro from './pages/Intro'
 import Home from './pages/Home'
 import Join from './pages/Join'
-import Partners from './pages/Partners'
+import Partners from './pages/Partners';
+import Library from './pages/Library';
 import Staff from './pages/Staff'
 import InitPassword from './pages/InitPassword';
 import Manage from './pages/admin/Manage';
 import Offers from './pages/Offers';
 import Profil from './pages/Profil';
-import StaffContextProvider from './context/StaffContext';
 import ArticlesPage from './pages/admin/ArticlesPage';
 import EventsPage from './pages/admin/EventsPage';
-import ArticlesContextProvider from './context/ArticlesContext';
-import EventContextProvider from './context/EventContext';
 import { ConfigProvider } from 'antd';
 import frFR from 'antd/es/locale/fr_FR';
 
@@ -36,6 +38,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/join" element={<Join />} />
         <Route path="/partners" element={<Partners />} />
+        <Route path="/library" element={<Library />} />
         <Route path="/staff" element={<Staff />} />
         <Route path="/offers" element={<Offers />} />                 
         <Route path="/initpassword/:token" element={<InitPassword /> } /> 
