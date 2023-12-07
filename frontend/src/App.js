@@ -7,6 +7,7 @@ import UsersContextProvider from './context/UsersContext'
 import StaffContextProvider from './context/StaffContext';
 import ArticlesContextProvider from './context/ArticlesContext';
 import EventContextProvider from './context/EventContext';
+import LibraryContextProvider from './context/LibraryContext'
 
 
 import Intro from './pages/Intro'
@@ -32,6 +33,7 @@ const App = () => {
     <StaffContextProvider>
     <ArticlesContextProvider>
     <EventContextProvider>
+    <LibraryContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
@@ -48,6 +50,7 @@ const App = () => {
         <Route path="/adminevent" element={<EventsPage/> } /> 
       </Routes>
     </BrowserRouter> 
+    </LibraryContextProvider>
     </EventContextProvider>
     </ArticlesContextProvider>
     </StaffContextProvider> 

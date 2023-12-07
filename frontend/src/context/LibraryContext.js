@@ -15,12 +15,11 @@ const [bookListe, setBookListe]=useState([]);
 
 const getBookListe = () =>{
     reqInstance.get("/library")
-    .then((res)=>setBookListe(res))
-}
-
-useEffect(()=>{
-    getBookListe()
-    console.log(bookListe)
+    .then((res)=>{setBookListe(res.data)})
+    }
+    
+    useEffect(()=>{
+        getBookListe()
 },[])
 
 return(

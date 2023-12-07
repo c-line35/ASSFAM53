@@ -1,0 +1,65 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.libraryPage{
+    display: flex;
+    padding: 50px 0 20px 0;
+}
+
+.libraryNav{
+    display: flex;
+    width: 20vw;
+    border-right: 1px solid $color-quaternary;
+}
+
+.library{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 80vw;
+    margin:0 50px;
+}
+
+.book{
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 200px;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 30px;
+    @include box-shadow-normal;
+    &_image{
+        width: 50%;
+        height:80%; 
+        overflow: hidden;
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            } 
+    }
+    &_text{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        height:80%; 
+        
+        &_title{
+            color: $color-tertiary;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+        }
+        &_author{
+            font-size: 12px;
+        }
+        &_star{
+            display: flex;            
+            margin-top: 10px;
+            img{
+                width: 70%;
+            }
+        }
+    }
+    
+}
