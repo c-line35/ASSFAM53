@@ -10,7 +10,6 @@ const BookLevel = ({ notice }) => {
 
     const getLevelAvg = () =>{
         if(notice.length>0){
-            console.log(notice.length) 
             let total =0
             for(let avis of notice){
             total += avis.level
@@ -40,6 +39,7 @@ const BookLevel = ({ notice }) => {
         getColorStar()
     },[average])
     
+    
 
     return (
         <div>
@@ -56,7 +56,7 @@ const BookLevel = ({ notice }) => {
                 )}
                 <span>({noticeLenght})</span>
                 </div>
-                :<div>Pas encore d'avis</div>    
+                :<div className='book_text_star'>Pas encore d'avis</div>    
             }
         </div>
     );
