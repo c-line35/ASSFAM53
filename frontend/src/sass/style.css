@@ -7,26 +7,26 @@
   z-index: 2;
   animation: cross 5000ms linear;
   top: 50%;
-  right: 50px;
+  right: 350px;
 }
 .anim--yellow {
   z-index: 4;
   bottom: 50%;
-  left: 400px;
+  left: 500px;
   animation: crossNegatif 7000ms linear;
   animation-delay: 4000ms;
 }
 .anim--pink {
   z-index: 2;
   bottom: 30%;
-  left: 75px;
+  left: 105px;
   animation: crossNegatif 6000ms linear;
   animation-delay: 9000ms;
 }
 .anim--blue {
   z-index: 2;
   bottom: 50%;
-  left: 300px;
+  left: 450px;
   animation: crossNegatif 5250ms linear;
   animation-delay: 7000ms;
 }

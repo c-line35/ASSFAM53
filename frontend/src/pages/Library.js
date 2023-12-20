@@ -26,7 +26,7 @@ const Library = () => {
                     bookListe&&
                     isAuthenticate&&
                     bookListe.map((book, index)=>
-                    ( <Book book={book}/>)
+                    ( <Book book={book} key={index}/>)
                     )
                 }
             </div>
