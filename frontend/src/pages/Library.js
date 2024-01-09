@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Modal } from 'antd';
 
 import Header from '../components/Header'
 import Footer from '../components/Footer';
@@ -8,6 +7,7 @@ import { libraryContext } from '../context/LibraryContext';
 import { useContext } from 'react';
 import { useEffect } from 'react';
 import { authContext } from '../context/AuthContext';
+import BookDetail from '../components/BookDetail';
 
 const Library = () => {
 
@@ -46,14 +46,15 @@ const Library = () => {
                     )
                 }
             </div>
-            <Modal
-                title="Ajouter un document" 
-                visible={showBook} 
-                destroyOnClose={true}
-                onCancel={handleCancel}
-            >    
-            <div>{selectedBook.title}</div>
-            </Modal>  
+            <BookDetail  
+                book={selectedBook}
+                showBook={showBook} 
+                setShowBook={setShowBook}
+                selectedBook={selectedBook}
+                setSelectedBook={setSelectedBook}
+                handleCancel={handleCancel} 
+            />
+           
         </main>
           <Footer/>
           </div>
