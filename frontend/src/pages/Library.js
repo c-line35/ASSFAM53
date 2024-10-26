@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-
+import React from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer';
 import Book from './../components/Book'
@@ -7,24 +6,18 @@ import { libraryContext } from '../context/LibraryContext';
 import { useContext } from 'react';
 import { useEffect } from 'react';
 import { authContext } from '../context/AuthContext';
-import BookDetail from '../components/BookDetail';
+
 
 const Library = () => {
 
     const { isAuthenticate }= useContext(authContext)
-    const { bookListe, getBookListe }=useContext(libraryContext);
-    const [showBook, setShowBook]= useState(false);
-    const [selectedBook, setSelectedBook]= useState('')
-
+    const { bookListe, getBookListe, getListeLike }=useContext(libraryContext);
+ 
     useEffect(()=>{
         getBookListe()
     }, [])
 
-    const handleCancel=({})=>{
-        setShowBook(false)
-        setSelectedBook('')
-    }
-
+    
     return (
         <div>
           <Header />
@@ -38,23 +31,11 @@ const Library = () => {
                     ( <Book 
                         book={book} 
                         key={index} 
-                        showBook={showBook} 
-                        setShowBook={setShowBook}
-                        selectedBook={selectedBook}
-                        setSelectedBook={setSelectedBook}
+                        getBookListe={getBookListe}
                         />)
                     )
                 }
             </div>
-            <BookDetail  
-                book={selectedBook}
-                showBook={showBook} 
-                setShowBook={setShowBook}
-                selectedBook={selectedBook}
-                setSelectedBook={setSelectedBook}
-                handleCancel={handleCancel} 
-            />
-           
         </main>
           <Footer/>
           </div>

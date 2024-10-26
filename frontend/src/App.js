@@ -8,7 +8,7 @@ import StaffContextProvider from './context/StaffContext';
 import ArticlesContextProvider from './context/ArticlesContext';
 import EventContextProvider from './context/EventContext';
 import LibraryContextProvider from './context/LibraryContext'
-
+import BookContextProvider from './context/BookContext';
 
 import Intro from './pages/Intro'
 import Home from './pages/Home'
@@ -25,6 +25,7 @@ import EventsPage from './pages/admin/EventsPage';
 import { ConfigProvider } from 'antd';
 import frFR from 'antd/es/locale/fr_FR';
 
+
 const App = () => {
   return (
     <ConfigProvider locale={frFR}>
@@ -34,6 +35,7 @@ const App = () => {
     <ArticlesContextProvider>
     <EventContextProvider>
     <LibraryContextProvider>
+    <BookContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Intro />} />
@@ -49,7 +51,8 @@ const App = () => {
         <Route path="/adminarticles" element={<ArticlesPage/> } /> 
         <Route path="/adminevent" element={<EventsPage/> } /> 
       </Routes>
-    </BrowserRouter> 
+    </BrowserRouter>
+    </BookContextProvider>
     </LibraryContextProvider>
     </EventContextProvider>
     </ArticlesContextProvider>

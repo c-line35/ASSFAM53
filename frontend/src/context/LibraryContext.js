@@ -9,23 +9,26 @@ export const libraryContext = React.createContext({
 
 const LibraryContextProvider = ({ children }) => {
 
-const { reqInstance }=useContext(authContext)
+const { reqBearer }=useContext(authContext)
 
 const [bookListe, setBookListe]=useState([]);
 
-const getBookListe = () =>{
-    reqInstance.get("/library")
-    .then((res)=>{setBookListe(res.data)})
-    }
-    
+
+
+    const getBookListe = () =>{
+        reqBearer.get("/library")
+        .then((res)=>{
+            setBookListe(res.data)
+            getBookListe()
+            })
+        }
+
     useEffect(()=>{
-        getBookListe()
-},[])
-
+            getBookListe()
+    },[])
     
-
 return(
-    <libraryContext.Provider value={ { bookListe, getBookListe} }>
+    <libraryContext.Provider value={ { bookListe, getBookListe } }>
         { children}
     </libraryContext.Provider>
     )

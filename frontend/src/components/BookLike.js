@@ -1,44 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { authContext } from '../context/AuthContext';
-import { libraryContext } from '../context/LibraryContext';
+import React, { useContext, useState, useEffect } from 'react';
+import { bookContext } from '../context/BookContext';
 
-const BookLike = ({ bookLike, bookId }) => {
+const BookLike = ({ book }) => {
 
-    const {reqBearer, authProfil} = useContext(authContext);
-    const {getBookListe} = useContext(libraryContext)
+    const { likeBook, userId } = useContext (bookContext)
 
-    const [isBookLiked, setIsBookLiked]=useState(false)
+    const [isBookLike, setIsBookLike]= useState(false)
 
-    const userId=authProfil._id
-
-    const userLike =()=>{
-        const like = bookLike.find((user)=>user===userId)
-        like?setIsBookLiked(true):setIsBookLiked(false)
+    const getIsBookLike = ()=>{
+        if(book){
+        const like = book.likes.find((user)=>user === userId)
+        like? setIsBookLike(true): setIsBookLike(false)
+        }
     }
-useEffect(()=>{
-    userLike()
-},[])
+    
+    useEffect(()=>{
+        getIsBookLike()
+    },[likeBook])
 
-    const likeBook=()=>{
-        const like = bookLike.find((user)=>user===userId)
-        like?setIsBookLiked(false):setIsBookLiked(true)    
-        reqBearer.put(`/library/${bookId}/${userId}`)
-        .then(()=>{
-            getBookListe()
-        })
-    }
 
     return (
-        <div id='like'>
-            {isBookLiked
-            ?<div className='book_test_like'onClick={()=>{likeBook()}} title='Enlever des favoris'>
-                <img src='assets/icones/coeur-rouge.png' alt='favoris' />
-            </div> 
-            :<div className='book_test_like'onClick={()=>{likeBook()}} title='Ajouter aux favoris'>
-                <img src='assets/icones/coeur-vide.png' alt='favoris' />
-            </div> 
-            }
-        </div>
+        <div >
+        {isBookLike
+        ?<div >
+            <img onClick={()=>{likeBook(book)}} title='Enlever des favoris' src='assets/icones/coeur-rouge.png' alt='favoris' />
+        </div> 
+        :<div>
+            <img onClick={()=>{likeBook(book)}} title='Ajouter aux favoris' src='assets/icones/coeur-vide.png' alt='favoris' />
+        </div> 
+        }
+    </div>      
     );
 };
 

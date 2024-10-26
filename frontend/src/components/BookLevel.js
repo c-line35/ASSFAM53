@@ -54,7 +54,7 @@ const BookLevel = ({ notice }) => {
                         }
                         </div>)
                 )}
-                <span>({noticeLenght})</span>
+                <span>({noticeLenght} avis)</span>
                 </div>
                 :<div className='book_text_star'>Pas encore d'avis</div>    
             }
