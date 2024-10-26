@@ -10,6 +10,7 @@
     @include box-shadow-normal;
     &:hover{
         @include box-shadow-hover;
+        cursor: pointer;
     }
     a{
         display: flex;
@@ -21,3 +22,30 @@
     }
     
   }
+  .button2{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border: $color-quaternary 1px solid;
+    border-radius:5px;
+    color:$color-quaternary;
+    border:$color-quaternary 1px soild;
+    font-size: 18px;
+    &:hover{
+        font-weight: bold;
+        background-color: rgb(243, 243, 243);
+        cursor: pointer;
+    }
+    a{
+        text-decoration: none;
+        color: $color-quaternary;
+    }
+}
+@media screen and (max-width: 900px){
+    .button2{
+        width: 80%;
+        max-width: 400px;
+        min-width: 250px;
+        margin: auto;
+    }
+}

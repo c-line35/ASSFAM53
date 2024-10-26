@@ -57,7 +57,8 @@ exports.getOneNotice=(req, res, next)=>{
         Notice.findOne({_id:id})
         .populate('userId', '-_id -__v -email -password -lastName -phoneNumber -adress -post -city -role -end -level -adminRights')
         .then((notice)=>{
-            res.status(200).json(notice)})
+            res.status(200).json(notice)
+        })
         .catch(()=>res.status(400).json({ message:"avis non trouvé" }))
     }else{
         return res.status(401).json({message: 'Requête non authentifiée'}) 
@@ -68,8 +69,10 @@ exports.getBookNotices=(req, res, next)=>{
     const bookId = req.params.bookId;
     if(req.auth.userRole === 'user'||req.auth.userRole === 'admin'){
         Notice.find({bookId:bookId})
-        .populate('userId', '-_id -__v -email -password -lastName -phoneNumber -adress -post -city -role -end -level -adminRights')
-        .then((data)=>res.status(201).json(data))
+        .populate('userId', '-__v -email -password -lastName -phoneNumber -adress -post -city -role -end -level -adminRights')
+        .then((data)=>{
+            res.status(201).json(data)
+        })
         .catch((error)=>res.status(400).json(error))
     }else{
         return res.status(401).json({message: 'Requête non authentifiée'})
