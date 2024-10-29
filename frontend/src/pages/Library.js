@@ -4,18 +4,15 @@ import Footer from '../components/Footer';
 import Book from './../components/Book'
 import { libraryContext } from '../context/LibraryContext';
 import { useContext } from 'react';
-import { useEffect } from 'react';
 import { authContext } from '../context/AuthContext';
 
 
 const Library = () => {
 
     const { isAuthenticate }= useContext(authContext)
-    const { bookListe, getBookListe, getListeLike }=useContext(libraryContext);
+    const { bookListe, getBookListe }=useContext(libraryContext);
  
-    useEffect(()=>{
-        getBookListe()
-    }, [])
+
 
     
     return (

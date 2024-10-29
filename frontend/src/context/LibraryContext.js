@@ -19,14 +19,13 @@ const [bookListe, setBookListe]=useState([]);
         reqBearer.get("/library")
         .then((res)=>{
             setBookListe(res.data)
-            getBookListe()
             })
         }
 
-    useEffect(()=>{
+        useEffect(()=>{
             getBookListe()
-    },[])
-    
+        }, [])
+
 return(
     <libraryContext.Provider value={ { bookListe, getBookListe } }>
         { children}
