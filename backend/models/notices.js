@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const noticeSchema=mongoose.Schema({
     userId:{type: mongoose.Schema.Types.ObjectId, ref:"User"},
+    firstName:{type: String, ref:"User"},
     bookId:{type:String, required: true},
     content:{type:String, required: true},
     date:{type: Date, required: true},

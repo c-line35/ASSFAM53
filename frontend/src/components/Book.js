@@ -2,27 +2,19 @@ import React, {useContext, useState, useEffect } from 'react';
 import BookLike from '../components/BookLike';
 import { bookContext } from '../context/BookContext';
 import { Modal, Form, Button, Rate, Input } from 'antd';
-
+import BookNote from './BookNote';
+import BookAvg from './BookAvg';
 
 const Book = ({ book, getBookListe  }) => {
 
-    const { userId, postNotice, deleteNotice, noticeListe, getNoticeListe, setNoticeListe } = useContext(bookContext);
+
+    const { userId, postNotice, deleteNotice } = useContext(bookContext);
  
     const [showBook, setShowBook]= useState(false);
     const [showPublishNotice, setShowPublishNotice]= useState(false);
     const [someNotices, setSomeNotices] = useState();
     const [yourNotice, setYourNotice]=useState();
     const [average, setAverage]=useState();
-
-
-
-    const getYourNotice=()=>{
-        noticeListe.forEach(element => {
-        if(element.userId === userId){
-           setYourNotice(element)
-            } 
-        });  
-    }
 
     const getLevelAvg = () =>{
         if(book.notice.length>0){
@@ -34,14 +26,18 @@ const Book = ({ book, getBookListe  }) => {
             setAverage(avg)
         }
     }
+    
 
-    useEffect(()=>{
-        getLevelAvg()
-    },[])
+    const getYourNotice=()=>{
+        book.notice.forEach(element => {
+        if(element.userId === userId){
+           setYourNotice(element)
+            } 
+        });  
+    }
 
     const selectBook=()=>{
         setShowBook(true)
-        getNoticeListe(book)
         book.notice.length>=1 ? setSomeNotices(true):setSomeNotices(false) 
         getYourNotice();
     }
@@ -62,15 +58,9 @@ const Book = ({ book, getBookListe  }) => {
     }
 
     const valideNotice= (values)=>{
-        let newNotice={
-            userId:userId,
-            content: values.content,
-            date: Date.now(),
-            level: values.level
-        }
-        noticeListe.push(newNotice)
         setYourNotice(values);
         postNotice(book, values);
+        getBookListe();
         setSomeNotices('true');
     }
 
@@ -91,15 +81,9 @@ const Book = ({ book, getBookListe  }) => {
                     <div className='book_text_info'>
                         <div className='book_text_info_title'>{book.title}</div>
                         <div className='book_text_info_author'>{book.author}</div>
-                    </div>                    
-                    {average
-                            ?<div className='book_text_star'>
-                                <Rate allowHalf disabled defaultValue={average} />
-                                <span>({book.notice.length} avis)</span>
-                                </div>
-                                :<div className='book_text_star'>Pas encore d'avis</div>    
-                            }                     
-                </div>             
+                    </div> 
+                    <BookAvg book={book} valideNotice={valideNotice}/>         
+                </div>                           
             </div>
             <div className='likeMain'>
                 <BookLike book={book}/> 
@@ -117,13 +101,7 @@ const Book = ({ book, getBookListe  }) => {
                         <div className='bookDetail_visuel_image'>
                             <img src={book.imageUrl} alt={book.title}/>                        
                         </div>
-                            {average
-                            ?<div className='book_text_star'>
-                                <Rate allowHalf disabled defaultValue={average} />
-                                <span>({book.notice.length} avis)</span>
-                                </div>
-                                :<div className='book_text_star'>Pas encore d'avis</div>    
-                            }
+                        <BookAvg book={book}/>
                         </div>    
                     <div className='bookDetail_text'>
                         <div className='bookDetail_text_info'>
@@ -178,15 +156,15 @@ const Book = ({ book, getBookListe  }) => {
                                 }
 
             {/* -----------Liste Des avis----------- */}
-                                    {noticeListe
+                                    {book.notice
                                         .sort((a,b)=>a.date>b.date? -1:1)
                                         .map((notice, index)=>
                                     <div key={index}> 
                                         <div className='noticeInfos'>
-                                            <div>Par: {notice.userId.firstName}</div>
+                                            <div>Par: {notice.firstName}</div>
                                             <div>Publié le: {dateFormater(notice.date)}</div>
                                             <div>{notice.level}</div>
-                                            <Rate disabled defaultValue={notice.level} />
+                                            <BookNote notice={notice}/>
                                         </div>                                           
                                             <div className='noticeContent'>
                                                 <p>{notice.content}</p><hr/>

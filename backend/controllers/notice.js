@@ -1,7 +1,7 @@
 const Notice =require('../models/notices');
 const Book = require('../models/books');
 const User = require('../models/user');
-const user = require('../models/user');
+
 
 const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàâùûîïôq°<Q/'\-,.?":{}()]{0,20000}$/i);
 
@@ -14,6 +14,7 @@ exports.createNotice=(req, res,next)=>{
     let noticeObject = req.body;
     const content = noticeObject.content;
     const level = noticeObject.level; 
+    const firstName = noticeObject.firstName;
 
     const valideContent = inputRegexp.test(content);
 
@@ -30,7 +31,7 @@ exports.createNotice=(req, res,next)=>{
                     Book.findOne({_id:bookId})
                     .then((book)=>{
                         const notice=book.notice
-                        const newNotice = new Notice({ userId, bookId, content, level, date})
+                        const newNotice = new Notice({ userId, bookId, content, level, date, firstName})
                         newNotice.save()
                         .then(()=>{
                         notice.push(newNotice)
