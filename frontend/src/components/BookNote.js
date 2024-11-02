@@ -4,7 +4,7 @@ import { Rate } from 'antd';
 const BookNote = ({ notice }) => {
     return (
         <div>
-            <Rate disabled defaultValue={notice.level} />
+            <Rate disabled value={notice.level} />
         </div>
     );
 };

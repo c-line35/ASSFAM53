@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Rate } from 'antd';
 
-const BookAvg = ({ book, valideNotice }) => {
+const BookAvg = ({ book }) => {
 
     const [average, setAverage]=useState();
     const noticeLength = book.notice.length;
@@ -15,7 +15,7 @@ const BookAvg = ({ book, valideNotice }) => {
             }
             let avg = total/(book.notice.length)
             setAverage(avg)
-        }
+        }else{setAverage('')}
     }
     
     useEffect(()=>{
@@ -29,7 +29,7 @@ const BookAvg = ({ book, valideNotice }) => {
             <div>
                 {average
                 ?<div className='book_text_star'>
-                    <Rate allowHalf disabled defaultValue={average} />
+                    <Rate allowHalf disabled value={average} />
                     <span>({noticeLength} avis)</span>
                     </div>
                 :<div className='book_text_star'>Pas encore d'avis</div>    

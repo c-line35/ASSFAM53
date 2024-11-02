@@ -18,6 +18,8 @@ export const authContext = React.createContext({
     setIsAdminStaff:()=>{},
     isAdminArticle:"",
     setIsAdminArticle:()=>{},
+    isAdminLibrary:"",
+    setIsAdminLibrary:()=>{},
     connect:"",
     setConnect:()=>{},
     isAuthenticate:false,
@@ -36,6 +38,7 @@ const { getAllStaff }=useContext(staffContext);
     const [isAdminAdmin, setIsAdminAdmin]=useState(false);
     const [isAdminStaff, setIsAdminStaff]=useState(false);
     const [isAdminArticle, setIsAdminArticle]=useState(false);
+    const [isAdminLibrary, setIsAdminLibrary]=useState(false);
 
 
     const initToken=()=>{
@@ -84,6 +87,9 @@ const { getAllStaff }=useContext(staffContext);
                 if(res.data.adminRights.includes('articles')){
                     setIsAdminArticle(true)
                 }
+                if(res.data.adminRights.includes('library')){
+                    setIsAdminLibrary(true)
+                }
                 getAllStaff()
             })
             .catch(()=>{
@@ -106,6 +112,7 @@ const { getAllStaff }=useContext(staffContext);
             isAdminAdmin, setIsAdminAdmin,
             isAdminStaff, setIsAdminStaff,
             isAdminArticle, setIsAdminArticle,
+            isAdminLibrary, setIsAdminLibrary,
             connect, setConnect,
             isAuthenticate, setIsAuthenticate
             } }>

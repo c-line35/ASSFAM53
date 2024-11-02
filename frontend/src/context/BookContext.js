@@ -7,7 +7,8 @@ export const bookContext = React.createContext({
     likeBook: ()=>{},
     userId:[],
     postNotice:()=>{},
-    deleteNotice:()=>{}
+    deleteNotice:()=>{},
+    updateNotice:()=>{}
 })
 
 const BookContextProvider = ({ children }) => {
@@ -16,7 +17,6 @@ const BookContextProvider = ({ children }) => {
     const { reqBearer, authProfil } = useContext(authContext);
     const { getBookListe } = useContext(libraryContext);
 
-    const firstName= authProfil.firstName;
     const userId=authProfil._id;
 
     const likeBook=(book)=>{ 
@@ -27,10 +27,11 @@ const BookContextProvider = ({ children }) => {
     } 
         
     const postNotice = (book, noticeValues)=>{
+        let firstName =  noticeValues.anonymous? 'Anonyme': authProfil.firstName
         let allValues={
             content:noticeValues.content,
             level:noticeValues.level,
-            firstName: firstName
+            firstName
         }
         reqBearer.post(`/notice/${book._id}/${userId}`, allValues)
         .then(()=>{
@@ -45,8 +46,21 @@ const BookContextProvider = ({ children }) => {
         })
     }
 
+    const updateNotice =(noticeValues, notice)=>{
+        let firstName =  noticeValues.anonymous? 'Anonyme': authProfil.firstName
+        let allValues={
+            content:noticeValues.content,
+            level:noticeValues.level,
+            firstName
+        }
+        reqBearer.put(`/notice/${notice._id}`, allValues)
+        .then(()=>{
+            getBookListe()
+        })
+    }
+
 return(
-    <bookContext.Provider value={ { likeBook, userId, postNotice, deleteNotice } }>
+    <bookContext.Provider value={ { likeBook, userId, postNotice, deleteNotice, updateNotice } }>
         { children}
     </bookContext.Provider>
     )

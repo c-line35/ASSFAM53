@@ -1,37 +1,25 @@
-import React, {useContext, useState, useEffect } from 'react';
+import React, {useContext, useEffect, useState } from 'react';
 import BookLike from '../components/BookLike';
 import { bookContext } from '../context/BookContext';
-import { Modal, Form, Button, Rate, Input } from 'antd';
+import { Modal, Form, Button, Rate, Input, Checkbox } from 'antd';
 import BookNote from './BookNote';
 import BookAvg from './BookAvg';
 
 const Book = ({ book, getBookListe  }) => {
 
 
-    const { userId, postNotice, deleteNotice } = useContext(bookContext);
+    const { userId, postNotice, deleteNotice, updateNotice } = useContext(bookContext);
  
     const [showBook, setShowBook]= useState(false);
     const [showPublishNotice, setShowPublishNotice]= useState(false);
     const [someNotices, setSomeNotices] = useState();
     const [yourNotice, setYourNotice]=useState();
-    const [average, setAverage]=useState();
-
-    const getLevelAvg = () =>{
-        if(book.notice.length>0){
-            let total =0
-            for(let avis of book.notice){
-            total += avis.level
-            }
-            let avg = total/(book.notice.length)
-            setAverage(avg)
-        }
-    }
-    
+    const [editNotice, setEditNotice]=useState(false)
 
     const getYourNotice=()=>{
         book.notice.forEach(element => {
         if(element.userId === userId){
-           setYourNotice(element)
+            setYourNotice(element)
             } 
         });  
     }
@@ -58,17 +46,31 @@ const Book = ({ book, getBookListe  }) => {
     }
 
     const valideNotice= (values)=>{
-        setYourNotice(values);
+        setYourNotice(values)
+        setShowPublishNotice(false)
         postNotice(book, values);
         getBookListe();
-        setSomeNotices('true');
+        setSomeNotices('true');       
     }
 
     const deleteThisNotice=()=>{
-        deleteNotice(yourNotice);
+        let noticeToDelete = book.notice.find((element)=>element.userId === userId)
+        book.notice.length === 1? setSomeNotices(false):setSomeNotices(true)
+        deleteNotice(noticeToDelete);
         setYourNotice('');
         getBookListe();
+        }
+
+    const updateThisNotice=(values)=>{
+        let noticeToDelete = book.notice.find((element)=>element.userId === userId)
+        updateNotice(values, noticeToDelete);
+        getBookListe();
+        setEditNotice(false)
     }
+
+    useEffect(()=>{
+        getYourNotice()
+    },[])
 
     return (
         <div className='mainBook'>
@@ -82,7 +84,7 @@ const Book = ({ book, getBookListe  }) => {
                         <div className='book_text_info_title'>{book.title}</div>
                         <div className='book_text_info_author'>{book.author}</div>
                     </div> 
-                    <BookAvg book={book} valideNotice={valideNotice}/>         
+                    <BookAvg book={book} />         
                 </div>                           
             </div>
             <div className='likeMain'>
@@ -117,67 +119,98 @@ const Book = ({ book, getBookListe  }) => {
                             <h3>Avis des lecteurs</h3>
                 
                         {/* -----------si il y a des avis----------- */} 
-                            {someNotices?
-                            <div>
-                        
-                            {/* -----------si l'utilisateur a déjà posté un avis----------- */} 
-                                {yourNotice?
+                            {someNotices                        
+                            ?<div> 
                                 <div>
-                                    <div className ='yourNotice'>Votre avis: {yourNotice.content}</div>
-                                    <div className='button2'>Modifier</div>
-                                    <div className='button2'onClick={()=>deleteThisNotice()}>Supprimer</div>
-                                </div>                         
-            
-                            /* -----------si l'utilisateur n'a pas donné son avis sur le livre----------- */
-                                :<div>
-
-                                {/* -----------formulaire de post d'un avis----------- */}                    
-                                    {showPublishNotice?
-                                           <div className ={yourNotice}>
-                                            <Form 
-                                            name="post_notice"
-                                            onFinish={(values)=>{valideNotice(values, book)}}
-                                            >
-                                                <Form.Item name="content">
-                                                    <Input.TextArea />
-                                                </Form.Item>
-                                                <Form.Item name="level" label="Note">
-                                                    <Rate />
-                                                </Form.Item>
-                                                <Button type="primary" htmlType="submit" >Valider</Button>
-                                                <Button type='text' onClick={()=>setShowPublishNotice(false)}>Annuler</Button>
-                                            </Form>
-                                       </div>
-                                        
-                                /* -----------pas d'action----------- */
-                                    :<div className='button2'onClick={()=>{setShowPublishNotice(true)}}>Donnez votre avis</div>    
-                                    }
-                                </div>
-                                }
-
-            {/* -----------Liste Des avis----------- */}
-                                    {book.notice
-                                        .sort((a,b)=>a.date>b.date? -1:1)
-                                        .map((notice, index)=>
-                                    <div key={index}> 
-                                        <div className='noticeInfos'>
-                                            <div>Par: {notice.firstName}</div>
-                                            <div>Publié le: {dateFormater(notice.date)}</div>
-                                            <div>{notice.level}</div>
-                                            <BookNote notice={notice}/>
-                                        </div>                                           
-                                            <div className='noticeContent'>
-                                                <p>{notice.content}</p><hr/>
+                                {yourNotice
+                                    ?<div></div>
+                                    :<div>
+                                        {showPublishNotice?
+                                            <div className ={yourNotice}>
+                                                <Form 
+                                                    name="post_notice"
+                                                    onFinish={(values)=>{valideNotice(values, book)}}
+                                                >
+                                                    <Form.Item name="content">
+                                                        <Input.TextArea />
+                                                    </Form.Item>
+                                                    <Form.Item name="level" label="Note">
+                                                        <Rate />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                    name="anonymous"
+                                                    valuePropName="checked"
+                                                    >
+                                                        <Checkbox>Publier anonymement</Checkbox>
+                                                    </Form.Item>
+                                                    <Button type="primary" htmlType="submit" >Valider</Button>
+                                                    <Button type='text' onClick={()=>setShowPublishNotice(false)}>Annuler</Button>
+                                                </Form>
                                             </div>
-                                        </div>
-                                        )
-                                    }
+                                /* -----------pas d'action----------- */
+                                :<div className='button2'onClick={()=>{setShowPublishNotice(true)}}>Donnez votre avis</div>       
+                                }
+                                    </div>
+                                }
                                 </div>
-                        /* -----------si il n'y a pas encore d'avis----------- */ 
+                                {book.notice
+                                    .sort((a,b)=>a.date>b.date? -1:1)
+                                    .map((notice, index)=>
+                                        <div key={index}>
+                                            <div className='noticeInfos'>
+                                                <div>Par: {notice.firstName}</div>
+                                                <div>Publié le: {dateFormater(notice.date)}</div>
+                                                <div>{notice.level}</div>
+                                                <BookNote notice={notice}/>
+                                            </div>                                           
+                                            <div className='noticeContent'>
+                                                <p>{notice.content}</p>
+                                            </div>
+                                            {yourNotice&&
+                                                <div>
+                                                    {notice.userId === userId
+                                                        ?<div>
+                                                            {editNotice
+                                                            ?<div>
+                                                            <Form 
+                                                                name="post_notice"
+                                                                onFinish={(values)=>{updateThisNotice(values)}}
+                                                            >
+                                                                <Form.Item name="content" initialValue={notice.content}>
+                                                                    <Input.TextArea  />
+                                                                </Form.Item>
+                                                                <Form.Item name="level" label="Note" initialValue={notice.level}>
+                                                                    <Rate />
+                                                                </Form.Item>
+                                                                <Form.Item
+                                                                    name="anonymous"
+                                                                    valuePropName="checked"
+                                                                    initialValue={notice.firstName==='Anonyme'?true:false}
+                                                                    >
+                                                                        <Checkbox>Publier anonymement</Checkbox>
+                                                                </Form.Item>
+                                                                <Button type="primary" htmlType="submit" >Valider</Button>
+                                                                <Button type='text' onClick={()=>setEditNotice(false)}>Annuler</Button>
+                                                            </Form>
+                                                            </div>
+                                                            :<div>
+                                                                <div type='text' onClick ={()=>{setEditNotice(true)}}>Modifier</div>
+                                                            <div type='text' onClick={()=>deleteThisNotice()}>Supprimer</div>    
+                                                            </div>
+                                                            }                                                           
+                                                        </div>
+                                                        :<div></div>
+                                                    }
+                                                    <hr/>
+                                                </div>
+                                            }    
+                                        </div>
+                                    )
+                                }  
+                            </div>
+                        /* -----------pas d'action----------- */
                             :<div>
-
-                                {/* -----------formulaire de post d'un avis----------- */}                                
-                                {showPublishNotice?
+                            {showPublishNotice?
                                 <div className ={yourNotice}>
                                     <Form 
                                         name="post_notice"
@@ -189,16 +222,23 @@ const Book = ({ book, getBookListe  }) => {
                                         <Form.Item name="level" label="Note">
                                             <Rate />
                                         </Form.Item>
+                                        <Form.Item
+                                            name="anonymous"
+                                            valuePropName="checked"
+                                            >
+                                                <Checkbox>Publier anonymement</Checkbox>
+                                        </Form.Item>
                                         <Button type="primary" htmlType="submit" >Valider</Button>
                                         <Button type='text' onClick={()=>setShowPublishNotice(false)}>Annuler</Button>
                                     </Form>
                                 </div>
-                                /* -----------pas d'action----------- */
-                                :<div className='button2'onClick={()=>{setShowPublishNotice(true)}}>Soyez le premier à donner votre avis</div>       
+                    /* -----------pas d'action----------- */
+                    :<div className='button2'onClick={()=>{setShowPublishNotice(true)}}>Soyez le premier à donner votre avis</div>       
+                    }
+                        </div>       
                                 }
-                            </div>
-                            } 
-                        </div>     
+                        </div>
+   
                     </div>
                 </div>     
                 <div className='likeDetail'> 

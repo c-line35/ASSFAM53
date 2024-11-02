@@ -24,6 +24,7 @@ import ArticlesPage from './pages/admin/ArticlesPage';
 import EventsPage from './pages/admin/EventsPage';
 import { ConfigProvider } from 'antd';
 import frFR from 'antd/es/locale/fr_FR';
+import LibraryPage from './pages/admin/LibraryPage';
 
 
 const App = () => {
@@ -49,7 +50,8 @@ const App = () => {
         <Route path="/management" element={<Manage /> } /> 
         <Route path="/profil" element={<Profil /> } /> 
         <Route path="/adminarticles" element={<ArticlesPage/> } /> 
-        <Route path="/adminevent" element={<EventsPage/> } /> 
+        <Route path="/adminevent" element={<EventsPage/> } />
+        <Route path="/adminLibrary" element={<LibraryPage/> } /> 
       </Routes>
     </BrowserRouter>
     </BookContextProvider>

@@ -50,7 +50,7 @@ exports.createbook=(req, res, next)=>{
 
 exports.getAllBooks=(req, res, next)=>{
     Book.find()
-    .populate('notice', '-__v -_id -bookId')
+    .populate('notice', '-__v -bookId')
     .then((library)=>{res.status(200).json(library)})
     .catch((error)=>{res.status(400).json(error)})
 }

@@ -96,6 +96,7 @@ exports.updateNotice=(req, res, next)=>{
     let noticeObject = req.body;
     const content = noticeObject.content;
     const level = noticeObject.level;
+    const firstName = noticeObject.firstName;
     date=Date.now()
 
     const valideContent = inputRegexp.test(content);
@@ -103,7 +104,7 @@ exports.updateNotice=(req, res, next)=>{
     if (!valideContent){
         return res.status(400).json({error:'Certains caractères spéciaux ne sont pas autorisés'})
     }else{
-        Notice.updateOne({_id:id}, { content, level, date })
+        Notice.updateOne({_id:id}, { content, level, date, firstName })
         .then((notice)=>{
             res.status(200).json(notice)})
         .catch(()=>res.status(400).json({ message:"avis non trouvé" }))
