@@ -7,7 +7,7 @@
   z-index: 2;
   animation: cross 5000ms linear;
   top: 50%;
-  right: 250px;
+  right: 200px;
 }
 .anim--yellow {
   z-index: 4;
@@ -26,7 +26,7 @@
 .anim--blue {
   z-index: 2;
   bottom: 50%;
-  left: 250px;
+  left: 450px;
   animation: crossNegatif 5250ms linear;
   animation-delay: 7000ms;
 }
