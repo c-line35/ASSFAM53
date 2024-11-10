@@ -31,12 +31,12 @@ const Join = () => {
             </ul>
         </div>
         <div className='join__level'>
-          <h2>3 Niveaux d'adhésion vous sont proposés</h2>
+          <h2>2 Niveaux d'adhésion vous sont proposés</h2>
           <JoinLevel />
         </div> 
         </div>
         <div className='join-form'>
-          <a href='./assets/formulaire.pdf' target='blank'>Vous pouvez télécharger le bulletin d'adhésion en cliquant ici</a>
+          <a href='./assets/Fiche_adhesion_2024.pdf' target='blank'>Vous pouvez télécharger le bulletin d'adhésion en cliquant ici</a>
         </div>
 
        

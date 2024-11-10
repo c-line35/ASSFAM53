@@ -1,6 +1,6 @@
 const Event =require('../models/agenda')
 
-const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàâùîïôq°<Q/'\-,.?":{}()]{0,20000}$/i);
+const inputRegexp = new RegExp(/^[a-z0-9\séèçêëàâùîïôq°<Q/'\-,.!?":{}()]{0,20000}$/i);
 
 exports.createEvent=(req, res, next)=>{
     let eventObject = req.body
